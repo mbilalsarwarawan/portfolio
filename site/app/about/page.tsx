@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { skills, experience } from '@/lib/data';
 
@@ -18,23 +19,48 @@ export default function AboutPage() {
       {/* Hero section */}
       <section className="pt-16 pb-20 md:pt-24 md:pb-32 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
-          <motion.div custom={0} variants={FADE_UP} initial="hidden" animate="visible">
-            <div className="label-caps mb-6">About</div>
-          </motion.div>
+        <div className="lg:grid lg:grid-cols-[1fr_auto] lg:gap-12 xl:gap-16 lg:items-end">
+          <div>
+            <motion.div custom={0} variants={FADE_UP} initial="hidden" animate="visible">
+              <div className="label-caps mb-6">About</div>
+            </motion.div>
 
-          <motion.h1
-            custom={0.1}
+            <motion.h1
+              custom={0.1}
+              variants={FADE_UP}
+              initial="hidden"
+              animate="visible"
+              className="heading-display text-[clamp(2.5rem,6vw,5rem)] max-w-[800px] mb-10 lg:mb-0"
+            >
+              I build software that
+              <br />
+              <span style={{ color: 'var(--accent)' }}>works hard</span> and
+              <br />
+              looks sharp.
+            </motion.h1>
+          </div>
+
+          {/* Portrait */}
+          <motion.div
+            custom={0.2}
             variants={FADE_UP}
             initial="hidden"
             animate="visible"
-            className="heading-display text-[clamp(2.5rem,6vw,5rem)] max-w-[800px] mb-10"
+            className="mb-10 lg:mb-0"
           >
-            I build software that
-            <br />
-            <span style={{ color: 'var(--accent)' }}>works hard</span> and
-            <br />
-            looks sharp.
-          </motion.h1>
+            <div className="relative w-[200px] md:w-[240px] xl:w-[280px] aspect-[3/4] overflow-hidden bg-[var(--bg-surface)]">
+              <Image
+                src="/profile.jpeg"
+                alt="Bilal"
+                fill
+                className="object-cover"
+                sizes="(min-width: 1280px) 280px, 240px"
+              />
+              {/* Cinematic gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
+            </div>
+          </motion.div>
+        </div>
 
           <motion.div
             custom={0.3}

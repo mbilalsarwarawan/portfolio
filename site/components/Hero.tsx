@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 const WORD_VARIANTS: any = {
@@ -54,14 +55,79 @@ export function Hero() {
         }}
       />
 
-      {/* Accent dot */}
+      {/* Accent dot — visible only on lg (xl+ replaced by portrait) */}
       <motion.div
-        className="absolute top-[20%] right-[12%] w-3 h-3 rounded-full hidden lg:block"
+        className="absolute top-[20%] right-[12%] w-3 h-3 rounded-full hidden lg:block xl:hidden"
         style={{ background: 'var(--accent)' }}
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 1.2, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       />
+
+      {/* Profile portrait — desktop */}
+      <motion.div
+        className="absolute top-[16%] right-[5%] 2xl:right-[8%] hidden xl:block z-[1]"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <div className="relative w-[240px] xl:w-[280px] 2xl:w-[320px]">
+          {/* Offset accent frame */}
+          <div
+            className="absolute -bottom-3 -right-3 w-full h-full"
+            style={{ border: '1.5px solid var(--accent)' }}
+          />
+          {/* Image */}
+          <div className="relative aspect-[3/4] overflow-hidden bg-[var(--bg-surface)]">
+            <Image
+              src="/profile.jpeg"
+              alt="Bilal — Full-Stack Developer"
+              fill
+              className="object-cover"
+              sizes="(min-width: 1536px) 320px, 280px"
+              priority
+            />
+            {/* Cinematic gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
+          </div>
+          {/* Accent dot at corner */}
+          <motion.div
+            className="absolute -top-2 -left-2 w-3 h-3 rounded-full z-10"
+            style={{ background: 'var(--accent)' }}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 1.5, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          />
+        </div>
+
+        {/* CTA buttons — desktop, centered under portrait */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-row gap-3 mt-8"
+        >
+            <a href="/projects" className="btn-primary flex-1 justify-center text-center min-w-[140px] md:min-w-[180px]">
+            View Work
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+              />
+            </svg>
+          </a>
+          <a href="/contact" className="btn-outline flex-1 justify-center text-center min-w-[140px] md:min-w-[180px]">
+            Contact
+          </a>
+        </motion.div>
+      </motion.div>
 
       {/* Vertical line accent */}
       <motion.div
@@ -73,6 +139,28 @@ export function Hero() {
       />
 
       <div className="max-w-[1400px] mx-auto w-full">
+        {/* Profile portrait — mobile/tablet */}
+        <motion.div
+          custom={0.05}
+          variants={FADE_UP}
+          initial="hidden"
+          animate="visible"
+          className="xl:hidden mb-6 md:mb-8"
+        >
+          <div
+            className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-[var(--bg-surface)]"
+            style={{ border: '2px solid var(--border)' }}
+          >
+            <Image
+              src="/profile.jpeg"
+              alt="Bilal"
+              fill
+              className="object-cover"
+              sizes="96px"
+            />
+          </div>
+        </motion.div>
+
         {/* Top label */}
         <motion.div
           custom={0.1}
@@ -116,9 +204,9 @@ export function Hero() {
             variants={FADE_UP}
             initial="hidden"
             animate="visible"
-            className="flex gap-4"
+            className="flex gap-4 xl:hidden"
           >
-            <a href="/projects" className="btn-primary">
+            <a href="/projects" className="btn-primary flex-1 justify-center text-center min-w-[120px] md:min-w-[160px]">
               View Work
               <svg
                 className="w-4 h-4"
@@ -134,7 +222,7 @@ export function Hero() {
                 />
               </svg>
             </a>
-            <a href="/contact" className="btn-outline">
+            <a href="/contact" className="btn-outline flex-1 justify-center text-center min-w-[120px] md:min-w-[160px]">
               Contact
             </a>
           </motion.div>
