@@ -1,9 +1,16 @@
 'use client';
 
-import { useEffect, ReactNode, useRef } from 'react';
+import { useEffect, ReactNode, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
+
+const ChatBubble = dynamic(() => import('./ChatBubble').then((m) => m.ChatBubble), { ssr: false });
+const ChatPanel = dynamic(() => import('./ChatPanel').then((m) => m.ChatPanel), { ssr: false });
 
 export function RootLayoutClient({ children }: { children: ReactNode }) {
   const dotRef = useRef<HTMLDivElement | null>(null);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [hasUnread, setHasUnread] = useState(true);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     // Load theme from localStorage
@@ -65,6 +72,12 @@ export function RootLayoutClient({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  // Mark when component is mounted on the client so client-only
+  // components (ChatPanel) are only rendered after hydration.
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <>
       {/* Global floating accent dot (hidden on small screens) */}
@@ -74,6 +87,16 @@ export function RootLayoutClient({ children }: { children: ReactNode }) {
         className="fixed w-3 h-3 rounded-full pointer-events-none z-50 hidden lg:block"
         style={{ background: 'var(--accent)', transform: 'translate3d(50%,50%,0)' }}
       />
+
+      {/* Portfolio chatbot */}
+      <ChatBubble
+        isOpen={chatOpen}
+        onToggle={() => { setChatOpen((o) => !o); setHasUnread(false); }}
+        hasUnread={hasUnread}
+      />
+      {/* Render ChatPanel only after client mount to avoid hydration mismatches.
+          Once mounted it stays mounted so `useChat` state is preserved across open/close. */}
+      {isClient && <ChatPanel isOpen={chatOpen} />}
 
       {children}
     </>
