@@ -282,7 +282,7 @@ export function Hero() {
           style={{ borderTop: '1px solid var(--border)' }}
         >
           {[
-            { to: 1, suffix: '.5+ yrs', label: 'Experience' },
+            { to: 2, suffix: '+ yrs', label: 'Experience' },
             { to: 10, suffix: '+', label: 'Projects Shipped' },
             { to: 100, suffix: '%', label: 'Client Satisfaction' },
           ].map(({ to, suffix, label }) => (
