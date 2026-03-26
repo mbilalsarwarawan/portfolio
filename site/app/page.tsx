@@ -73,9 +73,9 @@ export default function Home() {
                 className="text-lg leading-relaxed max-w-md"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                From concept to deployment — I architect, build, and ship
-                web applications that scale. Clean code, fast interfaces,
-                solid infrastructure.
+                From concept to deployment — I build and ship full-stack
+                web applications and AI-powered solutions. MERN stack,
+                Python frameworks, and modern DevOps.
               </p>
             </div>
 
@@ -85,22 +85,22 @@ export default function Home() {
                 {
                   num: '01',
                   title: 'Frontend',
-                  desc: 'React, Next.js, TypeScript — fast, accessible, pixel-perfect interfaces.',
+                  desc: 'React.js, JavaScript, HTML5, CSS3, Tailwind CSS — responsive, fast interfaces.',
                 },
                 {
                   num: '02',
                   title: 'Backend',
-                  desc: 'Node.js, Python, Go — scalable APIs, real-time systems, microservices.',
+                  desc: 'Node.js, Express.js, Django, FastAPI — scalable APIs and server-side systems.',
                 },
                 {
                   num: '03',
-                  title: 'Infrastructure',
-                  desc: 'AWS, Docker, CI/CD — automated deployments, monitoring, zero downtime.',
+                  title: 'AI / ML',
+                  desc: 'Langchain, OpenAI API, RAG systems, TensorFlow — intelligent applications.',
                 },
                 {
                   num: '04',
-                  title: 'Design Systems',
-                  desc: 'Component libraries, tokens, documentation — consistency at scale.',
+                  title: 'DevOps',
+                  desc: 'Docker, Nginx, Linux, Git — containerized deployments and CI/CD workflows.',
                 },
               ].map((item) => (
                 <div

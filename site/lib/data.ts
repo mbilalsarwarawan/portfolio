@@ -13,111 +13,110 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: 'devflow',
-    title: 'DevFlow',
+    slug: 'loca-key',
+    title: 'Loca-Key',
     description:
-      'A real-time collaborative IDE with integrated CI/CD, live pair programming, and AI-assisted code review. Built for distributed engineering teams.',
+      'A location-based discount platform with QR code scanning, geolocation filtering, and multi-role dashboards for businesses and admins managing offer redemptions.',
     image: '01',
-    tags: ['Next.js', 'TypeScript', 'WebSocket', 'PostgreSQL', 'Docker'],
+    tags: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS'],
     year: '2025',
-    role: 'Full-Stack Lead',
-    content:
-      'DevFlow is a next-generation collaborative development environment that supports real-time code editing across multiple users. The architecture uses CRDTs for conflict-free state synchronization, WebSocket connections for sub-50ms latency, and a custom LSP bridge for cross-language intelligence. The CI/CD pipeline integrates directly into the editor workspace, giving developers instant feedback on builds and tests.',
-    liveUrl: 'https://devflow.example.com',
-    githubUrl: 'https://github.com/example/devflow',
-  },
-  {
-    slug: 'finova-dashboard',
-    title: 'Finova Dashboard',
-    description:
-      'High-frequency trading analytics dashboard processing 2M+ data points with sub-second rendering and real-time WebSocket streams.',
-    image: '02',
-    tags: ['React', 'D3.js', 'Node.js', 'Redis', 'AWS'],
-    year: '2024',
-    role: 'Frontend Architect',
-    content:
-      'Finova is a trading analytics platform designed for institutional investors. The dashboard renders complex candlestick charts, heatmaps, and order flow visualizations using D3.js with canvas fallback for performance. Data streams in real-time through WebSocket connections backed by Redis pub/sub. The system handles 2M+ data points while maintaining 60fps rendering through virtualized viewports and web worker offloading.',
-    liveUrl: 'https://finova.example.com',
-  },
-  {
-    slug: 'atlas-cms',
-    title: 'Atlas CMS',
-    description:
-      'A headless content management system with visual page builder, role-based access, multi-tenant architecture, and edge-deployed API.',
-    image: '03',
-    tags: ['Next.js', 'GraphQL', 'MongoDB', 'Cloudflare Workers'],
-    year: '2024',
-    role: 'Solo Developer',
-    content:
-      'Atlas is a headless CMS built for agencies that need multi-tenant content management. Features include a drag-and-drop page builder, real-time preview, granular RBAC, and a GraphQL API deployed to the edge via Cloudflare Workers. The visual editor supports nested components, conditional fields, and localization across 12 languages.',
-    githubUrl: 'https://github.com/example/atlas-cms',
-  },
-  {
-    slug: 'pulse-health',
-    title: 'Pulse Health',
-    description:
-      'Cross-platform health tracking app with wearable device integration, ML-powered insights, and HIPAA-compliant data handling.',
-    image: '04',
-    tags: ['React Native', 'Python', 'FastAPI', 'TensorFlow', 'PostgreSQL'],
-    year: '2023',
     role: 'Full-Stack Developer',
     content:
-      'Pulse Health is a comprehensive wellness platform that syncs with Apple Watch, Fitbit, and Garmin devices. The backend runs FastAPI with async processing for real-time health metrics. An ML pipeline built on TensorFlow analyzes sleep patterns, heart rate variability, and activity data to generate personalized health insights. All data handling is HIPAA-compliant with end-to-end encryption.',
-    liveUrl: 'https://pulsehealth.example.com',
+      'Loca-Key is a location-based discount platform that connects businesses with nearby customers. Features include QR code scanning for offer redemptions, geolocation-based filtering to discover deals, and multi-role dashboards for businesses and admins. The platform handles real-time offer management and analytics for participating businesses.',
   },
   {
-    slug: 'nexus-ecommerce',
-    title: 'Nexus Commerce',
+    slug: 'mister-clay',
+    title: 'Mister Clay',
     description:
-      'Headless e-commerce platform handling $3M+ annual GMV with Stripe Connect, inventory sync, and AI-powered product recommendations.',
+      'Full-featured e-commerce platform for paint products with cart functionality, Stripe payment integration, inventory management, and responsive design.',
+    image: '02',
+    tags: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Stripe'],
+    year: '2025',
+    role: 'Full-Stack Developer',
+    content:
+      'Mister Clay is a complete e-commerce solution for paint products. Built with the MERN stack, it features a full shopping cart system, Stripe payment integration for secure transactions, real-time inventory management, and a fully responsive design optimized for all devices.',
+  },
+  {
+    slug: 'nomia-docs-chatbot',
+    title: 'NOMIA Docs Chatbot',
+    description:
+      'Dual-agent chatbot system combining RAG and SQL agents using Langchain, enabling natural language queries across both structured and unstructured documents.',
+    image: '03',
+    tags: ['Python', 'Langchain', 'FastAPI', 'Docker', 'Nginx'],
+    year: '2025',
+    role: 'Python Developer',
+    content:
+      'Built a dual-agent chatbot system for NOMIA Docs that combines RAG (Retrieval-Augmented Generation) and SQL agents using Langchain. The system enables natural language queries across both structured databases and unstructured documents. Deployed with FastAPI, Docker containerization, and Nginx reverse proxy, achieving 99.5% uptime in production.',
+  },
+  {
+    slug: 'slaythebear',
+    title: 'SlayTheBear Trading Platform',
+    description:
+      'Trading platform built with Django featuring subscription system with Stripe integration and JWT authentication, increasing paid conversions by 25%.',
+    image: '04',
+    tags: ['Python', 'Django', 'Stripe', 'JWT', 'PostgreSQL'],
+    year: '2025',
+    role: 'Python Developer',
+    content:
+      'Led backend development for SlayTheBear, a trading platform built with Django. Implemented a subscription system with Stripe integration and JWT authentication. The platform features secure payment processing, user management, and trading tools that helped increase paid conversions by 25%.',
+  },
+  {
+    slug: 'audio-streaming-platform',
+    title: 'Audio Streaming Platform',
+    description:
+      'Audio streaming platform using Django, Celery, Redis, and HLS protocol, achieving buffer-free delivery for 500+ concurrent users.',
     image: '05',
-    tags: ['Next.js', 'Stripe', 'Prisma', 'Redis', 'Vercel'],
-    year: '2023',
-    role: 'Tech Lead',
+    tags: ['Python', 'Django', 'Celery', 'Redis', 'Nginx'],
+    year: '2025',
+    role: 'Python Developer',
     content:
-      'Nexus is a multi-vendor e-commerce platform built on a headless architecture. It features Stripe Connect for marketplace payments, real-time inventory synchronization across vendors, and an AI recommendation engine that increased AOV by 34%. The storefront is statically generated with ISR for product pages, achieving sub-second load times globally.',
-    liveUrl: 'https://nexus.example.com',
-    githubUrl: 'https://github.com/example/nexus',
+      'Developed an audio streaming platform using Django, Celery for async task processing, Redis for caching, and HLS protocol for adaptive streaming. Deployed on a Linux server with Nginx, the platform achieves buffer-free audio delivery for 500+ concurrent users.',
   },
   {
-    slug: 'spectra-design',
-    title: 'Spectra Design System',
+    slug: 'ai-plant-recognition',
+    title: 'AI Plant Recognition App',
     description:
-      'Enterprise design system with 80+ components, Figma-to-code pipeline, automated visual regression testing, and full a11y compliance.',
+      'Mobile app with custom CNN model achieving 92% accuracy on 10,000+ plant images across 50 species, deployed via Firebase ML Kit for real-time inference.',
     image: '06',
-    tags: ['React', 'Storybook', 'TypeScript', 'Chromatic', 'Figma API'],
-    year: '2023',
-    role: 'Design Engineer',
+    tags: ['TensorFlow', 'Keras', 'Firebase ML Kit', 'Flutter'],
+    year: '2024',
+    role: 'ML Developer',
     content:
-      'Spectra is a design system used across 12 product teams at a Series C startup. It includes 80+ React components with full TypeScript coverage, automated visual regression testing via Chromatic, and a custom Figma plugin that syncs design tokens directly to code. Every component meets WCAG 2.1 AA standards with comprehensive keyboard navigation and screen reader support.',
-    githubUrl: 'https://github.com/example/spectra',
+      'Final year project — trained a custom CNN model using TensorFlow achieving 92% accuracy on 10,000+ plant images across 50 species. Converted the model to TensorFlow Lite and deployed to Firebase ML Kit for real-time mobile inference with sub-second response time on Flutter.',
   },
 ];
 
 export const skills = {
-  frontend: ['React', 'Next.js', 'TypeScript', 'Vue.js', 'Tailwind CSS', 'Framer Motion', 'Three.js'],
-  backend: ['Node.js', 'Python', 'Go', 'PostgreSQL', 'MongoDB', 'Redis', 'GraphQL'],
-  infrastructure: ['AWS', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD', 'Vercel', 'Cloudflare'],
-  practices: ['System Design', 'TDD', 'Agile', 'Code Review', 'Performance Tuning', 'a11y'],
+  frontend: ['React.js', 'JavaScript (ES6+)', 'HTML5', 'CSS3', 'Redux', 'Tailwind CSS', 'Bootstrap'],
+  backend: ['Node.js', 'Express.js', 'Python', 'Django', 'Django REST Framework', 'FastAPI'],
+  database: ['MongoDB', 'PostgreSQL', 'Redis'],
+  'ai/ml': ['Langchain', 'OpenAI API', 'RAG Systems', 'TensorFlow', 'Keras'],
+  'devops & tools': ['Docker', 'Nginx', 'Git', 'GitHub', 'Linux', 'Celery'],
 };
 
 export const experience = [
   {
-    period: '2023 — Present',
-    role: 'Senior Full-Stack Engineer',
-    company: 'Scale Studio',
-    description: 'Leading architecture and development of high-performance web applications for startups and enterprises.',
+    period: 'Aug 2025 — Present',
+    role: 'Full-Stack Developer (Freelance)',
+    company: 'Fintask.ie',
+    description: 'Delivered 5+ web applications using MERN stack for international clients, generating $1,000+ revenue with 100% client satisfaction through effective communication and on-time delivery.',
   },
   {
-    period: '2021 — 2023',
-    role: 'Full-Stack Developer',
-    company: 'Velocity Labs',
-    description: 'Built and shipped 15+ client projects ranging from e-commerce platforms to real-time dashboards.',
+    period: 'Feb 2025 — Aug 2025',
+    role: 'Python Developer',
+    company: 'Cherrybyte Technologies',
+    description: 'Developed audio streaming platforms, dual-agent chatbot systems, and trading platforms using Django, FastAPI, Langchain, and Docker with Nginx deployments.',
   },
   {
-    period: '2019 — 2021',
-    role: 'Frontend Developer',
-    company: 'PixelCraft Agency',
-    description: 'Developed responsive web experiences and component libraries for Fortune 500 clients.',
+    period: 'Jul 2024 — Dec 2024',
+    role: 'Python Developer',
+    company: 'StechAi',
+    description: 'Built OpenAI-powered RAG chatbots, RESTful APIs with Django and FastAPI, and deployed ML models using Docker and MLflow.',
+  },
+  {
+    period: 'Jun 2025 — Jul 2025',
+    role: 'AI Data Annotator (Contract)',
+    company: 'Turing',
+    description: 'Contributed to Anthropic\'s Computer Use Agent model training through data annotation and quality assurance of computer interaction datasets.',
   },
 ];

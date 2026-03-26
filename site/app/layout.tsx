@@ -18,13 +18,13 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Bilal — Full-Stack Developer',
+  title: 'Muhammad Bilal Awan — Full-Stack Developer',
   description:
-    'Full-stack developer crafting high-performance web applications, APIs, and design systems. Specializing in React, Node.js, and cloud architecture.',
+    'Full-Stack Developer with 1.5+ years of experience building scalable web applications using MERN stack and Python frameworks. Delivered 5+ production-ready applications for international clients.',
   openGraph: {
-    title: 'Bilal — Full-Stack Developer',
+    title: 'Muhammad Bilal Awan — Full-Stack Developer',
     description:
-      'Full-stack developer crafting high-performance web applications.',
+      'Full-Stack Developer building scalable web applications with MERN stack and Python frameworks.',
     type: 'website',
   },
 };

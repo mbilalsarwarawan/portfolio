@@ -79,11 +79,11 @@ export default function ContactPage() {
                 <div>
                   <div className="label-caps mb-3">Email</div>
                   <a
-                    href="mailto:hello@bilal.dev"
+                    href="mailto:mbilalsarwarawan@gmail.com"
                     className="text-sm font-medium transition-colors duration-200 hover:opacity-70"
                     style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
                   >
-                    hello@bilal.dev
+                    mbilalsarwarawan@gmail.com
                   </a>
                 </div>
                 <div>
@@ -92,16 +92,18 @@ export default function ContactPage() {
                     className="text-sm font-medium"
                     style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
                   >
-                    Available Worldwide
+                    Lahore, Pakistan
                   </span>
                 </div>
                 <div>
                   <div className="label-caps mb-3">Socials</div>
                   <div className="flex gap-4">
-                    {['GitHub', 'Twitter', 'LinkedIn'].map((s) => (
+                    {[{ label: 'GitHub', href: 'https://github.com/mbilalsarwarawan' }, { label: 'LinkedIn', href: 'https://linkedin.com/in/muhammad-awan-bilal' }].map((s) => (
                       <a
-                        key={s}
-                        href="#"
+                        key={s.label}
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-sm font-medium transition-colors duration-200"
                         style={{
                           fontFamily: 'var(--font-display)',
@@ -110,7 +112,7 @@ export default function ContactPage() {
                         onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
                         onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-tertiary)')}
                       >
-                        {s}
+                        {s.label}
                       </a>
                     ))}
                   </div>

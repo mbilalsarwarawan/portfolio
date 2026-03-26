@@ -10,9 +10,8 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { href: 'https://github.com', label: 'GitHub' },
-  { href: 'https://twitter.com', label: 'Twitter' },
-  { href: 'https://linkedin.com', label: 'LinkedIn' },
+  { href: 'https://github.com/mbilalsarwarawan', label: 'GitHub' },
+  { href: 'https://linkedin.com/in/muhammad-awan-bilal', label: 'LinkedIn' },
 ];
 
 export function Footer() {

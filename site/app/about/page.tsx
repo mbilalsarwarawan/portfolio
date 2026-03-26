@@ -70,16 +70,16 @@ export default function AboutPage() {
             className="grid md:grid-cols-2 gap-12 md:gap-24 max-w-[1000px]"
           >
             <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              I&apos;m a full-stack developer with 6+ years of experience
-              building web applications, APIs, and design systems. I care about
-              performance, clean architecture, and creating interfaces that
-              feel fast and intentional.
+              I&apos;m a full-stack developer with 1.5+ years of experience
+              building scalable web applications using MERN stack and Python
+              frameworks. I&apos;ve delivered 5+ production-ready applications
+              for international clients.
             </p>
             <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              I work across the entire stack — from crafting pixel-perfect
-              frontends with React and Next.js to designing scalable backend
-              systems with Node.js, Python, and cloud infrastructure. Every
-              project gets the same attention to detail.
+              I work across the entire stack — from building responsive
+              frontends with React to developing robust backend systems with
+              Node.js, Django, and FastAPI. I also have hands-on experience
+              with AI/ML integration using Langchain, OpenAI, and TensorFlow.
             </p>
           </motion.div>
         </div>

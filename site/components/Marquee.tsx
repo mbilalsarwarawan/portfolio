@@ -1,9 +1,9 @@
 'use client';
 
 const ITEMS = [
-  'React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'Go',
-  'PostgreSQL', 'MongoDB', 'Redis', 'GraphQL', 'Docker', 'AWS',
-  'Tailwind CSS', 'Figma', 'Three.js', 'WebSocket', 'Prisma', 'Vercel',
+  'React.js', 'JavaScript', 'Node.js', 'Express.js', 'Python', 'Django',
+  'FastAPI', 'MongoDB', 'PostgreSQL', 'Redis', 'Docker', 'Nginx',
+  'Tailwind CSS', 'Langchain', 'OpenAI API', 'TensorFlow', 'Git', 'Linux',
 ];
 
 function MarqueeRow({ reverse = false }: { reverse?: boolean }) {

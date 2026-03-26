@@ -1,7 +1,36 @@
 'use client';
 
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+
+function CountUp({ to, suffix = '', delay = 0 }: { to: number; suffix?: string; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true });
+  const [display, setDisplay] = useState(0);
+  const rafRef = useRef(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const timer = setTimeout(() => {
+      const start = performance.now();
+      const duration = 1800;
+      const tick = (now: number) => {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 4);
+        setDisplay(Math.round(eased * to));
+        if (t < 1) rafRef.current = requestAnimationFrame(tick);
+      };
+      rafRef.current = requestAnimationFrame(tick);
+    }, delay * 1000);
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [inView, to, delay]);
+
+  return <div ref={ref}>{display}{suffix}</div>;
+}
 
 const WORD_VARIANTS: any = {
   hidden: { y: '100%', opacity: 0 },
@@ -167,6 +196,22 @@ export function Hero() {
           variants={FADE_UP}
           initial="hidden"
           animate="visible"
+          className="mb-4 md:mb-5"
+        >
+          <span
+            className="text-sm font-semibold tracking-widest uppercase"
+            style={{ fontFamily: 'var(--font-display)', color: 'var(--text-tertiary)' }}
+          >
+            Muhammad Bilal Awan
+          </span>
+        </motion.div>
+
+        {/* Role label */}
+        <motion.div
+          custom={0.15}
+          variants={FADE_UP}
+          initial="hidden"
+          animate="visible"
           className="label-caps mb-6 md:mb-8"
         >
           Full-Stack Developer
@@ -195,8 +240,7 @@ export function Hero() {
             className="text-lg md:text-xl max-w-md leading-relaxed"
             style={{ color: 'var(--text-secondary)' }}
           >
-            Specializing in high-performance applications, scalable APIs,
-            and interfaces that feel fast and look sharp.
+            Full-Stack Developer specializing in MERN stack and Python frameworks — building scalable web apps and AI-powered solutions for international clients.
           </motion.p>
 
           <motion.div
@@ -238,16 +282,16 @@ export function Hero() {
           style={{ borderTop: '1px solid var(--border)' }}
         >
           {[
-            { value: '6+', label: 'Years Experience' },
-            { value: '50+', label: 'Projects Shipped' },
-            { value: '30+', label: 'Happy Clients' },
-          ].map(({ value, label }) => (
+            { to: 1, suffix: '.5+ yrs', label: 'Experience' },
+            { to: 10, suffix: '+', label: 'Projects Shipped' },
+            { to: 100, suffix: '%', label: 'Client Satisfaction' },
+          ].map(({ to, suffix, label }) => (
             <div key={label}>
               <div
                 className="text-3xl md:text-4xl font-bold tracking-tight"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                {value}
+                <CountUp to={to} suffix={suffix} delay={2.4} />
               </div>
               <div className="label-caps mt-2">{label}</div>
             </div>
