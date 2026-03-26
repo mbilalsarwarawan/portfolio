@@ -20,7 +20,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: 'Muhammad Bilal Awan — Full-Stack Developer',
   description:
-    'Full-Stack Developer with 1.5+ years of experience building scalable web applications using MERN stack and Python frameworks. Delivered 5+ production-ready applications for international clients.',
+    'Full-Stack Developer with 2+ years of experience building scalable web applications using MERN stack and Python frameworks. Delivered 5+ production-ready applications for international clients.',
   openGraph: {
     title: 'Muhammad Bilal Awan — Full-Stack Developer',
     description:

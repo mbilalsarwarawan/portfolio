@@ -70,7 +70,7 @@ export default function AboutPage() {
             className="grid md:grid-cols-2 gap-12 md:gap-24 max-w-[1000px]"
           >
             <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              I&apos;m a full-stack developer with 1.5+ years of experience
+              I&apos;m a full-stack developer with 2+ years of experience
               building scalable web applications using MERN stack and Python
               frameworks. I&apos;ve delivered 5+ production-ready applications
               for international clients.
