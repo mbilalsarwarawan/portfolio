@@ -2,6 +2,8 @@
 
 import { useEffect, ReactNode, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { AnimatePresence } from 'framer-motion';
+import { LoadingScreen } from './LoadingScreen';
 
 const ChatBubble = dynamic(() => import('./ChatBubble').then((m) => m.ChatBubble), { ssr: false });
 const ChatPanel = dynamic(() => import('./ChatPanel').then((m) => m.ChatPanel), { ssr: false });
@@ -11,6 +13,14 @@ export function RootLayoutClient({ children }: { children: ReactNode }) {
   const [chatOpen, setChatOpen] = useState(false);
   const [hasUnread, setHasUnread] = useState(true);
   const [isClient, setIsClient] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    // Skip intro on subsequent session visits
+    if (sessionStorage.getItem('intro_seen')) {
+      setShowLoader(false);
+    }
+  }, []);
 
   useEffect(() => {
     // Load theme from localStorage
@@ -78,8 +88,28 @@ export function RootLayoutClient({ children }: { children: ReactNode }) {
     setIsClient(true);
   }, []);
 
+  // Lock body scroll while intro loader is showing
+  useEffect(() => {
+    if (showLoader) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [showLoader]);
+
   return (
     <>
+      <AnimatePresence>
+        {showLoader && (
+          <LoadingScreen
+            onDone={() => {
+              sessionStorage.setItem('intro_seen', '1');
+              setShowLoader(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
       {/* Global floating accent dot (hidden on small screens) */}
       <div
         ref={dotRef}
