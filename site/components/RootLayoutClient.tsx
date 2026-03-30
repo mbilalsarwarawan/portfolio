@@ -4,6 +4,9 @@ import { useEffect, ReactNode, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { AnimatePresence } from 'framer-motion';
 import { LoadingScreen } from './LoadingScreen';
+import { usePathname } from 'next/navigation';
+import { Navbar } from './Navbar';
+import { Footer } from './Footer';
 
 const ChatBubble = dynamic(() => import('./ChatBubble').then((m) => m.ChatBubble), { ssr: false });
 const ChatPanel = dynamic(() => import('./ChatPanel').then((m) => m.ChatPanel), { ssr: false });
@@ -14,6 +17,7 @@ export function RootLayoutClient({ children }: { children: ReactNode }) {
   const [hasUnread, setHasUnread] = useState(true);
   const [isClient, setIsClient] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  const pathname = usePathname();
 
   useEffect(() => {
     // Skip intro on subsequent session visits
@@ -128,7 +132,13 @@ export function RootLayoutClient({ children }: { children: ReactNode }) {
           Once mounted it stays mounted so `useChat` state is preserved across open/close. */}
       {isClient && <ChatPanel isOpen={chatOpen} />}
 
+      {/* Show Navbar on non-admin routes only */}
+      {isClient && !pathname?.startsWith('/admin') && <Navbar />}
+
       {children}
+
+      {/* Show Footer on non-admin routes only */}
+      {isClient && !pathname?.startsWith('/admin') && <Footer />}
     </>
   );
 }

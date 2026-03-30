@@ -1,4 +1,4 @@
-import { projects } from '@/lib/data';
+import { createClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
@@ -8,15 +8,14 @@ interface ProjectPageProps {
   }>;
 }
 
-export async function generateStaticParams() {
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
-}
-
 export async function generateMetadata({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const supabase = await createClient();
+  const { data: project } = await supabase
+    .from('projects')
+    .select('title, description')
+    .eq('slug', slug)
+    .single();
   if (!project) return {};
   return {
     title: `${project.title} — Bilal`,
@@ -26,10 +25,22 @@ export async function generateMetadata({ params }: ProjectPageProps) {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const supabase = await createClient();
+
+  const { data: project } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('slug', slug)
+    .single();
 
   if (!project) notFound();
 
+  const { data: allProjects } = await supabase
+    .from('projects')
+    .select('slug, title')
+    .order('display_order');
+
+  const projects = allProjects || [];
   const projectIndex = projects.findIndex((p) => p.slug === slug);
   const nextProject = projects[(projectIndex + 1) % projects.length];
 
@@ -72,9 +83,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           {/* Links */}
           <div className="flex gap-4">
-            {project.liveUrl && (
+            {project.live_url && (
               <a
-                href={project.liveUrl}
+                href={project.live_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"
@@ -85,9 +96,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </svg>
               </a>
             )}
-            {project.githubUrl && (
+            {project.github_url && (
               <a
-                href={project.githubUrl}
+                href={project.github_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline"
@@ -115,7 +126,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   opacity: 0.08,
                 }}
               >
-                {project.image}
+                {project.image_url || ''}
               </span>
             </div>
           </div>
@@ -143,7 +154,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <div>
                 <div className="label-caps mb-3">Stack</div>
                 <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
+                  {project.tags.map((tag: string) => (
                     <span
                       key={tag}
                       className="text-xs font-medium px-2.5 py-1"

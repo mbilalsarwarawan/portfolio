@@ -1,8 +1,22 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { skills, experience } from '@/lib/data';
+
+interface Skill {
+  id: string;
+  name: string;
+  category: string;
+}
+
+interface Experience {
+  id: string;
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+}
 
 const FADE_UP = {
   hidden: { opacity: 0, y: 40 },
@@ -14,6 +28,20 @@ const FADE_UP = {
 };
 
 export default function AboutPage() {
+  const [skills, setSkills] = useState<Record<string, string[]>>({});
+  const [experience, setExperience] = useState<Experience[]>([]);
+
+  useEffect(() => {
+    fetch('/api/skills').then((r) => r.json()).then((data: Skill[]) => {
+      const grouped: Record<string, string[]> = {};
+      data.forEach((s) => {
+        if (!grouped[s.category]) grouped[s.category] = [];
+        grouped[s.category].push(s.name);
+      });
+      setSkills(grouped);
+    });
+    fetch('/api/experience').then((r) => r.json()).then(setExperience);
+  }, []);
   return (
     <div className="min-h-screen">
       {/* Hero section */}
@@ -48,16 +76,24 @@ export default function AboutPage() {
             animate="visible"
             className="mb-10 lg:mb-0"
           >
-            <div className="relative w-[200px] md:w-[240px] xl:w-[280px] aspect-[3/4] overflow-hidden bg-[var(--bg-surface)]">
-              <Image
-                src="/profile.jpeg"
-                alt="Bilal"
-                fill
-                className="object-cover"
-                sizes="(min-width: 1280px) 280px, 240px"
+            <div className="relative w-[200px] md:w-[240px] xl:w-[280px]">
+              {/* Offset accent frame */}
+              <div
+                className="absolute -bottom-3 -right-3 w-full h-full"
+                style={{ border: '1.5px solid var(--accent)' }}
               />
-              {/* Cinematic gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
+              {/* Image container */}
+              <div className="relative aspect-[3/4] overflow-hidden bg-[var(--bg-surface)]">
+                <Image
+                  src="/profile.jpeg"
+                  alt="Bilal"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1280px) 280px, 240px"
+                />
+                {/* Cinematic gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
+              </div>
             </div>
           </motion.div>
         </div>

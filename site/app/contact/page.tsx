@@ -1,13 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+
+interface ContactInfo {
+  email: string;
+  phone: string;
+  location: string;
+  github_url: string;
+  linkedin_url: string;
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
 
+  useEffect(() => {
+    fetch('/api/contact-info').then((r) => r.json()).then(setContactInfo);
+  }, []);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -79,11 +91,11 @@ export default function ContactPage() {
                 <div>
                   <div className="label-caps mb-3">Email</div>
                   <a
-                    href="mailto:mbilalsarwarawan@gmail.com"
+                    href={`mailto:${contactInfo?.email || ''}`}
                     className="text-sm font-medium transition-colors duration-200 hover:opacity-70"
                     style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
                   >
-                    mbilalsarwarawan@gmail.com
+                    {contactInfo?.email || ''}
                   </a>
                 </div>
                 <div>
@@ -92,13 +104,16 @@ export default function ContactPage() {
                     className="text-sm font-medium"
                     style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
                   >
-                    Lahore, Pakistan
+                    {contactInfo?.location || ''}
                   </span>
                 </div>
                 <div>
                   <div className="label-caps mb-3">Socials</div>
                   <div className="flex gap-4">
-                    {[{ label: 'GitHub', href: 'https://github.com/mbilalsarwarawan' }, { label: 'LinkedIn', href: 'https://linkedin.com/in/muhammad-awan-bilal' }].map((s) => (
+                    {[
+                      ...(contactInfo?.github_url ? [{ label: 'GitHub', href: contactInfo.github_url }] : []),
+                      ...(contactInfo?.linkedin_url ? [{ label: 'LinkedIn', href: contactInfo.linkedin_url }] : []),
+                    ].map((s) => (
                       <a
                         key={s.label}
                         href={s.href}

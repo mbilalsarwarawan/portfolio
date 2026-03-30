@@ -1,11 +1,27 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Hero } from '@/components/Hero';
 import { Marquee } from '@/components/Marquee';
 import { ProjectCard } from '@/components/ProjectCard';
-import { projects } from '@/lib/data';
+
+interface Project {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  image_url: string | null;
+  tags: string[];
+  year: string;
+  role: string;
+}
 
 export default function Home() {
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    fetch('/api/projects').then((r) => r.json()).then(setProjects);
+  }, []);
   return (
     <div>
       <Hero />
@@ -46,7 +62,17 @@ export default function Home() {
           {/* Project grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {projects.slice(0, 3).map((project, i) => (
-              <ProjectCard key={project.slug} {...project} index={i} />
+              <ProjectCard
+                key={project.slug}
+                slug={project.slug}
+                title={project.title}
+                description={project.description}
+                image={project.image_url || ''}
+                tags={project.tags}
+                year={project.year}
+                role={project.role}
+                index={i}
+              />
             ))}
           </div>
         </div>

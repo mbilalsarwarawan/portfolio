@@ -1,7 +1,7 @@
 import { groq } from '@ai-sdk/groq';
 import { streamText, convertToModelMessages, tool, stepCountIs } from 'ai';
 import { z } from 'zod';
-import { projects, skills, experience } from '@/lib/data';
+import { createClient } from '@/lib/supabase/server';
 import { buildSystemPrompt } from '@/lib/chatbot-context';
 
 // Simple in-memory rate limiter: 15 messages per IP per minute
@@ -44,9 +44,12 @@ export async function POST(req: Request) {
   // Cap conversation to last 20 messages to control token usage
   const cappedMessages = messages.slice(-20);
 
+  const supabase = await createClient();
+  const systemPrompt = await buildSystemPrompt();
+
   const result = streamText({
-    model: groq('llama-3.3-70b-versatile'),
-    system: buildSystemPrompt(),
+    model: groq('qwen/qwen3-32b'),
+    system: systemPrompt,
     messages: await convertToModelMessages(cappedMessages),
     maxOutputTokens: 1024,
     temperature: 0.7,
@@ -58,17 +61,15 @@ export async function POST(req: Request) {
         inputSchema: z.object({
           query: z.string().describe('Search term — can be a tech name (e.g. "Python", "React"), project type, or keyword'),
         }),
-        execute: async ({ query }): Promise<
-          | { found: false; message: string }
-          | { found: true; count: number; projects: { title: string; slug: string; description: string; tags: string[]; year: string; role: string; liveUrl?: string; githubUrl?: string }[] }
-        > => {
+        execute: async ({ query }) => {
           const q = query.toLowerCase();
-          const matched = projects.filter(
+          const { data: allProjects } = await supabase.from('projects').select('*').order('display_order');
+          const matched = (allProjects || []).filter(
             (p) =>
               p.title.toLowerCase().includes(q) ||
               p.description.toLowerCase().includes(q) ||
-              p.tags.some((t) => t.toLowerCase().includes(q)) ||
-              p.content.toLowerCase().includes(q) ||
+              p.tags.some((t: string) => t.toLowerCase().includes(q)) ||
+              (p.content || '').toLowerCase().includes(q) ||
               p.role.toLowerCase().includes(q)
           );
           if (matched.length === 0) {
@@ -84,8 +85,8 @@ export async function POST(req: Request) {
               tags: p.tags,
               year: p.year,
               role: p.role,
-              liveUrl: p.liveUrl,
-              githubUrl: p.githubUrl,
+              live_url: p.live_url,
+              github_url: p.github_url,
             })),
           };
         },
@@ -96,8 +97,8 @@ export async function POST(req: Request) {
         inputSchema: z.object({
           slug: z.string().describe('The project slug, e.g. "nomia-docs-chatbot"'),
         }),
-        execute: async ({ slug }): Promise<{ found: false } | { found: true; project: typeof projects[number] }> => {
-          const project = projects.find((p) => p.slug === slug);
+        execute: async ({ slug }) => {
+          const { data: project } = await supabase.from('projects').select('*').eq('slug', slug).single();
           if (!project) return { found: false };
           return { found: true, project };
         },
@@ -105,8 +106,11 @@ export async function POST(req: Request) {
 
       getExperience: tool({
         description: "Return Bilal's full work experience timeline.",
-        inputSchema: z.object({}),
-        execute: async () => ({ experience }),
+        inputSchema: z.object({ _: z.string().optional().describe('Unused — leave empty') }),
+        execute: async () => {
+          const { data } = await supabase.from('experiences').select('*').order('display_order');
+          return { experience: data || [] };
+        },
       }),
 
       getSkills: tool({
@@ -117,14 +121,23 @@ export async function POST(req: Request) {
             .optional()
             .describe('Optional category filter: frontend, backend, database, ai/ml, devops & tools'),
         }),
-        execute: async ({ category }): Promise<{ skills: typeof skills } | { category: string; skills: string[] } | { error: string }> => {
+        execute: async ({ category }) => {
+          let query = supabase.from('skills').select('*').order('display_order');
           if (category) {
-            const key = category.toLowerCase() as keyof typeof skills;
-            const found = skills[key];
-            if (found) return { category: key, skills: found };
-            return { error: `Unknown category "${category}". Available: ${Object.keys(skills).join(', ')}` };
+            query = query.eq('category', category.toLowerCase());
           }
-          return { skills };
+          const { data } = await query;
+          const grouped: Record<string, string[]> = {};
+          (data || []).forEach((s) => {
+            if (!grouped[s.category]) grouped[s.category] = [];
+            grouped[s.category].push(s.name);
+          });
+          if (category) {
+            const key = category.toLowerCase();
+            if (grouped[key]) return { category: key, skills: grouped[key] };
+            return { error: `Unknown category "${category}". Available: ${Object.keys(grouped).join(', ')}` };
+          }
+          return { skills: grouped };
         },
       }),
 
@@ -153,17 +166,20 @@ export async function POST(req: Request) {
 
       getContactInfo: tool({
         description: "Get Bilal's contact information and social links.",
-        inputSchema: z.object({}),
-        execute: async () => ({
-          email: 'bilalawan9870@gmail.com',
-          location: 'Lahore, Pakistan',
-          contactPage: '/contact',
-          socials: {
-            github: 'https://github.com/bilalawanai',
-            linkedin: 'https://linkedin.com/in/bilal-awan-dev',
-          },
-          note: 'Best way to reach Bilal is through the contact form at /contact or via email.',
-        }),
+        inputSchema: z.object({ _: z.string().optional().describe('Unused — leave empty') }),
+        execute: async () => {
+          const { data } = await supabase.from('contact_info').select('*').limit(1).single();
+          return {
+            email: data?.email || '',
+            location: data?.location || '',
+            contactPage: '/contact',
+            socials: {
+              github: data?.github_url || '',
+              linkedin: data?.linkedin_url || '',
+            },
+            note: 'Best way to reach Bilal is through the contact form at /contact or via email.',
+          };
+        },
       }),
     },
   });

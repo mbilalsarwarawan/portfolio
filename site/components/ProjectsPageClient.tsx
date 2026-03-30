@@ -1,10 +1,27 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { projects } from '@/lib/data';
 import { ProjectCard } from '@/components/ProjectCard';
 
+interface Project {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  image_url: string | null;
+  tags: string[];
+  year: string;
+  role: string;
+}
+
 export function ProjectsPageClient() {
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    fetch('/api/projects').then((r) => r.json()).then(setProjects);
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -45,7 +62,17 @@ export function ProjectsPageClient() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {projects.map((project, i) => (
-              <ProjectCard key={project.slug} {...project} index={i} />
+              <ProjectCard
+                key={project.slug}
+                slug={project.slug}
+                title={project.title}
+                description={project.description}
+                image={project.image_url || ''}
+                tags={project.tags}
+                year={project.year}
+                role={project.role}
+                index={i}
+              />
             ))}
           </div>
         </div>

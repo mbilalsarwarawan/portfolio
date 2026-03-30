@@ -1,18 +1,32 @@
-import { projects, skills, experience } from './data';
+import { createClient } from '@/lib/supabase/server';
 
-export function buildSystemPrompt(): string {
-  const projectList = projects
+export async function buildSystemPrompt(): Promise<string> {
+  const supabase = await createClient();
+
+  const [{ data: projects }, { data: skillRows }, { data: experience }] = await Promise.all([
+    supabase.from('projects').select('*').order('display_order'),
+    supabase.from('skills').select('*').order('display_order'),
+    supabase.from('experiences').select('*').order('display_order'),
+  ]);
+
+  const projectList = (projects || [])
     .map(
       (p) =>
-        `- ${p.title} (${p.year}): ${p.description} | Tech: ${p.tags.join(', ')} | Role: ${p.role}${p.liveUrl ? ` | Live: ${p.liveUrl}` : ''}${p.githubUrl ? ` | GitHub: ${p.githubUrl}` : ''} | Slug: /projects/${p.slug}`
+        `- ${p.title} (${p.year}): ${p.description} | Tech: ${p.tags.join(', ')} | Role: ${p.role}${p.live_url ? ` | Live: ${p.live_url}` : ''}${p.github_url ? ` | GitHub: ${p.github_url}` : ''} | Slug: /projects/${p.slug}`
     )
     .join('\n');
+
+  const skills: Record<string, string[]> = {};
+  (skillRows || []).forEach((s) => {
+    if (!skills[s.category]) skills[s.category] = [];
+    skills[s.category].push(s.name);
+  });
 
   const skillList = Object.entries(skills)
     .map(([cat, items]) => `  ${cat}: ${items.join(', ')}`)
     .join('\n');
 
-  const expList = experience
+  const expList = (experience || [])
     .map((e) => `- ${e.period} — ${e.role} at ${e.company}: ${e.description}`)
     .join('\n');
 
@@ -27,7 +41,7 @@ export function buildSystemPrompt(): string {
 - GitHub: https://github.com/bilalawanai (hypothetical — use /contact to reach him)
 - Portfolio pages: / (home), /about, /projects, /contact
 
-## Projects (${projects.length} total)
+## Projects (${(projects || []).length} total)
 ${projectList}
 
 ## Skills

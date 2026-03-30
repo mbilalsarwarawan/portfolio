@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Space_Grotesk, DM_Sans } from 'next/font/google';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
+// Footer moved to RootLayoutClient to avoid showing on admin routes
 import { RootLayoutClient } from '@/components/RootLayoutClient';
 import './globals.css';
 
@@ -43,9 +42,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col" style={{ background: 'var(--bg)', color: 'var(--text-primary)' }}>
         <RootLayoutClient>
-          <Navbar />
           <main className="flex-grow">{children}</main>
-          <Footer />
         </RootLayoutClient>
       </body>
     </html>
