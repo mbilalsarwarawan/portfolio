@@ -11,6 +11,7 @@ interface Project {
   title: string;
   description: string;
   image_url: string | null;
+  images: string[];
   tags: string[];
   year: string;
   role: string;
@@ -67,7 +68,7 @@ export default function Home() {
                 slug={project.slug}
                 title={project.title}
                 description={project.description}
-                image={project.image_url || ''}
+                image={(project.images?.[0] || project.image_url) ?? ''}
                 tags={project.tags}
                 year={project.year}
                 role={project.role}

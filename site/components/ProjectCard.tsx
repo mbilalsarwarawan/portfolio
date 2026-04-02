@@ -71,22 +71,31 @@ export function ProjectCard({
           className="relative aspect-[4/3] overflow-hidden surface-noise"
           style={{ background: 'var(--bg-surface)' }}
         >
-          {/* Large project number */}
-          <div
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            <span
-              className="text-[8rem] md:text-[10rem] font-bold leading-none select-none transition-all duration-500"
-              style={{
-                color: hovered ? 'var(--accent)' : 'var(--text-tertiary)',
-                opacity: hovered ? 0.2 : 0.07,
-                transform: hovered ? 'scale(1.1)' : 'scale(1)',
-              }}
+          {image?.startsWith('http') ? (
+            <img
+              src={image}
+              alt={title}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500"
+              style={{ transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
+            />
+          ) : (
+            /* Large project number */
+            <div
+              className="absolute inset-0 flex items-center justify-center"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
-              {image}
-            </span>
-          </div>
+              <span
+                className="text-[8rem] md:text-[10rem] font-bold leading-none select-none transition-all duration-500"
+                style={{
+                  color: hovered ? 'var(--accent)' : 'var(--text-tertiary)',
+                  opacity: hovered ? 0.2 : 0.07,
+                  transform: hovered ? 'scale(1.1)' : 'scale(1)',
+                }}
+              >
+                {image}
+              </span>
+            </div>
+          )}
 
           {/* Hover overlay line */}
           <motion.div

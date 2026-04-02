@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { ProjectImageSlider } from '@/components/ProjectImageSlider';
 
 interface ProjectPageProps {
   params: Promise<{
@@ -110,28 +111,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </section>
 
-      {/* Hero image area */}
-      <section className="px-6 md:px-12 lg:px-20 mb-20">
-        <div className="max-w-[1400px] mx-auto">
-          <div
-            className="relative aspect-[16/8] overflow-hidden surface-noise"
-            style={{ background: 'var(--bg-surface)' }}
-          >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span
-                className="text-[12rem] md:text-[20rem] font-bold leading-none select-none"
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  color: 'var(--accent)',
-                  opacity: 0.08,
-                }}
-              >
-                {project.image_url || ''}
-              </span>
+      {/* Image slider */}
+      {(() => {
+        const allImages: string[] = Array.isArray(project.images) && project.images.length > 0
+          ? project.images
+          : project.image_url?.startsWith('http') ? [project.image_url] : [];
+
+        return (
+          <section className="px-6 md:px-12 lg:px-20 mb-20">
+            <div className="max-w-[1400px] mx-auto">
+              <ProjectImageSlider images={allImages} title={project.title} />
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
+        );
+      })()}
 
       {/* Project details */}
       <section className="px-6 md:px-12 lg:px-20 pb-20 md:pb-32">

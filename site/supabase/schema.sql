@@ -3,6 +3,9 @@
 -- Run this in the Supabase SQL Editor (Dashboard > SQL Editor)
 -- ============================================================
 
+-- Migration: add images column to existing projects table (run once)
+-- alter table projects add column if not exists images text[] not null default '{}';
+
 -- 1. Projects
 create table if not exists projects (
   id uuid primary key default gen_random_uuid(),
@@ -11,6 +14,7 @@ create table if not exists projects (
   description text not null,
   content text not null default '',
   image_url text,
+  images text[] not null default '{}',
   tags text[] not null default '{}',
   year text not null,
   role text not null,

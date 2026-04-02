@@ -197,9 +197,9 @@ export default function ContactPage() {
                   <div
                     className="py-3 px-4 text-sm font-medium"
                     style={{
-                      color: '#10b981',
-                      border: '1px solid #10b98133',
-                      background: '#10b98108',
+                      color: 'var(--success)',
+                      border: '1px solid var(--success-border)',
+                      background: 'var(--success-bg)',
                     }}
                   >
                     Message sent — I&apos;ll get back to you soon.
@@ -210,9 +210,9 @@ export default function ContactPage() {
                   <div
                     className="py-3 px-4 text-sm font-medium"
                     style={{
-                      color: '#ef4444',
-                      border: '1px solid #ef444433',
-                      background: '#ef444408',
+                      color: 'var(--error)',
+                      border: '1px solid var(--error-border)',
+                      background: 'var(--error-bg)',
                     }}
                   >
                     Something went wrong. Please try again.
