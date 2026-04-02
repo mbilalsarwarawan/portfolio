@@ -9,12 +9,23 @@ import { ChatMessage, TypingIndicator, useAutoScroll } from './ChatMessage';
 const MAX_MESSAGES = 15;
 const STORAGE_KEY = 'portfolio_chat_count';
 const MESSAGES_KEY = 'portfolio_chat_messages';
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
 function loadMessages(): UIMessage[] {
   try {
     const raw = localStorage.getItem(MESSAGES_KEY);
     if (!raw) return [];
-    return JSON.parse(raw) as UIMessage[];
+    const parsed = JSON.parse(raw);
+    // Backwards-compat: if stored value is an array (older format), return it
+    if (Array.isArray(parsed)) return parsed as UIMessage[];
+    const { messages, savedAt } = parsed as { messages?: UIMessage[]; savedAt?: number };
+    if (!messages) return [];
+    if (!savedAt || Date.now() - savedAt > ONE_DAY_MS) {
+      localStorage.removeItem(MESSAGES_KEY);
+      localStorage.removeItem(STORAGE_KEY);
+      return [];
+    }
+    return messages;
   } catch {
     return [];
   }
@@ -22,7 +33,8 @@ function loadMessages(): UIMessage[] {
 
 function saveMessages(msgs: UIMessage[]) {
   try {
-    localStorage.setItem(MESSAGES_KEY, JSON.stringify(msgs));
+    const payload = { messages: msgs, savedAt: Date.now() };
+    localStorage.setItem(MESSAGES_KEY, JSON.stringify(payload));
   } catch {
     // quota exceeded — ignore
   }
@@ -52,9 +64,14 @@ export function ChatPanel({ isOpen }: { isOpen: boolean }) {
 
   const { messages, status, sendMessage } = useChat({ messages: initialMessages });
 
-  // Persist messages whenever they change
+  // Persist messages whenever they change and remove when empty
   useEffect(() => {
-    if (messages.length > 0) saveMessages(messages);
+    if (messages.length > 0) {
+      saveMessages(messages);
+    } else {
+      localStorage.removeItem(MESSAGES_KEY);
+      localStorage.setItem(STORAGE_KEY, '0');
+    }
   }, [messages]);
 
   const isLoading = status === 'submitted' || status === 'streaming';

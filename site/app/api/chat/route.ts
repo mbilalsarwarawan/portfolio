@@ -41,8 +41,8 @@ export async function POST(req: Request) {
     });
   }
 
-  // Cap conversation to last 20 messages to control token usage
-  const cappedMessages = messages.slice(-20);
+  // Only send the last message (no conversational context) to the model
+  const cappedMessages = messages.slice(-1);
 
   const supabase = await createClient();
   const systemPrompt = await buildSystemPrompt();
