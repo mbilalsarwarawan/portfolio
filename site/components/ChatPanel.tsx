@@ -113,13 +113,13 @@ export function ChatPanel({ isOpen }: { isOpen: boolean }) {
         width: 'min(420px, calc(100vw - 32px))',
         height: 'min(560px, calc(100vh - 120px))',
         background: 'var(--bg)',
-        border: '1px solid color-mix(in srgb, var(--fg) 10%, transparent)',
+        border: '1px solid var(--border)',
       }}
     >
       {/* Header */}
       <div
         className="flex items-center gap-3 px-4 py-3 flex-shrink-0"
-        style={{ borderBottom: '1px solid color-mix(in srgb, var(--fg) 8%, transparent)' }}
+        style={{ borderBottom: '1px solid var(--border)' }}
       >
         <div
           className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
@@ -161,7 +161,7 @@ export function ChatPanel({ isOpen }: { isOpen: boolean }) {
       {isLimitReached ? (
         <div
           className="px-4 py-3 flex-shrink-0 text-center"
-          style={{ borderTop: '1px solid color-mix(in srgb, var(--fg) 8%, transparent)' }}
+          style={{ borderTop: '1px solid var(--border)' }}
         >
           <p className="text-xs opacity-60" style={{ color: 'var(--fg)' }}>
             You&apos;ve reached the {MAX_MESSAGES}-message limit.
@@ -178,7 +178,7 @@ export function ChatPanel({ isOpen }: { isOpen: boolean }) {
         <form
           onSubmit={onSubmit}
           className="flex items-center gap-2 px-3 py-3 flex-shrink-0"
-          style={{ borderTop: '1px solid color-mix(in srgb, var(--fg) 8%, transparent)' }}
+          style={{ borderTop: '1px solid var(--border)' }}
         >
           <input
             ref={inputRef}
@@ -189,10 +189,10 @@ export function ChatPanel({ isOpen }: { isOpen: boolean }) {
             style={{
               background: 'color-mix(in srgb, var(--fg) 6%, transparent)',
               color: 'var(--fg)',
-              border: '1.5px solid color-mix(in srgb, var(--fg) 10%, transparent)',
+              border: '1.5px solid var(--border)',
             }}
             onFocus={(e) => (e.target.style.borderColor = 'var(--accent)')}
-            onBlur={(e) => (e.target.style.borderColor = 'color-mix(in srgb, var(--fg) 10%, transparent)')}
+            onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
             disabled={isLoading}
             autoComplete="off"
           />

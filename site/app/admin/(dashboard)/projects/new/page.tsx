@@ -214,7 +214,7 @@ export default function NewProjectPage() {
         </div>
 
         {error && (
-          <div className="py-2 px-3 text-sm" style={{ color: '#ef4444', border: '1px solid #ef444433' }}>
+          <div className="py-2 px-3 text-sm rounded-lg" style={{ color: 'var(--error)', border: '1px solid var(--error-border)', background: 'var(--error-bg)' }}>
             {error}
           </div>
         )}

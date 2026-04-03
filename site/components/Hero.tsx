@@ -75,9 +75,9 @@ export function Hero() {
 
   return (
     <section className="relative min-h-[100vh] flex items-end pb-16 md:pb-24 px-6 md:px-12 lg:px-20 overflow-hidden">
-      {/* Subtle grid pattern */}
+      {/* Grid pattern */}
       <div
-        className="absolute inset-0 -z-10 opacity-[0.03] dark:opacity-[0.04]"
+        className="absolute inset-0 -z-10 opacity-[0.08] dark:opacity-[0.14]"
         style={{
           backgroundImage: `linear-gradient(var(--text-primary) 1px, transparent 1px), linear-gradient(90deg, var(--text-primary) 1px, transparent 1px)`,
           backgroundSize: '60px 60px',
@@ -178,7 +178,7 @@ export function Hero() {
         >
           <div
             className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-[var(--bg-surface)]"
-            style={{ border: '2px solid var(--border)' }}
+            style={{ border: '2px solid var(--accent)' }}
           >
             <Image
               src="/profile.jpeg"

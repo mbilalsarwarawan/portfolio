@@ -63,7 +63,7 @@ export function ProjectCard({
         rotateY,
         transformPerspective: 1000,
       }}
-      className="tilt-card relative group px-4 md:px-6"
+      className="tilt-card relative group overflow-hidden px-4 md:px-6"
     >
       <Link href={`/projects/${slug}`} className="block">
         {/* Image area */}

@@ -108,7 +108,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 <div
                   key={toolPart.toolCallId}
                   className="rounded-xl p-3 text-sm mt-1 w-full"
-                  style={{ background: 'var(--surface, color-mix(in srgb, var(--fg) 6%, transparent))', border: '1px solid color-mix(in srgb, var(--fg) 10%, transparent)' }}
+                  style={{ background: 'var(--surface, color-mix(in srgb, var(--fg) 6%, transparent))', border: '1px solid var(--border)' }}
                 >
                   <p className="font-semibold mb-1" style={{ color: 'var(--fg)' }}>{p.title} <span className="font-normal text-xs opacity-60">({p.year})</span></p>
                   <p className="text-xs opacity-70 mb-2">{p.description}</p>
@@ -146,7 +146,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 <div
                   key={toolPart.toolCallId}
                   className="rounded-xl p-3 text-sm mt-1 w-full space-y-1.5"
-                  style={{ background: 'var(--surface, color-mix(in srgb, var(--fg) 6%, transparent))', border: '1px solid color-mix(in srgb, var(--fg) 10%, transparent)' }}
+                  style={{ background: 'var(--surface, color-mix(in srgb, var(--fg) 6%, transparent))', border: '1px solid var(--border)' }}
                 >
                   <p className="text-xs font-semibold uppercase tracking-wider opacity-50 mb-2" style={{ color: 'var(--fg)' }}>Contact</p>
                   <p className="text-xs" style={{ color: 'var(--fg)' }}>📧 <a href={`mailto:${output.email}`} className="underline" style={{ color: 'var(--accent)' }}>{output.email}</a></p>
@@ -193,7 +193,7 @@ function ProjectCard({ project }: { project: { title: string; slug: string; desc
     <a
       href={`/projects/${project.slug}`}
       className="block rounded-xl p-3 transition-opacity hover:opacity-80"
-      style={{ background: 'var(--surface, color-mix(in srgb, var(--fg) 6%, transparent))', border: '1px solid color-mix(in srgb, var(--fg) 10%, transparent)' }}
+      style={{ background: 'var(--surface, color-mix(in srgb, var(--fg) 6%, transparent))', border: '1px solid var(--border)' }}
     >
       <div className="flex items-start justify-between gap-2 mb-1.5">
         <p className="text-sm font-semibold leading-tight" style={{ color: 'var(--fg)' }}>{project.title}</p>

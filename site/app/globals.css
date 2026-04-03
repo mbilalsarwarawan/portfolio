@@ -15,8 +15,8 @@
   --accent: #ff4d00;
   --accent-hover: #e64400;
   --accent-subtle: rgba(255, 77, 0, 0.08);
-  --border: rgba(0, 0, 0, 0.08);
-  --border-hover: rgba(0, 0, 0, 0.15);
+  --border: rgba(15, 8, 4, 0.22);
+  --border-hover: rgba(15, 8, 4, 0.38);
   --font-display: var(--font-space-grotesk), system-ui, sans-serif;
   --font-body: var(--font-dm-sans), system-ui, sans-serif;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -46,9 +46,9 @@
   --accent: #ff4d00;
   --accent-hover: #ff6b2b;
   --accent-subtle: rgba(255, 77, 0, 0.12);
-  /* Raised from 0.07 — borders are now visible */
-  --border: rgba(255, 255, 255, 0.12);
-  --border-hover: rgba(255, 255, 255, 0.22);
+  /* Warm-tinted white — elevated resting border for clear card presence */
+  --border: rgba(255, 248, 240, 0.22);
+  --border-hover: rgba(255, 248, 240, 0.40);
   /* Semantic aliases */
   --fg: var(--text-primary);
   --surface: var(--bg-surface);
@@ -206,15 +206,25 @@ body {
 .tilt-card {
   transform-style: preserve-3d;
   will-change: transform;
-  transition: transform 0.4s var(--ease-out-quart), box-shadow 0.4s var(--ease-out-quart);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.1), 0 1px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.4s var(--ease-out-quart), box-shadow 0.4s var(--ease-out-quart), border-color 0.4s var(--ease-out-quart);
+}
+
+.dark .tilt-card {
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.4), 0 1px 4px -1px rgba(0, 0, 0, 0.3);
 }
 
 .tilt-card:hover {
-  box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.2);
+  border-color: var(--border-hover);
+  box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.22), 0 8px 24px -8px rgba(0, 0, 0, 0.12), 0 2px 8px -2px rgba(0, 0, 0, 0.08);
+  transform: translateY(-6px);
 }
 
 .dark .tilt-card:hover {
-  box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.6), 0 8px 24px -8px rgba(0, 0, 0, 0.4), 0 2px 8px -2px rgba(0, 0, 0, 0.3);
+  transform: translateY(-6px);
 }
 
 /* --- Divider --- */
