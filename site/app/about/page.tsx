@@ -85,7 +85,7 @@ export default function AboutPage() {
               {/* Image container */}
               <div className="relative aspect-[3/4] overflow-hidden bg-[var(--bg-surface)]">
                 <Image
-                  src="/profile.jpeg"
+                  src="/profile.png"
                   alt="Bilal"
                   fill
                   className="object-cover"

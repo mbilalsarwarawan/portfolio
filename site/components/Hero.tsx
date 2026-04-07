@@ -109,7 +109,7 @@ export function Hero() {
           {/* Image */}
           <div className="relative aspect-[3/4] overflow-hidden bg-[var(--bg-surface)]">
             <Image
-              src="/profile.jpeg"
+              src="/profile.png"
               alt="Bilal — Full-Stack Developer"
               fill
               className="object-cover"
@@ -181,7 +181,7 @@ export function Hero() {
             style={{ border: '2px solid var(--accent)' }}
           >
             <Image
-              src="/profile.jpeg"
+              src="/profile.png"
               alt="Bilal"
               fill
               className="object-cover"
