@@ -15,6 +15,9 @@
   --accent: #ff4d00;
   --accent-hover: #e64400;
   --accent-subtle: rgba(255, 77, 0, 0.08);
+  /* Accent gradient tokens (used on contact -> hero) */
+  --accent-gradient: linear-gradient(135deg,#ff9a5a 0%,#ff6a2a 45%,#ff4d00 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, color-mix(in srgb, var(--bg-surface) 82%, transparent), color-mix(in srgb, var(--accent) 12%, transparent));
   --border: rgba(15, 8, 4, 0.22);
   --border-hover: rgba(15, 8, 4, 0.38);
   --font-display: var(--font-space-grotesk), system-ui, sans-serif;
@@ -113,6 +116,29 @@
   }
   .animate-marquee-slow {
     animation: marquee 50s linear infinite;
+  }
+  /* Background utilities for accent gradients */
+  .bg-accent-gradient {
+    background-color: var(--accent);
+    background-image: var(--accent-gradient);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .bg-accent-gradient-subtle {
+    background-color: transparent;
+    background-image: var(--accent-gradient-subtle);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .heading-accent {
+    width: 56px;
+    height: 4px;
+    border-radius: 2px;
+    background-image: var(--accent-gradient);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-top: 0.75rem;
   }
   .animate-reveal-up {
     animation: reveal-up 0.8s var(--ease-out-expo) both;
@@ -272,6 +298,10 @@ body {
 .btn-primary:hover {
   background: var(--accent-hover);
   transform: translateY(-2px);
+  /* layer the full accent gradient for a richer hover state (solid color fallback kept) */
+  background-image: var(--accent-gradient);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .btn-primary::after {

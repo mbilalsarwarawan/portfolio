@@ -38,6 +38,7 @@ export default function Home() {
               <h2 className="heading-section text-[clamp(2rem,4vw,3.5rem)]">
                 Featured Projects
               </h2>
+              <div className="heading-accent" aria-hidden="true" />
             </div>
             <a
               href="/projects"
@@ -171,10 +172,10 @@ export default function Home() {
 
       {/* CTA Banner */}
       <section
-        className="py-20 md:py-32 px-6 md:px-12 lg:px-20"
-        style={{ background: 'var(--bg-surface)' }}
+        className="py-20 md:py-32 px-6 md:px-12 lg:px-20 relative bg-accent-gradient-subtle"
       >
-        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div className="absolute inset-0" aria-hidden="true" style={{ background: 'rgba(255,255,255,0.06)' }} />
+        <div className="max-w-[1400px] mx-auto relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
             <h2 className="heading-section text-[clamp(1.75rem,3.5vw,3rem)] mb-3">
               Have a project in mind?
