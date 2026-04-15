@@ -177,7 +177,7 @@ export async function POST(req: Request) {
               github: data?.github_url || '',
               linkedin: data?.linkedin_url || '',
             },
-            note: 'Best way to reach Bilal is through the contact form at /contact or via email.',
+            note: 'Best way to reach Bilal is through the direct contact details on /contact or via email.',
           };
         },
       }),

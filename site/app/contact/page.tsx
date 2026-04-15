@@ -11,45 +11,50 @@ interface ContactInfo {
   linkedin_url: string;
 }
 
+interface ContactLink {
+  label: string;
+  value: string;
+  href?: string;
+  note: string;
+  accent: string;
+}
+
 export default function ContactPage() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [isLoading, setIsLoading] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
 
   useEffect(() => {
     fetch('/api/contact-info').then((r) => r.json()).then(setContactInfo);
   }, []);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setSubmitStatus('idle');
+  const contactLinks: ContactLink[] = [
+    {
+      label: 'Email',
+      value: contactInfo?.email || 'Email coming soon',
+      href: contactInfo?.email ? `mailto:${contactInfo.email}` : undefined,
+      note: 'Best for project inquiries, freelance work, and collaborations.',
+      accent: '01',
+    },
+    {
+      label: 'GitHub',
+      value: 'See code and experiments',
+      href: contactInfo?.github_url || undefined,
+      note: 'Browse shipping work, side projects, and implementation details.',
+      accent: '02',
+    },
+    {
+      label: 'LinkedIn',
+      value: 'Professional background',
+      href: contactInfo?.linkedin_url || undefined,
+      note: 'Use this if you prefer a more formal intro or hiring outreach.',
+      accent: '03',
+    },
+  ].filter((item): item is ContactLink & { href: string } => Boolean(item.href));
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      setSubmitStatus('error');
-      console.error('Contact form error:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const responseSignals = [
+    'Open to freelance, contract, and full-time opportunities',
+    'Strong fit for product builds, dashboards, AI integrations, and full-stack delivery',
+    `Based in ${contactInfo?.location || 'Pakistan'} and comfortable working asynchronously`,
+  ];
 
   return (
     <div className="min-h-screen">
@@ -60,15 +65,14 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Header */}
             <div className="grid md:grid-cols-2 gap-12 md:gap-24 mb-20">
               <div>
                 <span className="label-caps mb-6 block">Get in Touch</span>
                 <h1 className="heading-display text-[clamp(2.5rem,5vw,4.5rem)]">
-                  Let&apos;s build
+                  Start the
                   <br />
-                  something{' '}
-                  <span style={{ color: 'var(--accent)' }}>great</span>
+                  conversation{' '}
+                  <span style={{ color: 'var(--accent)' }}>directly</span>
                 </h1>
               </div>
               <div className="flex items-end">
@@ -76,169 +80,178 @@ export default function ContactPage() {
                   className="text-lg md:text-xl leading-relaxed max-w-md"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  Have a project in mind or want to collaborate? Drop me a message
-                  and I&apos;ll get back to you within 24 hours.
+                  This page is now a clean handoff point. Reach out by email or
+                  through my public profiles, and we can move the conversation
+                  forward from there.
                 </p>
               </div>
             </div>
 
             <div className="section-divider mb-16" />
 
-            {/* Form */}
-            <div className="grid md:grid-cols-[1fr_2fr] gap-12 md:gap-24">
-              {/* Sidebar info */}
-              <div className="space-y-8">
-                <div>
-                  <div className="label-caps mb-3">Email</div>
-                  <a
-                    href={`mailto:${contactInfo?.email || ''}`}
-                    className="text-sm font-medium transition-colors duration-200 hover:opacity-70"
-                    style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
-                  >
-                    {contactInfo?.email || ''}
-                  </a>
-                </div>
-                <div>
-                  <div className="label-caps mb-3">Based in</div>
-                  <span
-                    className="text-sm font-medium"
-                    style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
-                  >
-                    {contactInfo?.location || ''}
-                  </span>
-                </div>
-                <div>
-                  <div className="label-caps mb-3">Socials</div>
-                  <div className="flex gap-4">
-                    {[
-                      ...(contactInfo?.github_url ? [{ label: 'GitHub', href: contactInfo.github_url }] : []),
-                      ...(contactInfo?.linkedin_url ? [{ label: 'LinkedIn', href: contactInfo.linkedin_url }] : []),
-                    ].map((s) => (
-                      <a
-                        key={s.label}
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm font-medium transition-colors duration-200"
+            <div className="grid xl:grid-cols-[1.15fr_0.85fr] gap-10 md:gap-14 items-start">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className="relative overflow-hidden border surface-noise"
+                style={{
+                  borderColor: 'var(--border)',
+                  background:
+                    'linear-gradient(135deg, color-mix(in srgb, var(--bg-surface) 82%, transparent), color-mix(in srgb, var(--accent) 10%, var(--bg)))',
+                }}
+              >
+                <div
+                  className="absolute inset-x-0 top-0 h-px"
+                  style={{
+                    background:
+                      'linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 70%, white), transparent)',
+                  }}
+                />
+                <div className="p-8 md:p-10 lg:p-12">
+                  <div className="flex items-start justify-between gap-6 mb-12">
+                    <div>
+                      <div className="label-caps mb-4">Direct Channel</div>
+                      <h2 className="heading-section text-[clamp(1.8rem,4vw,3.4rem)] max-w-[12ch]">
+                        Reach out where the conversation actually starts.
+                      </h2>
+                    </div>
+                    <div
+                      className="hidden md:flex h-16 w-16 items-center justify-center rounded-full border text-sm"
+                      style={{
+                        borderColor: 'var(--border)',
+                        color: 'var(--accent)',
+                        background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+                        fontFamily: 'var(--font-display)',
+                      }}
+                    >
+                      LIVE
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4">
+                    {contactLinks.map((item, index) => (
+                      <motion.a
+                        key={item.label}
+                        href={item.href}
+                        target={item.label === 'Email' ? undefined : '_blank'}
+                        rel={item.label === 'Email' ? undefined : 'noopener noreferrer'}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                        className="group grid gap-4 border px-5 py-5 md:grid-cols-[auto_1fr_auto] md:items-center"
                         style={{
-                          fontFamily: 'var(--font-display)',
-                          color: 'var(--text-tertiary)',
+                          borderColor: 'var(--border)',
+                          background: 'color-mix(in srgb, var(--bg) 72%, transparent)',
                         }}
-                        onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
-                        onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-tertiary)')}
                       >
-                        {s.label}
-                      </a>
+                        <div
+                          className="text-xs tracking-[0.3em]"
+                          style={{ fontFamily: 'var(--font-display)', color: 'var(--accent)' }}
+                        >
+                          {item.accent}
+                        </div>
+                        <div>
+                          <div className="label-caps mb-2">{item.label}</div>
+                          <div
+                            className="text-lg md:text-xl break-all md:break-normal transition-colors duration-300 group-hover:text-[var(--accent)]"
+                            style={{ fontFamily: 'var(--font-display)' }}
+                          >
+                            {item.value}
+                          </div>
+                          <p className="mt-2 text-sm max-w-xl" style={{ color: 'var(--text-secondary)' }}>
+                            {item.note}
+                          </p>
+                        </div>
+                        <div
+                          className="text-sm transition-transform duration-300 group-hover:translate-x-1"
+                          style={{ color: 'var(--text-tertiary)' }}
+                        >
+                          Open
+                        </div>
+                      </motion.a>
                     ))}
                   </div>
-                </div>
-              </div>
 
-              {/* Form */}
-              <form onSubmit={handleSubmit} className="space-y-8">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="label-caps mb-3 block"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="form-input w-full"
-                    placeholder="Your name"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="label-caps mb-3 block"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="form-input w-full"
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="label-caps mb-3 block"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={6}
-                    className="form-input w-full resize-none"
-                    placeholder="Tell me about your project..."
-                  />
-                </div>
-
-                {submitStatus === 'success' && (
-                  <div
-                    className="py-3 px-4 text-sm font-medium"
-                    style={{
-                      color: 'var(--success)',
-                      border: '1px solid var(--success-border)',
-                      background: 'var(--success-bg)',
-                    }}
-                  >
-                    Message sent — I&apos;ll get back to you soon.
+                  <div className="mt-10 flex flex-wrap gap-3">
+                    {contactInfo?.email && (
+                      <a href={`mailto:${contactInfo.email}`} className="btn-primary">
+                        Email Bilal
+                      </a>
+                    )}
+                    {contactInfo?.linkedin_url && (
+                      <a href={contactInfo.linkedin_url} target="_blank" rel="noopener noreferrer" className="btn-outline">
+                        LinkedIn
+                      </a>
+                    )}
                   </div>
-                )}
+                </div>
+              </motion.div>
 
-                {submitStatus === 'error' && (
-                  <div
-                    className="py-3 px-4 text-sm font-medium"
-                    style={{
-                      color: 'var(--error)',
-                      border: '1px solid var(--error-border)',
-                      background: 'var(--error-bg)',
-                    }}
-                  >
-                    Something went wrong. Please try again.
-                  </div>
-                )}
-
-                <motion.button
-                  type="submit"
-                  disabled={isLoading}
-                  whileHover={{ y: isLoading ? 0 : -2 }}
-                  whileTap={{ scale: isLoading ? 1 : 0.98 }}
-                  className="btn-primary w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+              <div className="grid gap-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  className="border p-8 md:p-10"
+                  style={{ borderColor: 'var(--border)', background: 'var(--bg-surface)' }}
                 >
-                  {isLoading ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                      </svg>
-                      Sending…
-                    </span>
-                  ) : (
-                    'Send Message'
-                  )}
-                </motion.button>
-              </form>
+                  <div className="label-caps mb-4">What To Send</div>
+                  <div className="space-y-4 text-sm md:text-base" style={{ color: 'var(--text-secondary)' }}>
+                    <p>
+                      A short intro, project scope, timeline, and any useful links
+                      are enough to get a productive reply started.
+                    </p>
+                    <p>
+                      If you&apos;re hiring, include team context, role expectations,
+                      and whether the work is contract, freelance, or full-time.
+                    </p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                  className="border p-8 md:p-10"
+                  style={{ borderColor: 'var(--border)', background: 'var(--bg)' }}
+                >
+                  <div className="label-caps mb-5">Availability Snapshot</div>
+                  <div className="space-y-4">
+                    {responseSignals.map((signal) => (
+                      <div key={signal} className="flex items-start gap-3">
+                        <div className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: 'var(--accent)' }} />
+                        <p className="text-sm md:text-base" style={{ color: 'var(--text-secondary)' }}>
+                          {signal}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.39, ease: [0.16, 1, 0.3, 1] }}
+                  className="border p-8 md:p-10"
+                  style={{
+                    borderColor: 'var(--border)',
+                    background:
+                      'linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 6%, transparent))',
+                  }}
+                >
+                  <div className="label-caps mb-3">Base</div>
+                  <div
+                    className="text-xl md:text-2xl mb-3"
+                    style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
+                  >
+                    {contactInfo?.location || 'Pakistan'}
+                  </div>
+                  <p className="text-sm md:text-base max-w-sm" style={{ color: 'var(--text-secondary)' }}>
+                    Remote-friendly, async-ready, and comfortable collaborating across time zones.
+                  </p>
+                </motion.div>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -246,6 +259,3 @@ export default function ContactPage() {
     </div>
   );
 }
-
-
-

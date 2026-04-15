@@ -156,7 +156,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                     className="inline-flex items-center gap-1.5 mt-1 text-xs font-medium px-2.5 py-1.5 rounded-lg transition-opacity hover:opacity-80"
                     style={{ background: 'var(--accent)', color: '#fff' }}
                   >
-                    Open Contact Form ↗
+                    Open Contact Page↗
                   </a>
                 </div>
               );
