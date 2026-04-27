@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { motion, useInView } from 'framer-motion';
+import Link from 'next/link';
+import { motion, useInView, type Variants } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
 function CountUp({ to, suffix = '', delay = 0 }: { to: number; suffix?: string; delay?: number }) {
@@ -32,7 +33,9 @@ function CountUp({ to, suffix = '', delay = 0 }: { to: number; suffix?: string; 
   return <div ref={ref}>{display}{suffix}</div>;
 }
 
-const WORD_VARIANTS: any = {
+const EASE_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const WORD_VARIANTS: Variants = {
   hidden: { y: '100%', opacity: 0 },
   visible: (i: number) => ({
     y: 0,
@@ -40,17 +43,17 @@ const WORD_VARIANTS: any = {
     transition: {
       delay: 0.3 + i * 0.08,
       duration: 0.7,
-      ease: [0.16, 1, 0.3, 1] as any,
+      ease: EASE_OUT,
     },
   }),
 };
 
-const FADE_UP: any = {
+const FADE_UP: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay, duration: 0.8, ease: [0.16, 1, 0.3, 1] as any },
+    transition: { delay, duration: 0.8, ease: EASE_OUT },
   }),
 };
 
@@ -72,6 +75,8 @@ function AnimatedWord({ word, index }: { word: string; index: number }) {
 
 export function Hero() {
   const headlineWords = ['I', 'build', 'things', 'for', 'the', 'web.'];
+  const [desktopPortraitLoaded, setDesktopPortraitLoaded] = useState(false);
+  const [mobilePortraitLoaded, setMobilePortraitLoaded] = useState(false);
 
   return (
     <section className="relative min-h-[100vh] flex items-end pb-16 md:pb-24 px-6 md:px-12 lg:px-20 overflow-hidden">
@@ -108,13 +113,17 @@ export function Hero() {
           />
           {/* Image */}
           <div className="relative aspect-[3/4] overflow-hidden bg-[var(--bg-surface)]">
+            {!desktopPortraitLoaded && (
+              <div className="absolute inset-0 skeleton-block z-[1]" />
+            )}
             <Image
               src="/profile.png"
               alt="Bilal — Full-Stack Developer"
               fill
-              className="object-cover"
+              className={`object-cover transition-opacity duration-500 ${desktopPortraitLoaded ? 'opacity-100' : 'opacity-0'}`}
               sizes="(min-width: 1536px) 320px, 280px"
               priority
+              onLoad={() => setDesktopPortraitLoaded(true)}
             />
             {/* Cinematic gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
@@ -136,7 +145,10 @@ export function Hero() {
           transition={{ delay: 1.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-row gap-3 mt-8"
         >
-            <a href="/projects" className="btn-primary flex-1 justify-center text-center min-w-[140px] md:min-w-[180px]">
+          <Link
+            href="/projects"
+            className="btn-primary flex-1 justify-center text-center min-w-[140px] md:min-w-[180px]"
+          >
             View Work
             <svg
               className="w-4 h-4"
@@ -151,10 +163,13 @@ export function Hero() {
                 d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
               />
             </svg>
-          </a>
-          <a href="/contact" className="btn-outline flex-1 justify-center text-center min-w-[140px] md:min-w-[180px]">
+          </Link>
+          <Link
+            href="/contact"
+            className="btn-outline flex-1 justify-center text-center min-w-[140px] md:min-w-[180px]"
+          >
             Contact
-          </a>
+          </Link>
         </motion.div>
       </motion.div>
 
@@ -180,12 +195,16 @@ export function Hero() {
             className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-[var(--bg-surface)]"
             style={{ border: '2px solid var(--accent)' }}
           >
+            {!mobilePortraitLoaded && (
+              <div className="absolute inset-0 skeleton-block z-[1]" />
+            )}
             <Image
               src="/profile.png"
               alt="Bilal"
               fill
-              className="object-cover"
+              className={`object-cover transition-opacity duration-500 ${mobilePortraitLoaded ? 'opacity-100' : 'opacity-0'}`}
               sizes="96px"
+              onLoad={() => setMobilePortraitLoaded(true)}
             />
           </div>
         </motion.div>
@@ -250,7 +269,10 @@ export function Hero() {
             animate="visible"
             className="flex gap-4 xl:hidden"
           >
-            <a href="/projects" className="btn-primary flex-1 justify-center text-center min-w-[120px] md:min-w-[160px]">
+            <Link
+              href="/projects"
+              className="btn-primary flex-1 justify-center text-center min-w-[120px] md:min-w-[160px]"
+            >
               View Work
               <svg
                 className="w-4 h-4"
@@ -265,10 +287,13 @@ export function Hero() {
                   d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
                 />
               </svg>
-            </a>
-            <a href="/contact" className="btn-outline flex-1 justify-center text-center min-w-[120px] md:min-w-[160px]">
+            </Link>
+            <Link
+              href="/contact"
+              className="btn-outline flex-1 justify-center text-center min-w-[120px] md:min-w-[160px]"
+            >
               Contact
-            </a>
+            </Link>
           </motion.div>
         </div>
 
@@ -301,4 +326,3 @@ export function Hero() {
     </section>
   );
 }
-

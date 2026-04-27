@@ -43,11 +43,14 @@ const reducedMotionTransition = {
 export function ProjectImageSlider({ images, title }: ProjectImageSliderProps) {
   const [[current, direction], setCurrent] = useState([0, 0]);
   const [isDragging, setIsDragging] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
   const dragStartX = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const total = images.length;
+  const activeImage = images[current];
+  const activeImageLoaded = activeImage ? loadedImages[activeImage] : true;
 
   const paginate = useCallback(
     (dir: number) => {
@@ -58,6 +61,12 @@ export function ProjectImageSlider({ images, title }: ProjectImageSliderProps) {
     },
     [total],
   );
+
+  const markImageLoaded = useCallback((src: string) => {
+    setLoadedImages((currentState) => (
+      currentState[src] ? currentState : { ...currentState, [src]: true }
+    ));
+  }, []);
 
   // Keyboard navigation — scoped to component focus
   useEffect(() => {
@@ -91,11 +100,18 @@ export function ProjectImageSlider({ images, title }: ProjectImageSliderProps) {
     return (
       <div className="relative aspect-video overflow-hidden surface-noise" style={{ background: 'var(--bg-surface)' }}>
         {images[0] ? (
-          <img
-            src={images[0]}
-            alt={title}
-            className="absolute inset-0 w-full h-full object-contain"
-          />
+          <>
+            {!loadedImages[images[0]] && (
+              <div className="absolute inset-0 skeleton-block z-[1]" />
+            )}
+            <img
+              src={images[0]}
+              alt={title}
+              className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
+              style={{ opacity: loadedImages[images[0]] ? 1 : 0 }}
+              onLoad={() => markImageLoaded(images[0])}
+            />
+          </>
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <span
@@ -129,6 +145,9 @@ export function ProjectImageSlider({ images, title }: ProjectImageSliderProps) {
         onPointerUp={handlePointerUp}
         onPointerLeave={() => setIsDragging(false)}
       >
+        {!activeImageLoaded && (
+          <div className="absolute inset-0 skeleton-block z-[1]" />
+        )}
         <AnimatePresence
           initial={false}
           custom={direction}
@@ -136,9 +155,9 @@ export function ProjectImageSlider({ images, title }: ProjectImageSliderProps) {
         >
           <motion.img
             key={current}
-            src={images[current]}
+            src={activeImage}
             alt={`${title} — image ${current + 1} of ${total}`}
-            className="absolute inset-0 w-full h-full object-contain"
+            className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
             draggable={false}
             custom={direction}
             variants={prefersReducedMotion ? reducedMotionVariants : slideVariants}
@@ -146,6 +165,8 @@ export function ProjectImageSlider({ images, title }: ProjectImageSliderProps) {
             animate="center"
             exit="exit"
             transition={prefersReducedMotion ? reducedMotionTransition : transition}
+            style={{ opacity: activeImageLoaded ? 1 : 0 }}
+            onLoad={() => markImageLoaded(activeImage)}
           />
         </AnimatePresence>
 

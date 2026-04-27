@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { ContactLinksSkeleton, SkeletonBlock } from '@/components/Skeleton';
 
 interface ContactInfo {
   email: string;
@@ -21,9 +22,32 @@ interface ContactLink {
 
 export default function ContactPage() {
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/contact-info').then((r) => r.json()).then(setContactInfo);
+    let cancelled = false;
+
+    fetch('/api/contact-info')
+      .then((r) => r.json())
+      .then((data: ContactInfo) => {
+        if (!cancelled) {
+          setContactInfo(data);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setContactInfo(null);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const contactLinks: ContactLink[] = [
@@ -129,60 +153,75 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="grid gap-4">
-                    {contactLinks.map((item, index) => (
-                      <motion.a
-                        key={item.label}
-                        href={item.href}
-                        target={item.label === 'Email' ? undefined : '_blank'}
-                        rel={item.label === 'Email' ? undefined : 'noopener noreferrer'}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                        className="group grid gap-4 border px-5 py-5 md:grid-cols-[auto_1fr_auto] md:items-center"
-                        style={{
-                          borderColor: 'var(--border)',
-                          background: 'color-mix(in srgb, var(--bg) 72%, transparent)',
-                        }}
-                      >
-                        <div
-                          className="text-xs tracking-[0.3em]"
-                          style={{ fontFamily: 'var(--font-display)', color: 'var(--accent)' }}
-                        >
-                          {item.accent}
-                        </div>
-                        <div>
-                          <div className="label-caps mb-2">{item.label}</div>
-                          <div
-                            className="text-lg md:text-xl break-all md:break-normal transition-colors duration-300 group-hover:text-[var(--accent)]"
-                            style={{ fontFamily: 'var(--font-display)' }}
+                  <div aria-busy={loading}>
+                    {loading ? (
+                      <ContactLinksSkeleton count={3} />
+                    ) : (
+                      <div className="grid gap-4">
+                        {contactLinks.map((item, index) => (
+                          <motion.a
+                            key={item.label}
+                            href={item.href}
+                            target={item.label === 'Email' ? undefined : '_blank'}
+                            rel={item.label === 'Email' ? undefined : 'noopener noreferrer'}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.2 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                            className="group grid gap-4 border px-5 py-5 md:grid-cols-[auto_1fr_auto] md:items-center"
+                            style={{
+                              borderColor: 'var(--border)',
+                              background: 'color-mix(in srgb, var(--bg) 72%, transparent)',
+                            }}
                           >
-                            {item.value}
-                          </div>
-                          <p className="mt-2 text-sm max-w-xl" style={{ color: 'var(--text-secondary)' }}>
-                            {item.note}
-                          </p>
-                        </div>
-                        <div
-                          className="text-sm transition-transform duration-300 group-hover:translate-x-1"
-                          style={{ color: 'var(--text-tertiary)' }}
-                        >
-                          Open
-                        </div>
-                      </motion.a>
-                    ))}
+                            <div
+                              className="text-xs tracking-[0.3em]"
+                              style={{ fontFamily: 'var(--font-display)', color: 'var(--accent)' }}
+                            >
+                              {item.accent}
+                            </div>
+                            <div>
+                              <div className="label-caps mb-2">{item.label}</div>
+                              <div
+                                className="text-lg md:text-xl break-all md:break-normal transition-colors duration-300 group-hover:text-[var(--accent)]"
+                                style={{ fontFamily: 'var(--font-display)' }}
+                              >
+                                {item.value}
+                              </div>
+                              <p className="mt-2 text-sm max-w-xl" style={{ color: 'var(--text-secondary)' }}>
+                                {item.note}
+                              </p>
+                            </div>
+                            <div
+                              className="text-sm transition-transform duration-300 group-hover:translate-x-1"
+                              style={{ color: 'var(--text-tertiary)' }}
+                            >
+                              Open
+                            </div>
+                          </motion.a>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
-                  <div className="mt-10 flex flex-wrap gap-3">
-                    {contactInfo?.email && (
-                      <a href={`mailto:${contactInfo.email}`} className="btn-primary">
-                        Email Bilal
-                      </a>
-                    )}
-                    {contactInfo?.linkedin_url && (
-                      <a href={contactInfo.linkedin_url} target="_blank" rel="noopener noreferrer" className="btn-outline">
-                        LinkedIn
-                      </a>
+                  <div className="mt-10 flex flex-wrap gap-3" aria-busy={loading}>
+                    {loading ? (
+                      <>
+                        <SkeletonBlock className="h-12 w-36" />
+                        <SkeletonBlock className="h-12 w-28" />
+                      </>
+                    ) : (
+                      <>
+                        {contactInfo?.email && (
+                          <a href={`mailto:${contactInfo.email}`} className="btn-primary">
+                            Email Bilal
+                          </a>
+                        )}
+                        {contactInfo?.linkedin_url && (
+                          <a href={contactInfo.linkedin_url} target="_blank" rel="noopener noreferrer" className="btn-outline">
+                            LinkedIn
+                          </a>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
@@ -217,15 +256,27 @@ export default function ContactPage() {
                   style={{ borderColor: 'var(--border)', background: 'var(--bg)' }}
                 >
                   <div className="label-caps mb-5">Availability Snapshot</div>
-                  <div className="space-y-4">
-                    {responseSignals.map((signal) => (
-                      <div key={signal} className="flex items-start gap-3">
-                        <div className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: 'var(--accent)' }} />
-                        <p className="text-sm md:text-base" style={{ color: 'var(--text-secondary)' }}>
-                          {signal}
-                        </p>
-                      </div>
-                    ))}
+                  <div className="space-y-4" aria-busy={loading}>
+                    {loading ? (
+                      Array.from({ length: 3 }, (_, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <SkeletonBlock className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full" />
+                          <div className="flex-1 space-y-2">
+                            <SkeletonBlock className="h-4 w-full" />
+                            <SkeletonBlock className="h-4 w-5/6" />
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      responseSignals.map((signal) => (
+                        <div key={signal} className="flex items-start gap-3">
+                          <div className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: 'var(--accent)' }} />
+                          <p className="text-sm md:text-base" style={{ color: 'var(--text-secondary)' }}>
+                            {signal}
+                          </p>
+                        </div>
+                      ))
+                    )}
                   </div>
                 </motion.div>
 
@@ -241,15 +292,25 @@ export default function ContactPage() {
                   }}
                 >
                   <div className="label-caps mb-3">Base</div>
-                  <div
-                    className="text-xl md:text-2xl mb-3"
-                    style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
-                  >
-                    {contactInfo?.location || 'Pakistan'}
-                  </div>
-                  <p className="text-sm md:text-base max-w-sm" style={{ color: 'var(--text-secondary)' }}>
-                    Remote-friendly, async-ready, and comfortable collaborating across time zones.
-                  </p>
+                  {loading ? (
+                    <div className="space-y-3" aria-busy="true">
+                      <SkeletonBlock className="h-8 w-32" />
+                      <SkeletonBlock className="h-4 w-full max-w-sm" />
+                      <SkeletonBlock className="h-4 w-5/6 max-w-sm" />
+                    </div>
+                  ) : (
+                    <>
+                      <div
+                        className="text-xl md:text-2xl mb-3"
+                        style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
+                      >
+                        {contactInfo?.location || 'Pakistan'}
+                      </div>
+                      <p className="text-sm md:text-base max-w-sm" style={{ color: 'var(--text-secondary)' }}>
+                        Remote-friendly, async-ready, and comfortable collaborating across time zones.
+                      </p>
+                    </>
+                  )}
                 </motion.div>
               </div>
             </div>

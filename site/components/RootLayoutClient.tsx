@@ -7,6 +7,7 @@ import { LoadingScreen } from './LoadingScreen';
 import { usePathname } from 'next/navigation';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import { NavigationProgress } from './NavigationProgress';
 
 const ChatBubble = dynamic(() => import('./ChatBubble').then((m) => m.ChatBubble), { ssr: false });
 const ChatPanel = dynamic(() => import('./ChatPanel').then((m) => m.ChatPanel), { ssr: false });
@@ -20,10 +21,16 @@ export function RootLayoutClient({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Skip intro on subsequent session visits
-    if (sessionStorage.getItem('intro_seen')) {
-      setShowLoader(false);
-    }
+    const frame = window.requestAnimationFrame(() => {
+      // Skip intro on subsequent session visits
+      if (sessionStorage.getItem('intro_seen')) {
+        setShowLoader(false);
+      }
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   useEffect(() => {
@@ -89,7 +96,13 @@ export function RootLayoutClient({ children }: { children: ReactNode }) {
   // Mark when component is mounted on the client so client-only
   // components (ChatPanel) are only rendered after hydration.
   useEffect(() => {
-    setIsClient(true);
+    const frame = window.requestAnimationFrame(() => {
+      setIsClient(true);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   // Lock body scroll while intro loader is showing
@@ -115,6 +128,8 @@ export function RootLayoutClient({ children }: { children: ReactNode }) {
         )}
       </AnimatePresence>
       {/* Global floating accent dot (hidden on small screens) */}
+      <NavigationProgress />
+
       <div
         ref={dotRef}
         aria-hidden

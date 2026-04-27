@@ -1,9 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Hero } from '@/components/Hero';
 import { Marquee } from '@/components/Marquee';
 import { ProjectCard } from '@/components/ProjectCard';
+import { ProjectGridSkeleton } from '@/components/Skeleton';
 
 interface Project {
   id: string;
@@ -19,10 +21,34 @@ interface Project {
 
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [projectsLoading, setProjectsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/projects').then((r) => r.json()).then(setProjects);
+    let cancelled = false;
+
+    fetch('/api/projects')
+      .then((r) => r.json())
+      .then((data: Project[]) => {
+        if (!cancelled) {
+          setProjects(data);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setProjects([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setProjectsLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
+
   return (
     <div>
       <Hero />
@@ -40,7 +66,7 @@ export default function Home() {
               </h2>
               <div className="heading-accent" aria-hidden="true" />
             </div>
-            <a
+            <Link
               href="/projects"
               className="btn-outline text-sm"
             >
@@ -58,24 +84,30 @@ export default function Home() {
                   d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
 
           {/* Project grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {projects.slice(0, 3).map((project, i) => (
-              <ProjectCard
-                key={project.slug}
-                slug={project.slug}
-                title={project.title}
-                description={project.description}
-                image={(project.images?.[0] || project.image_url) ?? ''}
-                tags={project.tags}
-                year={project.year}
-                role={project.role}
-                index={i}
-              />
-            ))}
+          <div aria-busy={projectsLoading}>
+            {projectsLoading ? (
+              <ProjectGridSkeleton count={3} />
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                {projects.slice(0, 3).map((project, i) => (
+                  <ProjectCard
+                    key={project.slug}
+                    slug={project.slug}
+                    title={project.title}
+                    description={project.description}
+                    image={(project.images?.[0] || project.image_url) ?? ''}
+                    tags={project.tags}
+                    year={project.year}
+                    role={project.role}
+                    index={i}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -187,7 +219,7 @@ export default function Home() {
               Let&apos;s talk about how I can help bring it to life.
             </p>
           </div>
-          <a href="/contact" className="btn-primary shrink-0">
+          <Link href="/contact" className="btn-primary shrink-0">
             Start a Conversation
             <svg
               className="w-4 h-4"
@@ -202,7 +234,7 @@ export default function Home() {
                 d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
               />
             </svg>
-          </a>
+          </Link>
         </div>
       </section>
     </div>

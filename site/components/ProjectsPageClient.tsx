@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ProjectCard } from '@/components/ProjectCard';
+import { ProjectGridSkeleton, SkeletonBlock } from '@/components/Skeleton';
 
 interface Project {
   id: string;
@@ -18,9 +19,32 @@ interface Project {
 
 export function ProjectsPageClient() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/projects').then((r) => r.json()).then(setProjects);
+    let cancelled = false;
+
+    fetch('/api/projects')
+      .then((r) => r.json())
+      .then((data: Project[]) => {
+        if (!cancelled) {
+          setProjects(data);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setProjects([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
@@ -57,24 +81,34 @@ export function ProjectsPageClient() {
       <section className="py-16 md:py-24 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
           {/* Count */}
-          <div className="label-caps mb-10">
-            {projects.length} Projects
-          </div>
+          {loading ? (
+            <SkeletonBlock className="h-3 w-28 mb-10" />
+          ) : (
+            <div className="label-caps mb-10">
+              {projects.length} Projects
+            </div>
+          )}
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {projects.map((project, i) => (
-              <ProjectCard
-                key={project.slug}
-                slug={project.slug}
-                title={project.title}
-                description={project.description}
-                image={(project.images?.[0] || project.image_url) ?? ''}
-                tags={project.tags}
-                year={project.year}
-                role={project.role}
-                index={i}
-              />
-            ))}
+          <div aria-busy={loading}>
+            {loading ? (
+              <ProjectGridSkeleton count={6} />
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                {projects.map((project, i) => (
+                  <ProjectCard
+                    key={project.slug}
+                    slug={project.slug}
+                    title={project.title}
+                    description={project.description}
+                    image={(project.images?.[0] || project.image_url) ?? ''}
+                    tags={project.tags}
+                    year={project.year}
+                    role={project.role}
+                    index={i}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>

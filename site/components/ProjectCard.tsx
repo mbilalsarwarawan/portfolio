@@ -27,6 +27,8 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(!image?.startsWith('http'));
+  const [imageError, setImageError] = useState(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -34,6 +36,8 @@ export function ProjectCard({
   const springConfig = { stiffness: 200, damping: 20, mass: 0.5 };
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), springConfig);
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), springConfig);
+  const hasRemoteImage = image?.startsWith('http') && !imageError;
+  const fallbackLabel = String(index + 1).padStart(2, '0');
 
   function handleMouseMove(e: React.MouseEvent) {
     if (!ref.current) return;
@@ -71,13 +75,26 @@ export function ProjectCard({
           className="relative aspect-[4/3] overflow-hidden surface-noise"
           style={{ background: 'var(--bg-surface)' }}
         >
-          {image?.startsWith('http') ? (
-            <img
-              src={image}
-              alt={title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500"
-              style={{ transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
-            />
+          {hasRemoteImage ? (
+            <>
+              {!imageLoaded && (
+                <div className="absolute inset-0 skeleton-block z-[1]" />
+              )}
+              <img
+                src={image}
+                alt={title}
+                className="absolute inset-0 w-full h-full object-cover transition-[transform,opacity] duration-500"
+                style={{
+                  transform: hovered ? 'scale(1.05)' : 'scale(1)',
+                  opacity: imageLoaded ? 1 : 0,
+                }}
+                onLoad={() => setImageLoaded(true)}
+                onError={() => {
+                  setImageError(true);
+                  setImageLoaded(true);
+                }}
+              />
+            </>
           ) : (
             /* Large project number */
             <div
@@ -92,7 +109,7 @@ export function ProjectCard({
                   transform: hovered ? 'scale(1.1)' : 'scale(1)',
                 }}
               >
-                {image}
+                {fallbackLabel}
               </span>
             </div>
           )}
@@ -160,4 +177,3 @@ export function ProjectCard({
     </motion.div>
   );
 }
-

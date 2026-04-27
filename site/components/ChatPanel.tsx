@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useRef, useEffect, FormEvent } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { UIMessage } from 'ai';
@@ -58,8 +59,14 @@ export function ChatPanel({ isOpen }: { isOpen: boolean }) {
   });
 
   useEffect(() => {
-    const stored = parseInt(localStorage.getItem(STORAGE_KEY) ?? '0', 10);
-    setMsgCount(stored);
+    const frame = window.requestAnimationFrame(() => {
+      const stored = parseInt(localStorage.getItem(STORAGE_KEY) ?? '0', 10);
+      setMsgCount(stored);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   const { messages, status, sendMessage } = useChat({ messages: initialMessages });
@@ -166,13 +173,13 @@ export function ChatPanel({ isOpen }: { isOpen: boolean }) {
           <p className="text-xs opacity-60" style={{ color: 'var(--fg)' }}>
             You&apos;ve reached the {MAX_MESSAGES}-message limit.
           </p>
-          <a
+          <Link
             href="/contact"
             className="text-xs font-medium mt-1 inline-block"
             style={{ color: 'var(--accent)' }}
           >
             Contact Bilal directly →
-          </a>
+          </Link>
         </div>
       ) : (
         <form

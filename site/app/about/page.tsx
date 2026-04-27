@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { motion, type Variants } from 'framer-motion';
+import {
+  ExperienceListSkeleton,
+  SkillColumnsSkeleton,
+} from '@/components/Skeleton';
 
 interface Skill {
   id: string;
@@ -18,29 +23,70 @@ interface Experience {
   description: string;
 }
 
-const FADE_UP = {
+const EASE_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const FADE_UP: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay, duration: 0.7, ease: [0.16, 1, 0.3, 1] as any },
+    transition: { delay, duration: 0.7, ease: EASE_OUT },
   }),
 };
 
 export default function AboutPage() {
   const [skills, setSkills] = useState<Record<string, string[]>>({});
   const [experience, setExperience] = useState<Experience[]>([]);
+  const [skillsLoading, setSkillsLoading] = useState(true);
+  const [experienceLoading, setExperienceLoading] = useState(true);
+  const [portraitLoaded, setPortraitLoaded] = useState(false);
 
   useEffect(() => {
-    fetch('/api/skills').then((r) => r.json()).then((data: Skill[]) => {
-      const grouped: Record<string, string[]> = {};
-      data.forEach((s) => {
-        if (!grouped[s.category]) grouped[s.category] = [];
-        grouped[s.category].push(s.name);
+    let cancelled = false;
+    fetch('/api/skills')
+      .then((r) => r.json())
+      .then((data: Skill[]) => {
+        if (cancelled) return;
+
+        const grouped: Record<string, string[]> = {};
+        data.forEach((skill) => {
+          if (!grouped[skill.category]) grouped[skill.category] = [];
+          grouped[skill.category].push(skill.name);
+        });
+        setSkills(grouped);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setSkills({});
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setSkillsLoading(false);
+        }
       });
-      setSkills(grouped);
-    });
-    fetch('/api/experience').then((r) => r.json()).then(setExperience);
+
+    fetch('/api/experience')
+      .then((r) => r.json())
+      .then((data: Experience[]) => {
+        if (!cancelled) {
+          setExperience(data);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setExperience([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setExperienceLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
   return (
     <div className="min-h-screen">
@@ -84,12 +130,16 @@ export default function AboutPage() {
               />
               {/* Image container */}
               <div className="relative aspect-[3/4] overflow-hidden bg-[var(--bg-surface)]">
+                {!portraitLoaded && (
+                  <div className="absolute inset-0 skeleton-block z-[1]" />
+                )}
                 <Image
                   src="/profile.png"
                   alt="Bilal"
                   fill
-                  className="object-cover"
+                  className={`object-cover transition-opacity duration-500 ${portraitLoaded ? 'opacity-100' : 'opacity-0'}`}
                   sizes="(min-width: 1280px) 280px, 240px"
+                  onLoad={() => setPortraitLoaded(true)}
                 />
                 {/* Cinematic gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
@@ -138,38 +188,44 @@ export default function AboutPage() {
             </div>
 
             <div>
-              {experience.map((exp, i) => (
-                <motion.div
-                  key={exp.company}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="py-8 group"
-                  style={{ borderBottom: '1px solid var(--border)' }}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-3">
-                    <div>
-                      <h3
-                        className="text-lg font-bold group-hover:text-[var(--accent)] transition-colors duration-300"
-                        style={{ fontFamily: 'var(--font-display)' }}
-                      >
-                        {exp.role}
-                      </h3>
-                      <div className="label-caps mt-1">{exp.company}</div>
-                    </div>
-                    <span
-                      className="text-sm font-medium shrink-0"
-                      style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-display)' }}
+              <div aria-busy={experienceLoading}>
+                {experienceLoading ? (
+                  <ExperienceListSkeleton count={3} />
+                ) : (
+                  experience.map((exp, i) => (
+                    <motion.div
+                      key={exp.company}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-50px' }}
+                      transition={{ delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                      className="py-8 group"
+                      style={{ borderBottom: '1px solid var(--border)' }}
                     >
-                      {exp.period}
-                    </span>
-                  </div>
-                  <p className="text-sm leading-relaxed max-w-lg" style={{ color: 'var(--text-secondary)' }}>
-                    {exp.description}
-                  </p>
-                </motion.div>
-              ))}
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-3">
+                        <div>
+                          <h3
+                            className="text-lg font-bold group-hover:text-[var(--accent)] transition-colors duration-300"
+                            style={{ fontFamily: 'var(--font-display)' }}
+                          >
+                            {exp.role}
+                          </h3>
+                          <div className="label-caps mt-1">{exp.company}</div>
+                        </div>
+                        <span
+                          className="text-sm font-medium shrink-0"
+                          style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-display)' }}
+                        >
+                          {exp.period}
+                        </span>
+                      </div>
+                      <p className="text-sm leading-relaxed max-w-lg" style={{ color: 'var(--text-secondary)' }}>
+                        {exp.description}
+                      </p>
+                    </motion.div>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -183,34 +239,40 @@ export default function AboutPage() {
             Technologies I use
           </h2>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
-            {Object.entries(skills).map(([category, items], ci) => (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ delay: ci * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <div
-                  className="text-sm font-bold uppercase tracking-wider mb-5"
-                  style={{ fontFamily: 'var(--font-display)', color: 'var(--accent)' }}
-                >
-                  {category}
-                </div>
-                <div className="space-y-3">
-                  {items.map((skill) => (
+          <div aria-busy={skillsLoading}>
+            {skillsLoading ? (
+              <SkillColumnsSkeleton columns={4} />
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
+                {Object.entries(skills).map(([category, items], ci) => (
+                  <motion.div
+                    key={category}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ delay: ci * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  >
                     <div
-                      key={skill}
-                      className="text-sm"
-                      style={{ color: 'var(--text-secondary)' }}
+                      className="text-sm font-bold uppercase tracking-wider mb-5"
+                      style={{ fontFamily: 'var(--font-display)', color: 'var(--accent)' }}
                     >
-                      {skill}
+                      {category}
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+                    <div className="space-y-3">
+                      {items.map((skill) => (
+                        <div
+                          key={skill}
+                          className="text-sm"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          {skill}
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -226,12 +288,12 @@ export default function AboutPage() {
               I&apos;m always open to new challenges and collaborations.
             </p>
           </div>
-          <a href="/contact" className="btn-primary shrink-0">
+          <Link href="/contact" className="btn-primary shrink-0">
             Get in Touch
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
             </svg>
-          </a>
+          </Link>
         </div>
       </section>
     </div>
