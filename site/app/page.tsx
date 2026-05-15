@@ -6,6 +6,7 @@ import { Hero } from '@/components/Hero';
 import { Marquee } from '@/components/Marquee';
 import { ProjectCard } from '@/components/ProjectCard';
 import { ProjectGridSkeleton } from '@/components/Skeleton';
+import { ExperienceSection } from '@/components/ExperienceSection';
 
 interface Project {
   id: string;
@@ -201,6 +202,14 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Separator */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20">
+        <div className="section-divider" />
+      </div>
+
+      {/* Experience section */}
+      <ExperienceSection />
 
       {/* CTA Banner */}
       <section

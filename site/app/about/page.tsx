@@ -4,10 +4,8 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, type Variants } from 'framer-motion';
-import {
-  ExperienceListSkeleton,
-  SkillColumnsSkeleton,
-} from '@/components/Skeleton';
+import { SkillColumnsSkeleton } from '@/components/Skeleton';
+import { ExperienceSection } from '@/components/ExperienceSection';
 
 interface Skill {
   id: string;
@@ -15,13 +13,7 @@ interface Skill {
   category: string;
 }
 
-interface Experience {
-  id: string;
-  company: string;
-  role: string;
-  period: string;
-  description: string;
-}
+
 
 const EASE_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -36,9 +28,7 @@ const FADE_UP: Variants = {
 
 export default function AboutPage() {
   const [skills, setSkills] = useState<Record<string, string[]>>({});
-  const [experience, setExperience] = useState<Experience[]>([]);
   const [skillsLoading, setSkillsLoading] = useState(true);
-  const [experienceLoading, setExperienceLoading] = useState(true);
   const [portraitLoaded, setPortraitLoaded] = useState(false);
 
   useEffect(() => {
@@ -66,23 +56,7 @@ export default function AboutPage() {
         }
       });
 
-    fetch('/api/experience')
-      .then((r) => r.json())
-      .then((data: Experience[]) => {
-        if (!cancelled) {
-          setExperience(data);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setExperience([]);
-        }
-      })
-      .finally(() => {
-        if (!cancelled) {
-          setExperienceLoading(false);
-        }
-      });
+
 
     return () => {
       cancelled = true;
@@ -177,59 +151,7 @@ export default function AboutPage() {
       </div>
 
       {/* Experience section */}
-      <section className="py-20 md:py-32 px-6 md:px-12 lg:px-20">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="grid md:grid-cols-[1fr_2fr] gap-12 md:gap-24">
-            <div>
-              <div className="label-caps mb-4">Experience</div>
-              <h2 className="heading-section text-[clamp(1.75rem,3vw,2.5rem)]">
-                Where I&apos;ve worked
-              </h2>
-            </div>
-
-            <div>
-              <div aria-busy={experienceLoading}>
-                {experienceLoading ? (
-                  <ExperienceListSkeleton count={3} />
-                ) : (
-                  experience.map((exp, i) => (
-                    <motion.div
-                      key={exp.company}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: '-50px' }}
-                      transition={{ delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                      className="py-8 group"
-                      style={{ borderBottom: '1px solid var(--border)' }}
-                    >
-                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-3">
-                        <div>
-                          <h3
-                            className="text-lg font-bold group-hover:text-[var(--accent)] transition-colors duration-300"
-                            style={{ fontFamily: 'var(--font-display)' }}
-                          >
-                            {exp.role}
-                          </h3>
-                          <div className="label-caps mt-1">{exp.company}</div>
-                        </div>
-                        <span
-                          className="text-sm font-medium shrink-0"
-                          style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-display)' }}
-                        >
-                          {exp.period}
-                        </span>
-                      </div>
-                      <p className="text-sm leading-relaxed max-w-lg" style={{ color: 'var(--text-secondary)' }}>
-                        {exp.description}
-                      </p>
-                    </motion.div>
-                  ))
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ExperienceSection />
 
       {/* Skills section */}
       <section className="py-20 md:py-32 px-6 md:px-12 lg:px-20" style={{ background: 'var(--bg-surface)' }}>
