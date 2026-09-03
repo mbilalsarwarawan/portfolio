@@ -37,8 +37,8 @@ export async function buildSystemPrompt(): Promise<string> {
 - Title: Full-Stack Developer & AI Engineer
 - Location: Lahore, Pakistan
 - Experience: 2+ years building production applications
-- Email: bilalawan9870@gmail.com
-- GitHub: https://github.com/bilalawanai
+- Email: mbilalsarwarawan@gmail.com
+- GitHub: https://github.com/mbilalsarwarawan
 - Portfolio pages: / (home), /about, /projects, /contact
 
 ## Projects (${(projects || []).length} total)
