@@ -47,8 +47,16 @@ export async function POST(req: Request) {
     const supabase = await createClient();
     const systemPrompt = await buildSystemPrompt();
 
+    const modelName = process.env.AI_MODEL;
+    if (!modelName) {
+      return new Response(JSON.stringify({ error: 'AI_MODEL environment variable is not configured.' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const result = streamText({
-      model: groq(process.env.AI_MODEL),
+      model: groq(modelName),
       system: systemPrompt,
       messages: await convertToModelMessages(cappedMessages),
       maxOutputTokens: 1024,
