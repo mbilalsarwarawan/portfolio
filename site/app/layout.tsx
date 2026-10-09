@@ -1,50 +1,62 @@
-import type { Metadata } from 'next';
-import { Space_Grotesk, DM_Sans } from 'next/font/google';
-// Footer moved to RootLayoutClient to avoid showing on admin routes
-import { RootLayoutClient } from '@/components/RootLayoutClient';
+import type { Metadata, Viewport } from 'next';
+import { Fraunces } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+import { seo, person } from '@/content/site';
+import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
-const spaceGrotesk = Space_Grotesk({
-  variable: '--font-space-grotesk',
+const fraunces = Fraunces({
+  variable: '--font-fraunces',
   subsets: ['latin'],
+  axes: ['opsz', 'SOFT'],
+  style: ['normal', 'italic'],
   display: 'swap',
-});
-
-const dmSans = DM_Sans({
-  variable: '--font-dm-sans',
-  subsets: ['latin'],
-  display: 'swap',
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
-  title: 'Muhammad Bilal Awan — Full-Stack Developer',
-  description:
-    'Full-Stack Developer with 2+ years of experience building scalable web applications using MERN stack and Python frameworks. Delivered 5+ production-ready applications for international clients.',
+  metadataBase: new URL(SITE_URL),
+  title: { default: seo.home.title, template: `%s · ${person.name}` },
+  description: seo.home.description,
+  applicationName: person.name,
+  authors: [{ name: person.fullName, url: SITE_URL }],
+  creator: person.fullName,
+  alternates: { canonical: '/' },
   openGraph: {
-    title: 'Muhammad Bilal Awan — Full-Stack Developer',
-    description:
-      'Full-Stack Developer building scalable web applications with MERN stack and Python frameworks.',
     type: 'website',
+    siteName: person.name,
+    title: seo.home.title,
+    description: seo.home.description,
+    url: '/',
+    locale: 'en_GB',
   },
+  twitter: { card: 'summary_large_image', title: seo.home.title, description: seo.home.description },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#0e0d0c' },
+    { media: '(prefers-color-scheme: light)', color: '#f4f0ea' },
+  ],
+  colorScheme: 'dark light',
+};
+
+// Runs before first paint: dark is the default, a saved "light" choice wins.
+const themeScript = `try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}`;
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      data-scroll-behavior="smooth"
-      className={`${spaceGrotesk.variable} ${dmSans.variable} h-full antialiased`}
+      className={`dark ${fraunces.variable} ${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen flex flex-col" style={{ background: 'var(--bg)', color: 'var(--text-primary)' }}>
-        <RootLayoutClient>
-          <main className="flex-grow">{children}</main>
-        </RootLayoutClient>
-      </body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className="min-h-dvh">{children}</body>
     </html>
   );
 }
