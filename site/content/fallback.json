@@ -1,0 +1,425 @@
+{
+  "generatedAt": "2026-10-09T11:56:08.004Z",
+  "projects": [
+    {
+      "id": "2571c624-7e60-4b1d-8d3a-7066610e7aea",
+      "slug": "meetdrake",
+      "title": "Meet Drake",
+      "description": "A full-stack LinkedIn automation platform featuring a custom Chrome extension for seamless profile extraction and a robust Next.js/MongoDB backend for managing automated outreach campaigns and centralized CRM syncing.",
+      "content": "The project has two main pieces that work closely together: a custom Chrome extension that lives right in your browser, and a Next.js web dashboard that acts as the brain of the operation.\nThe Chrome extension is the core engine of the platform. I designed it to seamlessly layer over LinkedIn to handle the tedious, manual tasks. Its key features include:\n• Automatically scraping profile details and syncing connections straight to the CRM in real-time.\n• Running automated messaging campaigns and follow-up sequences.\n• Handling bulk connection requests safely and efficiently.\n• Interacting with profiles (like viewing pages, liking, and commenting) to keep user accounts active and boost engagement.\nOn the backend, I built a robust Next.js and MongoDB dashboard to organize all this incoming data. One of the biggest technical challenges I tackled was making sure we didn't save the exact same LinkedIn profile multiple times if different users connected with them. I solved this by building a centralized, shared database model—so if ten users interact with the same person, the profile data is only stored once. This kept the app lightning-fast and saved a ton on database costs. \nI also built out a rock-solid syncing system to make sure the Chrome extension and the backend CRM never trip over each other, even when hundreds of profiles are syncing at the exact same time. Overall, it was an incredibly fun project that pushed my skills in building reliable browser extensions, managing complex background scripts, and designing smart database architectures.",
+      "image_url": "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1780420856758-837gm8.png",
+      "tags": [
+        "Next.js",
+        "React",
+        "Node.js",
+        "TypeScript",
+        "MongoDB",
+        "Chrome Extension API",
+        "Vue.js(for extension)"
+      ],
+      "year": "2026",
+      "role": "Full-Stack Developer",
+      "live_url": "https://chromewebstore.google.com/detail/drake-linkedin-automation/lnobmcddhfacmjmpdjednmakhaplflbl?hl=en-US&utm_source=ext_sidebar",
+      "github_url": null,
+      "display_order": 0,
+      "created_at": "2026-06-02T17:21:34.82216+00:00",
+      "updated_at": "2026-06-02T17:29:30.995703+00:00",
+      "images": [
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1780420856758-837gm8.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1780420890039-0bp6t5.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1780420974214-pneg6k.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1780420975223-m4bxeg.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1780420976471-hqd6l1.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1780420978310-bkwqcg.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1780420979438-d6qhmg.png"
+      ]
+    },
+    {
+      "id": "1cb08fe3-3114-4b5b-904a-f5974e125f8e",
+      "slug": "local-key",
+      "title": "Local-Key",
+      "description": "A location-based discount platform with QR code scanning, geolocation filtering, and multi-role dashboards for businesses and admins managing offer redemptions.",
+      "content": "Local-Key is a location-based discount platform that connects businesses with nearby customers. Features include QR code scanning for offer redemptions, geolocation-based filtering to discover deals, and multi-role dashboards for businesses and admins. The platform handles real-time offer management and analytics for participating businesses.",
+      "image_url": "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1775128034477-y5xx3u.png",
+      "tags": [
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "Tailwind CSS"
+      ],
+      "year": "2025",
+      "role": "Full-Stack Developer",
+      "live_url": "https://local-key.com/",
+      "github_url": null,
+      "display_order": 1,
+      "created_at": "2026-03-30T12:24:50.189861+00:00",
+      "updated_at": "2026-05-20T12:02:01.981392+00:00",
+      "images": [
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1775128034477-y5xx3u.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1775128036263-93izv7.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1775128037770-tajoc5.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1775128039040-416qj7.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1775128040225-r7utw7.png"
+      ]
+    },
+    {
+      "id": "9e9facbd-30b3-4c43-9fd7-68d8ab952ad0",
+      "slug": "mister-clay",
+      "title": "Mister Clay",
+      "description": "Full-featured e-commerce platform for paint products with cart functionality, Stripe payment integration, inventory management, and responsive design.",
+      "content": "Mister Clay is a complete e-commerce solution for paint products. Built with the MERN stack, it features a full shopping cart system, Stripe payment integration for secure transactions, real-time inventory management, and a fully responsive design optimized for all devices.",
+      "image_url": "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1777214900481-wdsm9i.png",
+      "tags": [
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "Stripe"
+      ],
+      "year": "2025",
+      "role": "Full-Stack Developer",
+      "live_url": "https://misterandclay.com/home",
+      "github_url": null,
+      "display_order": 2,
+      "created_at": "2026-03-30T12:24:50.189861+00:00",
+      "updated_at": "2026-05-20T12:01:34.474307+00:00",
+      "images": [
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1777214900481-wdsm9i.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1777210424033-cewqmq.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1777210324878-b48wzj.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1777210245769-ndlwx8.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1777210250069-h50les.png",
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1777210259410-hrows5.png"
+      ]
+    },
+    {
+      "id": "0c87c610-137b-4889-838b-4372934b2fc6",
+      "slug": "nomia-docs-chatbot",
+      "title": "NOMIA Docs Chatbot",
+      "description": "Dual-agent chatbot system combining RAG and SQL agents using Langchain, enabling natural language queries across both structured and unstructured documents.",
+      "content": "Built a dual-agent chatbot system for NOMIA Docs that combines RAG (Retrieval-Augmented Generation) and SQL agents using Langchain. The system enables natural language queries across both structured databases and unstructured documents. Deployed with FastAPI, Docker containerization, and Nginx reverse proxy, achieving 99.5% uptime in production.",
+      "image_url": "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1777268277339-knu3r0.png",
+      "tags": [
+        "Python",
+        "Langchain",
+        "FastAPI",
+        "Docker",
+        "Nginx"
+      ],
+      "year": "2025",
+      "role": "Python Developer",
+      "live_url": "https://www.nomiadocs.com/",
+      "github_url": null,
+      "display_order": 3,
+      "created_at": "2026-03-30T12:24:50.189861+00:00",
+      "updated_at": "2026-04-27T05:38:18.249468+00:00",
+      "images": [
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1777268277339-knu3r0.png"
+      ]
+    },
+    {
+      "id": "97994ff4-d800-41c8-ba10-ccfc2e679d49",
+      "slug": "lit-path",
+      "title": "LitPath",
+      "description": " I worked as a lead engineer to help litpath convert their broken and old website into mordern website with many more new features. Litpath is a non-profit organization with focused on mental health therapies and addictions.",
+      "content": "Led the redevelopment of LitPath’s legacy platform by rebuilding the system architecture, improving UI/UX, and introducing modern development practices. The project involved migrating from an outdated and unreliable codebase to a more maintainable and scalable solution.",
+      "image_url": "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1779277821609-rhsv8z.png",
+      "tags": [
+        "Web Development",
+        "System Modernization",
+        "UI/UX",
+        "Backend Development",
+        "Full Stack"
+      ],
+      "year": "2025",
+      "role": "Full-Stack Developer",
+      "live_url": "https://litpath.org/",
+      "github_url": null,
+      "display_order": 4,
+      "created_at": "2026-03-30T12:24:50.189861+00:00",
+      "updated_at": "2026-05-20T11:56:20.17272+00:00",
+      "images": [
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1779277821609-rhsv8z.png"
+      ]
+    },
+    {
+      "id": "20513cea-2426-4593-afc8-6bdcccc7f2fa",
+      "slug": "soul-virtue",
+      "title": "SoulVirtue",
+      "description": "Built and maintained a modern mental health consultation platform that enabled secure online therapy sessions, appointment management workflows, and video-based consultations for psychologists and psychiatrists.",
+      "content": "Developed and maintained a modern telemedicine platform designed for mental health professionals and patients. Worked on secure video consultation systems, appointment scheduling workflows, authentication, and scalable backend services to support seamless online therapy experiences. Contributed to both frontend and backend development, improved application reliability, and implemented features that enhanced accessibility and usability for healthcare providers and patients.",
+      "image_url": "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1779278042602-c7h9df.png",
+      "tags": [
+        "MongoDB",
+        "Express.js",
+        "React.js",
+        "Node.js",
+        "JavaScript",
+        "REST API",
+        "Socket.io",
+        "WebRTC",
+        "JWT Authentication",
+        "Tailwind CSS",
+        "Video Consultation",
+        "Appointment System",
+        "Telemedicine",
+        "Healthcare Platform"
+      ],
+      "year": "2025",
+      "role": "Full-Stack Developer",
+      "live_url": "https://www.soulvirtue.lv/",
+      "github_url": null,
+      "display_order": 5,
+      "created_at": "2026-03-30T12:24:50.189861+00:00",
+      "updated_at": "2026-05-20T11:54:09.272728+00:00",
+      "images": [
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1779278042602-c7h9df.png"
+      ]
+    },
+    {
+      "id": "4cc5a3eb-0593-4637-8191-faeb94f80696",
+      "slug": "quickrooms",
+      "title": "QuickRooms",
+      "description": "Built and contributed to an AI-powered hotel operations platform designed to streamline core hospitality workflows including reservations, guest services, HR, inventory, and internal operations. Focused on improving operational efficiency through automation and system integration.",
+      "content": "Worked on QuickRooms, a modern hospitality management platform that centralizes hotel operations into a unified system. The platform supports automated reservations, staff coordination, inventory tracking, and guest service management with AI-assisted workflows.",
+      "image_url": "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1779278405675-m08z26.png",
+      "tags": [
+        "MongoDB",
+        "Express.js",
+        "React.js",
+        "Node.js",
+        "JavaScript",
+        "REST API",
+        "AI Integration"
+      ],
+      "year": "2024",
+      "role": "Full-Stack Developer",
+      "live_url": "https://quickrooms.co/",
+      "github_url": null,
+      "display_order": 6,
+      "created_at": "2026-03-30T12:24:50.189861+00:00",
+      "updated_at": "2026-05-20T12:00:17.235942+00:00",
+      "images": [
+        "https://cibjrydzzszlksqdpcrd.supabase.co/storage/v1/object/public/portfolio-files/projects/1779278405675-m08z26.png"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "id": "053676cf-6c75-41fa-921e-99c0757ec02a",
+      "name": "React.js",
+      "category": "frontend",
+      "display_order": 1
+    },
+    {
+      "id": "adffc826-2865-4808-b22c-f5f3f7fcaf77",
+      "name": "Node.js",
+      "category": "backend",
+      "display_order": 1
+    },
+    {
+      "id": "63a80c19-3112-40d9-a6a4-da15379ad4ff",
+      "name": "MongoDB",
+      "category": "database",
+      "display_order": 1
+    },
+    {
+      "id": "90c6900e-a489-4ea8-9a0b-1531b19f8efb",
+      "name": "Langchain",
+      "category": "ai/ml",
+      "display_order": 1
+    },
+    {
+      "id": "46bd7456-db67-4f23-a59a-67791a8721a3",
+      "name": "Docker",
+      "category": "devops & tools",
+      "display_order": 1
+    },
+    {
+      "id": "e4b6b11e-a9bb-41b7-8037-69b11ee9ac00",
+      "name": "OpenAI API",
+      "category": "ai/ml",
+      "display_order": 2
+    },
+    {
+      "id": "aec3fca8-b0b6-4990-984d-3ca2d60fce19",
+      "name": "PostgreSQL",
+      "category": "database",
+      "display_order": 2
+    },
+    {
+      "id": "e84cae31-d8f5-4f03-a684-6d72da4bcc98",
+      "name": "JavaScript (ES6+)",
+      "category": "frontend",
+      "display_order": 2
+    },
+    {
+      "id": "7e42eecd-40a5-4e69-bba8-2253b369b1f8",
+      "name": "Nginx",
+      "category": "devops & tools",
+      "display_order": 2
+    },
+    {
+      "id": "88f107f1-ef95-4e4d-9768-f53b1116e87a",
+      "name": "Express.js",
+      "category": "backend",
+      "display_order": 2
+    },
+    {
+      "id": "58b5112e-31ae-45a4-a290-d407e695d4ad",
+      "name": "RAG Systems",
+      "category": "ai/ml",
+      "display_order": 3
+    },
+    {
+      "id": "cdde1693-0fc9-4b64-9c9a-1ab9ca5839d0",
+      "name": "Python",
+      "category": "backend",
+      "display_order": 3
+    },
+    {
+      "id": "12e9d805-466b-4e86-9d2c-6e9fd54c81b6",
+      "name": "HTML5",
+      "category": "frontend",
+      "display_order": 3
+    },
+    {
+      "id": "9e76e43c-9508-461c-b7f5-0c6d383e2491",
+      "name": "Redis",
+      "category": "database",
+      "display_order": 3
+    },
+    {
+      "id": "01a92eb2-b984-47d8-9ad8-02f5fbec70c8",
+      "name": "Git",
+      "category": "devops & tools",
+      "display_order": 3
+    },
+    {
+      "id": "d2ee1fcd-4c1d-496a-b7e1-733f4fca432e",
+      "name": "Django",
+      "category": "backend",
+      "display_order": 4
+    },
+    {
+      "id": "2a5da2a0-432c-453c-85c8-f3e23c2199e9",
+      "name": "TensorFlow",
+      "category": "ai/ml",
+      "display_order": 4
+    },
+    {
+      "id": "63903c32-fa9d-48d7-9e17-501d1a00cf02",
+      "name": "GitHub",
+      "category": "devops & tools",
+      "display_order": 4
+    },
+    {
+      "id": "38ea3793-85ee-49ed-8950-31c5f1da755c",
+      "name": "CSS3",
+      "category": "frontend",
+      "display_order": 4
+    },
+    {
+      "id": "71b2e9d8-79ca-4fca-8478-6cb4ed619371",
+      "name": "Redux",
+      "category": "frontend",
+      "display_order": 5
+    },
+    {
+      "id": "2c264c50-bc42-46f9-a511-dd0e753fd0d2",
+      "name": "Django REST Framework",
+      "category": "backend",
+      "display_order": 5
+    },
+    {
+      "id": "008d88bb-2853-4d04-bc81-d3618bdc0b82",
+      "name": "Linux",
+      "category": "devops & tools",
+      "display_order": 5
+    },
+    {
+      "id": "37728fca-b3ef-4206-9032-96683d7be2c5",
+      "name": "Keras",
+      "category": "ai/ml",
+      "display_order": 5
+    },
+    {
+      "id": "c749d811-8699-4fd7-8f14-723dd4ae9755",
+      "name": "Celery",
+      "category": "devops & tools",
+      "display_order": 6
+    },
+    {
+      "id": "377484ba-1aed-49ad-8b10-d7386de298d7",
+      "name": "FastAPI",
+      "category": "backend",
+      "display_order": 6
+    },
+    {
+      "id": "813f0f37-2670-4f98-97c6-c7119ce45e84",
+      "name": "Tailwind CSS",
+      "category": "frontend",
+      "display_order": 6
+    },
+    {
+      "id": "e18b0b56-5298-47e5-9ee9-07c8054bafd2",
+      "name": "Bootstrap",
+      "category": "frontend",
+      "display_order": 7
+    }
+  ],
+  "experiences": [
+    {
+      "id": "5f8069c9-9a4b-426d-9a6e-bc88685a2a65",
+      "company": "Fintask.ie",
+      "role": "Full-Stack Developer (Freelance)",
+      "period": "Aug 2025 — Present",
+      "description": "Delivered 5+ web applications using MERN stack for international clients, generating $1,000+ revenue with 100% client satisfaction through effective communication and on-time delivery.",
+      "type": "work",
+      "display_order": 1
+    },
+    {
+      "id": "ba03bacd-9424-4c29-874e-98b74d7aa3b1",
+      "company": "Cherrybyte Technologies",
+      "role": "Python Developer",
+      "period": "Feb 2025 — Aug 2025",
+      "description": "Developed audio streaming platforms, dual-agent chatbot systems, and trading platforms using Django, FastAPI, Langchain, and Docker with Nginx deployments.",
+      "type": "work",
+      "display_order": 2
+    },
+    {
+      "id": "2a7ae826-c496-4d99-92be-2a1f00c32630",
+      "company": "StechAi",
+      "role": "Python Developer",
+      "period": "Jul 2024 — Dec 2024",
+      "description": "Built OpenAI-powered RAG chatbots, RESTful APIs with Django and FastAPI, and deployed ML models using Docker and MLflow.",
+      "type": "work",
+      "display_order": 3
+    },
+    {
+      "id": "4b7f0951-be15-4ce5-a3ca-63a55394b4fa",
+      "company": "Turing",
+      "role": "AI Data Annotator (Contract)",
+      "period": "Jun 2025 — Jul 2025",
+      "description": "Contributed to Anthropic's Computer Use Agent model training through data annotation and quality assurance of computer interaction datasets.",
+      "type": "work",
+      "display_order": 4
+    }
+  ],
+  "about": {
+    "id": "20910773-6ff1-4a2f-a2a5-b02e6c15f50f",
+    "bio": "I'm a full-stack developer with 2+ years of experience building scalable web applications using MERN stack and Python frameworks. I've delivered 5+ production-ready applications for international clients.",
+    "resume_url": null,
+    "updated_at": "2026-03-30T12:24:50.189861+00:00"
+  },
+  "contact": {
+    "id": "fc8bb3b5-e2d7-4727-9230-c539b36bf2ab",
+    "email": "mbilalsarwarawan@gmail.com",
+    "location": "Lahore, Pakistan",
+    "github_url": "https://github.com/mbilalsarwarawan",
+    "linkedin_url": "https://linkedin.com/in/muhammad-awan-bilal",
+    "updated_at": "2026-06-15T10:32:45.799022+00:00",
+    "phone": null
+  }
+}
