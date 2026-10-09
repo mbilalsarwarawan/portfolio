@@ -23,6 +23,7 @@ export const hero = {
     'I design, build and run web products end to end, from the Chrome extension your users install to the RAG pipeline that answers their questions. Right now I ship remotely for Fintask.ie in Ireland.',
   primaryCta: { label: 'Let’s work together', href: '/contact' },
   secondaryCta: { label: 'View selected work', href: '/#work' },
+  focus: 'Products · AI · Automation',
 };
 
 /** Labels for the proof strip. Values are computed from Supabase in lib/content.ts. */
@@ -158,6 +159,94 @@ export const contact = {
   heading: 'Have something that needs to ship?',
   body: 'Tell me what you’re building and where it’s stuck. I’ll reply with honest next steps, even if the answer is “you don’t need me for this”.',
   responseTime: '[TODO: confirm reply time, e.g. within 1 working day]',
+};
+
+/** Section headings. Wrap a word in *asterisks* to set it in the italic accent. */
+export const sections = {
+  work: {
+    eyebrow: 'Selected work',
+    title: 'Products in production, *not* side projects.',
+    intro: 'A few of the products I’ve built and shipped: what the problem was, what I built, and the decisions that mattered.',
+    moreTitle: 'More shipped work',
+    moreCta: 'All projects',
+    empty: 'Case studies are being updated. Check back shortly or get in touch for a walkthrough.',
+  },
+  services: {
+    eyebrow: 'What I do',
+    title: 'Four ways I help teams *ship*.',
+    intro: 'Hire me for the outcome, not the tech list. Each of these is backed by work that’s live today.',
+  },
+  process: {
+    eyebrow: 'How I work',
+    title: 'From brief to shipped, *in writing*.',
+    intro: 'Remote work runs on clarity. You always know what’s happening, what’s next and what I need from you.',
+  },
+  about: {
+    eyebrow: 'About',
+    title: 'An engineer who owns the *whole* product.',
+    cta: 'More about me',
+  },
+  testimonials: {
+    eyebrow: 'Kind words',
+    title: 'What it’s like to *work* with me.',
+  },
+  stack: {
+    heading: 'Tools I ship with',
+    hint: 'Numbers show case studies using it. Hover to pause.',
+  },
+  contact: {
+    eyebrow: 'Contact',
+  },
+};
+
+/** Copy for standalone pages. */
+export const pages = {
+  projects: {
+    eyebrow: 'Work',
+    title: 'Everything I’ve *shipped* lately.',
+    intro: 'Client products, AI systems and tools that are live today. Filter by technology, or open any project for the full case study.',
+    allLabel: 'All',
+    empty: 'No projects use that technology yet. Try another filter.',
+  },
+  caseStudy: {
+    back: 'All work',
+    role: 'Role',
+    year: 'Year',
+    live: 'Live',
+    visit: 'Visit live site',
+    source: 'Source code',
+    problem: 'The problem',
+    built: 'What I built',
+    how: 'How: key decisions',
+    result: 'Result',
+    stack: 'Stack',
+    gallery: 'Screens',
+    next: 'Next case study',
+    ctaTitle: 'Need something like this built?',
+  },
+  about: {
+    eyebrow: 'About',
+    title: 'Full-stack engineer. Increasingly, an *AI* engineer.',
+    storyHeading: 'The short version',
+    experienceHeading: 'Where I’ve shipped',
+    principlesHeading: 'How I work',
+    stackHeading: 'What I build with',
+    resume: 'Download CV',
+  },
+  contact: {
+    eyebrow: 'Contact',
+    title: 'Let’s build the *thing* you keep putting off.',
+    emailLabel: 'Email',
+    elsewhereLabel: 'Elsewhere',
+    locationLabel: 'Location',
+    timeLabel: 'My local time',
+    goodFitHeading: 'Good fit if you need',
+  },
+  notFound: {
+    title: 'This page *shipped* somewhere else.',
+    body: 'The link may be old or mistyped. The work is still here.',
+    cta: 'Back to home',
+  },
 };
 
 export const nav = [

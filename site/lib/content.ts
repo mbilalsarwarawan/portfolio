@@ -1,8 +1,8 @@
 import 'server-only';
 import { cache } from 'react';
 import { caseStudies } from '@/content/case-studies';
-import { coreStack, experienceCopy, proof } from '@/content/site';
-import type { CaseStudyDecision } from '@/content/types';
+import { coreStack, experienceCopy, proof, testimonials } from '@/content/site';
+import type { CaseStudyDecision, Testimonial } from '@/content/types';
 import fallback from '@/content/fallback.json';
 import { copy, copyList } from './copy';
 import { createPublicClient, type CacheTag } from './db/public-client';
@@ -220,4 +220,19 @@ export async function getProofStats(): Promise<ProofStats> {
 
 function normalise(s: string) {
   return s.toLowerCase().replace(/[.\s()-]|js$/g, '');
+}
+
+/** Marquee rows: core stack first, then the rest. Each item carries how many case studies use it. */
+export async function getStackRows(): Promise<{ name: string; count: number }[][]> {
+  const [{ core, extended }, projects] = await Promise.all([getStack(), getProjects()]);
+  const count = (name: string) => projects.filter((p) => p.stack.some((s) => normalise(s) === normalise(name))).length;
+  const toItems = (names: string[]) => names.map((name) => ({ name, count: count(name) }));
+  return [toItems(core), toItems(extended)].filter((row) => row.length > 0);
+}
+
+/** Testimonials with TODO placeholders stripped. Empty in production until real quotes exist. */
+export function getTestimonials(): Testimonial[] {
+  return testimonials
+    .map((t) => ({ quote: copy(t.quote), name: copy(t.name), role: copy(t.role) }))
+    .filter((t) => t.quote && t.name);
 }

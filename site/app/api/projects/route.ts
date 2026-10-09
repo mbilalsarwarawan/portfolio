@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
+import { invalidate } from '@/lib/revalidate';
 
 export async function GET() {
   const supabase = await createClient();
@@ -21,5 +22,6 @@ export async function POST(request: Request) {
   const { data, error } = await supabase.from('projects').insert(body).select().single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  invalidate('projects');
   return NextResponse.json(data, { status: 201 });
 }

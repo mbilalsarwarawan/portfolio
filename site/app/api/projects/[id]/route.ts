@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
+import { invalidate } from '@/lib/revalidate';
 
 interface Params { params: Promise<{ id: string }> }
 
@@ -22,6 +23,7 @@ export async function PUT(request: Request, { params }: Params) {
   const { data, error } = await supabase.from('projects').update(body).eq('id', id).select().single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  invalidate('projects');
   return NextResponse.json(data);
 }
 
@@ -34,5 +36,6 @@ export async function DELETE(_request: Request, { params }: Params) {
   const { error } = await supabase.from('projects').delete().eq('id', id);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  invalidate('projects');
   return NextResponse.json({ success: true });
 }
