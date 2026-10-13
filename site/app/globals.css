@@ -16,6 +16,7 @@
   --color-line-strong: var(--color-line-strong);
   --color-accent: var(--color-accent);
   --color-accent-strong: var(--color-accent-strong);
+  --color-accent-solid: var(--color-accent-solid);
   --color-accent-fg: var(--color-accent-fg);
   --color-accent-soft: var(--color-accent-soft);
 
@@ -68,7 +69,7 @@ body {
 }
 
 ::selection {
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
   color: var(--color-accent-fg);
 }
 
@@ -116,41 +117,44 @@ html.has-cursor button {
   .t-display {
     font-family: var(--font-display);
     font-size: var(--text-display);
-    font-weight: 380;
+    font-weight: 640;
+    font-stretch: 118%;
     line-height: var(--leading-tight);
     letter-spacing: var(--tracking-display);
-    font-variation-settings: 'opsz' 144, 'SOFT' 30;
+    text-wrap: balance;
   }
 
   .t-h1 {
     font-family: var(--font-display);
     font-size: var(--text-h1);
-    font-weight: 400;
-    line-height: 1.02;
+    font-weight: 640;
+    font-stretch: 112%;
+    line-height: 0.98;
     letter-spacing: var(--tracking-display);
-    font-variation-settings: 'opsz' 120, 'SOFT' 30;
+    text-wrap: balance;
   }
 
   .t-h2 {
     font-family: var(--font-display);
     font-size: var(--text-h2);
-    font-weight: 400;
-    line-height: 1.04;
-    letter-spacing: -0.03em;
-    font-variation-settings: 'opsz' 96, 'SOFT' 30;
+    font-weight: 620;
+    font-stretch: 110%;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
   }
 
   .t-h3 {
     font-family: var(--font-display);
     font-size: var(--text-h3);
-    font-weight: 450;
+    font-weight: 600;
+    font-stretch: 104%;
     line-height: var(--leading-snug);
-    letter-spacing: -0.02em;
-    font-variation-settings: 'opsz' 48;
+    letter-spacing: -0.025em;
   }
 
   .t-h4 {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-size: var(--text-h4);
     font-weight: 560;
     line-height: 1.3;
@@ -178,10 +182,9 @@ html.has-cursor button {
     letter-spacing: 0.01em;
   }
 
-  .italic-accent {
-    font-style: italic;
+  /* Emphasised word in headings: accent colour, no italics */
+  .em-accent {
     color: var(--color-accent);
-    font-variation-settings: 'opsz' 144, 'SOFT' 100;
   }
 
   /* Dev-only TODO highlighting (markers are stripped in production) */
@@ -197,7 +200,7 @@ html.has-cursor button {
     top: var(--space-4);
     z-index: 200;
     padding: var(--space-3) var(--space-4);
-    background: var(--color-accent);
+    background: var(--color-accent-solid);
     color: var(--color-accent-fg);
     font-weight: 600;
     border-radius: var(--radius-sm);
@@ -322,10 +325,40 @@ html.has-cursor button {
 
 /* Generic fade-up for above-the-fold elements (CSS only, no hydration wait) */
 @keyframes fade-up {
-  from { opacity: 0; transform: translate3d(0, 16px, 0); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; transform: translate3d(0, 22px, 0); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
 }
 .fade-up {
-  animation: fade-up 0.9s var(--ease-out-expo) both;
+  animation: fade-up 0.85s var(--ease-out-expo) both;
+  animation-delay: var(--d, 0s);
+}
+
+/* Slide in from left (eyebrow / chip) */
+@keyframes slide-left {
+  from { opacity: 0; transform: translate3d(-20px, 0, 0); filter: blur(3px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+.slide-left {
+  animation: slide-left 0.75s var(--ease-out-expo) both;
+  animation-delay: var(--d, 0s);
+}
+
+/* Scale + fade for decorative elements */
+@keyframes scale-up {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.scale-up {
+  animation: scale-up 0.7s var(--ease-out-expo) both;
+  animation-delay: var(--d, 0s);
+}
+
+/* Horizontal line wipe for the hero meta border */
+@keyframes line-wipe {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+.line-wipe {
+  animation: line-wipe 0.9s var(--ease-out-expo) both;
   animation-delay: var(--d, 0s);
 }

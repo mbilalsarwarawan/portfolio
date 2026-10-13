@@ -3,7 +3,7 @@ import type { CaseStudyCopy } from './types';
 /**
  * Rewritten case-study copy, keyed by `projects.slug` in Supabase.
  * Original DB rows stay untouched so the two can be compared.
- * Every claim here is taken from the DB row or the bio; gaps are marked [TODO].
+ * Every claim here is taken from the DB row or the bio.
  */
 export const caseStudies: Record<string, CaseStudyCopy> = {
   meetdrake: {
@@ -35,7 +35,7 @@ export const caseStudies: Record<string, CaseStudyCopy> = {
     result: [
       'Shipped and published on the Chrome Web Store.',
       'Duplicate profile storage removed by design, not by clean-up jobs.',
-      '[TODO: add metric: active users, profiles synced or campaigns run]',
+      'The extension and web dashboard share campaign and contact state.',
     ],
     stack: ['TypeScript', 'Chrome Extension APIs', 'Vue.js', 'Next.js', 'React', 'Node.js', 'MongoDB'],
     featured: true,
@@ -68,7 +68,7 @@ export const caseStudies: Record<string, CaseStudyCopy> = {
     ],
     result: [
       '99.5% uptime in production.',
-      '[TODO: add metric: queries answered, response time or answer accuracy]',
+      'One chat experience now handles questions across documents and structured records.',
     ],
     stack: ['Python', 'LangChain', 'FastAPI', 'Docker', 'Nginx'],
     role: 'AI / Python Engineer',
@@ -104,7 +104,7 @@ export const caseStudies: Record<string, CaseStudyCopy> = {
     result: [
       'Live in production at soulvirtue.lv.',
       'Improved application reliability and usability for practitioners and patients.',
-      '[TODO: add metric: sessions held, practitioners onboarded or uptime]',
+      'Appointments, accounts and browser-based consultations work inside one product.',
     ],
     stack: ['React', 'Node.js', 'Express', 'MongoDB', 'WebRTC', 'Socket.io', 'JWT', 'Tailwind CSS'],
     featured: true,
@@ -137,7 +137,7 @@ export const caseStudies: Record<string, CaseStudyCopy> = {
     ],
     result: [
       'Live at litpath.org on the rebuilt platform.',
-      '[TODO: add metric: load time, uptime or content-update time before vs after]',
+      'The organisation moved from an unreliable legacy codebase to a maintainable foundation for future changes.',
     ],
     stack: ['Full-stack web', 'System modernisation', 'UI/UX'],
     role: 'Lead Engineer',
@@ -165,7 +165,7 @@ export const caseStudies: Record<string, CaseStudyCopy> = {
         body: 'Each redemption is a scan, so businesses get a verifiable record instead of trusting a screenshot.',
       },
     ],
-    result: ['Live at local-key.com.', '[TODO: add metric: businesses listed or offers redeemed]'],
+    result: ['Live at local-key.com.', 'Businesses can publish offers and verify in-person redemptions from the same platform.'],
     stack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Tailwind CSS'],
     featured: false,
     order: 5,
@@ -191,7 +191,7 @@ export const caseStudies: Record<string, CaseStudyCopy> = {
         body: 'Card handling and compliance stay with Stripe, so the store never touches raw card data.',
       },
     ],
-    result: ['Live at misterandclay.com.', '[TODO: add metric: orders processed or conversion rate]'],
+    result: ['Live at misterandclay.com.', 'Customers can browse products, pay through Stripe and complete an order in one responsive storefront.'],
     stack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Stripe'],
     featured: false,
     order: 6,
@@ -217,7 +217,7 @@ export const caseStudies: Record<string, CaseStudyCopy> = {
         body: 'Most of the efficiency comes from operational modules sharing data through APIs rather than from any single feature, so staff stop re-entering the same information in different places.',
       },
     ],
-    result: ['Live at quickrooms.co.', '[TODO: add metric: hotels using it or hours saved]'],
+    result: ['Live at quickrooms.co.', 'Reservations, guest services, staff coordination and inventory share one operational system.'],
     stack: ['React', 'Node.js', 'Express', 'MongoDB', 'REST APIs', 'AI integration'],
     featured: false,
     order: 7,

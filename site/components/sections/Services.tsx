@@ -24,7 +24,7 @@ export function Services({ heading, services, projectTitles }: ServicesProps) {
                 <span className="t-mono text-subtle md:col-span-1">0{i + 1}</span>
                 <div className="md:col-span-5">
                   <h3 className="t-h3 text-fg transition-colors duration-[var(--dur-base)] group-hover:text-accent">{s.title}</h3>
-                  <p className="mt-3 font-display text-lead italic text-fg/80" style={{ fontVariationSettings: "'opsz' 36, 'SOFT' 100" }}>
+                  <p className="mt-3 text-lead text-fg/80">
                     {s.outcome}
                   </p>
                 </div>
@@ -37,6 +37,10 @@ export function Services({ heading, services, projectTitles }: ServicesProps) {
                       </li>
                     ))}
                   </ul>
+                  <div className="mt-6 border-l border-accent/50 pl-4">
+                    <p className="t-eyebrow mb-2">Under the hood</p>
+                    <p className="text-small text-subtle">{s.tech.join(' · ')}</p>
+                  </div>
                   {proof.length > 0 && (
                     <p className="mt-6 text-small text-subtle">
                       Proof:{' '}

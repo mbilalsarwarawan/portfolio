@@ -213,7 +213,6 @@ export async function getProofStats(): Promise<ProofStats> {
     { value: String(live), label: proof.liveProductsLabel },
     { value: proof.yearsValue, label: proof.yearsLabel },
     { value: String(experience.length), label: proof.teamsLabel },
-    { value: copy(proof.extraStat.value), label: copy(proof.extraStat.label) },
   ].filter((s) => s.value && s.label);
   return { stats, companies: experience.map((e) => e.company) };
 }
@@ -233,6 +232,12 @@ export async function getStackRows(): Promise<{ name: string; count: number }[][
 /** Testimonials with TODO placeholders stripped. Empty in production until real quotes exist. */
 export function getTestimonials(): Testimonial[] {
   return testimonials
-    .map((t) => ({ quote: copy(t.quote), name: copy(t.name), role: copy(t.role) }))
+    .map((t) => ({
+      quote: copy(t.quote),
+      name: copy(t.name),
+      role: copy(t.role),
+      source: t.source,
+      href: t.href,
+    }))
     .filter((t) => t.quote && t.name);
 }

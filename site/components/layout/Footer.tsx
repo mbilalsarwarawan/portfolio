@@ -24,7 +24,7 @@ export function Footer({ name, contact, items, location }: FooterProps) {
           <p className="t-eyebrow mb-4">Get in touch</p>
           <a
             href={`mailto:${contact.email}`}
-            className="group inline-block break-all font-display text-h3 leading-tight text-fg transition-colors duration-[var(--dur-base)] hover:text-accent sm:break-normal"
+            className="group inline-block break-all font-display text-h3 font-semibold leading-tight tracking-tight text-fg transition-colors duration-[var(--dur-base)] hover:text-accent sm:break-normal"
             data-cursor="link"
           >
             {contact.email}

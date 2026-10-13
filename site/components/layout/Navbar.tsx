@@ -93,7 +93,7 @@ export function Navbar({ name, items, cta }: NavbarProps) {
       />
       <nav aria-label="Primary" className="shell flex h-[72px] items-center justify-between gap-6">
         <Link href="/" className="group flex items-baseline gap-2 text-fg" aria-label={`${name}, home`}>
-          <span className="font-display text-[1.375rem] leading-none tracking-tight" style={{ fontVariationSettings: "'opsz' 48, 'SOFT' 50" }}>
+          <span className="font-display text-[1.25rem] font-semibold leading-none tracking-tight [font-stretch:115%]">
             {name}
           </span>
           <span className="size-1.5 translate-y-[-2px] rounded-full bg-accent transition-transform duration-[var(--dur-slow)] group-hover:scale-150" aria-hidden="true" />
@@ -130,7 +130,7 @@ export function Navbar({ name, items, cta }: NavbarProps) {
           <ThemeToggle />
           <Link
             href={cta.href}
-            className="hidden min-h-11 items-center rounded-full bg-fg px-5 text-small font-medium text-bg transition-colors duration-[var(--dur-base)] hover:bg-accent hover:text-accent-fg sm:inline-flex"
+            className="hidden min-h-11 items-center rounded-full bg-fg px-5 text-small font-medium text-bg transition-colors duration-[var(--dur-base)] hover:bg-accent-solid hover:text-accent-fg sm:inline-flex"
           >
             {cta.label}
           </Link>

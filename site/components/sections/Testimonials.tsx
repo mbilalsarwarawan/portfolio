@@ -14,12 +14,12 @@ export function Testimonials({ heading, items }: TestimonialsProps) {
   return (
     <section aria-labelledby="testimonials-title" className="section border-t border-line">
       <div className="shell">
-        <SectionHeader id="testimonials-title" index="05" heading={heading} />
+        <SectionHeader id="testimonials-title" index="04" heading={heading} />
         <Reveal as="ul" className="grid gap-6 md:grid-cols-2">
           {items.map((t, i) => (
             <RevealItem as="li" key={i}>
               <figure className="flex h-full flex-col justify-between rounded-md border border-line bg-surface/60 p-8 md:p-10">
-                <blockquote className="font-display text-h4 leading-snug text-fg" style={{ fontVariationSettings: "'opsz' 36" }}>
+                <blockquote className="text-h4 font-medium leading-snug tracking-tight text-fg">
                   <span className="text-accent" aria-hidden="true">
                     “
                   </span>
@@ -32,6 +32,17 @@ export function Testimonials({ heading, items }: TestimonialsProps) {
                   <span className="text-subtle">
                     <Copy text={t.role} />
                   </span>
+                  {t.source && (
+                    <span className="mt-2 block">
+                      {t.href ? (
+                        <a href={t.href} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-4">
+                          Verified on {t.source}
+                        </a>
+                      ) : (
+                        <span className="text-accent">Verified on {t.source}</span>
+                      )}
+                    </span>
+                  )}
                 </figcaption>
               </figure>
             </RevealItem>

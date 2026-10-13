@@ -19,7 +19,6 @@ export function personJsonLd(sameAs: string[], email: string) {
     email: `mailto:${email}`,
     image: absoluteUrl('/profile.png'),
     address: { '@type': 'PostalAddress', addressLocality: 'Lahore', addressCountry: 'PK' },
-    worksFor: { '@type': 'Organization', name: person.currentCompany.name, url: person.currentCompany.url },
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Government College University Lahore' },
     knowsAbout: [
       'Full-stack web development',
@@ -32,6 +31,8 @@ export function personJsonLd(sameAs: string[], email: string) {
       'LLM integration',
       'Chrome extensions',
       'Browser automation',
+      'Flutter mobile development',
+      'Backend systems',
     ],
     sameAs,
   };

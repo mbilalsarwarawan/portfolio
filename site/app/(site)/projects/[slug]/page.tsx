@@ -86,7 +86,7 @@ export default async function CaseStudyPage({ params }: Params) {
         <h1 className="t-h1 fade-up max-w-[20ch] text-fg" style={{ ['--d' as string]: '0.06s' }}>
           {project.title}
         </h1>
-        <p className="t-lead fade-up mt-6 max-w-[48ch] font-display !text-h3 !leading-snug text-fg/85" style={{ ['--d' as string]: '0.12s', fontVariationSettings: "'opsz' 48, 'SOFT' 50" }}>
+        <p className="t-lead fade-up mt-6 max-w-[48ch] !text-h4 font-medium !leading-snug tracking-tight text-fg/85 md:!text-h3" style={{ ['--d' as string]: '0.12s' }}>
           {project.headline}
         </p>
 
@@ -128,7 +128,7 @@ export default async function CaseStudyPage({ params }: Params) {
       <div className="shell mt-10">
         {project.problem && (
           <Block index="01" title={L.problem}>
-            <p className="font-display text-h4 leading-relaxed text-fg" style={{ fontVariationSettings: "'opsz' 36" }}>
+            <p className="text-h4 leading-relaxed tracking-tight text-fg">
               {project.problem}
             </p>
           </Block>
@@ -167,7 +167,7 @@ export default async function CaseStudyPage({ params }: Params) {
           <Block index="04" title={L.result}>
             <ul className="space-y-4">
               {project.result.map((r, i) => (
-                <li key={i} className="font-display text-h4 leading-snug text-fg" style={{ fontVariationSettings: "'opsz' 36" }}>
+                <li key={i} className="text-h4 font-medium leading-snug tracking-tight text-fg">
                   <Copy text={r} />
                 </li>
               ))}

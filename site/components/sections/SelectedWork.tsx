@@ -15,7 +15,7 @@ export function SelectedWork({ heading, featured, rest }: SelectedWorkProps) {
   return (
     <section id="work" aria-labelledby="work-title" className="section scroll-mt-20">
       <div className="shell">
-        <SectionHeader id="work-title" index="01" heading={heading} />
+        <SectionHeader id="work-title" index="03" heading={heading} />
 
         {featured.length === 0 ? (
           <p className="rounded-md border border-dashed border-line-strong p-10 text-center text-muted">{heading.empty}</p>

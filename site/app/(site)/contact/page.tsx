@@ -45,7 +45,7 @@ export default async function ContactPage() {
             <p className="t-eyebrow mb-4">{P.emailLabel}</p>
             <a
               href={`mailto:${contact.email}?subject=${subject}`}
-              className="group inline-flex items-center gap-3 break-all font-display text-h3 leading-tight text-fg transition-colors hover:text-accent"
+              className="group inline-flex items-center gap-3 break-all font-display text-h3 font-semibold leading-tight tracking-tight text-fg transition-colors hover:text-accent"
             >
               {contact.email}
               <Arrow className="size-6 shrink-0 text-accent" />

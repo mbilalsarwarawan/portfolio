@@ -13,7 +13,7 @@ export function ProofStrip({ stats, companies, companiesHeading }: ProofStripPro
         <Reveal as="ul" className={`grid grid-cols-2 gap-px bg-line [&>li:last-child:nth-child(odd)]:col-span-2 lg:[&>li:last-child:nth-child(odd)]:col-span-1 ${stats.length > 3 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
           {stats.map((s) => (
             <RevealItem as="li" key={s.label} className="flex flex-col gap-2 bg-bg px-4 py-8 sm:px-6 md:py-10">
-              <span className="font-display text-h2 leading-none tracking-tight text-fg" style={{ fontVariationSettings: "'opsz' 144" }}>
+              <span className="font-display text-h2 font-semibold leading-none tracking-tighter text-fg [font-stretch:118%]">
                 {s.value}
               </span>
               <span className="text-small text-muted">{s.label}</span>
@@ -25,7 +25,7 @@ export function ProofStrip({ stats, companies, companiesHeading }: ProofStripPro
           <p className="t-eyebrow shrink-0">{companiesHeading}</p>
           <ul className="flex flex-wrap items-center gap-x-8 gap-y-2">
             {companies.map((c) => (
-              <li key={c} className="font-display text-lead text-fg/80" style={{ fontVariationSettings: "'opsz' 36" }}>
+              <li key={c} className="font-display text-lead font-medium tracking-tight text-fg/80 [font-stretch:110%]">
                 {c}
               </li>
             ))}

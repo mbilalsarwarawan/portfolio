@@ -76,7 +76,7 @@ export function Cursor() {
         style={{ x: ringX, y: ringY, translateX: '-50%', translateY: '-50%' }}
         animate={{
           scale: ringScale,
-          backgroundColor: state === 'view' ? 'var(--color-accent)' : 'rgba(0,0,0,0)',
+          backgroundColor: state === 'view' ? 'var(--color-accent-solid)' : 'rgba(0,0,0,0)',
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 26 }}
       >

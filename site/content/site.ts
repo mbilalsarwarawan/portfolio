@@ -1,40 +1,58 @@
-import type { PageSeo, ProcessStep, Service, Testimonial } from './types';
+import type { FaqItem, GlanceItem, PageSeo, ProcessStep, Service, Testimonial } from './types';
 
-/**
- * Site-wide copy. Facts come from the bio and the Supabase rows.
- * Unknown numbers are marked [TODO: ...] and stripped in production.
- */
+/** Site-wide copy. Claims come from the bio and verified Supabase rows. */
 
 export const person = {
   name: 'Bilal Awan',
   fullName: 'Muhammad Bilal Awan',
-  jobTitle: 'Full-Stack & AI Engineer',
+  jobTitle: 'Full-Stack Developer',
   location: 'Lahore, Pakistan',
-  timezone: 'PKT (UTC+5), overlapping European working hours',
-  currentCompany: { name: 'Fintask.ie', url: 'https://fintask.ie', country: 'Ireland' },
+  timezone: 'PKT (UTC+5), with working-hour overlap for UK and European teams',
   education: { degree: 'BS Computer Science', school: 'GCU Lahore', year: '2024' },
-  availability: 'Open to contract and freelance work',
+  availability: 'Available for freelance and contract work',
 };
 
 export const hero = {
-  eyebrow: 'Full-stack & AI engineer · Lahore → Ireland, remote',
-  headline: ['Software that ships:', 'products, AI agents,', 'and the plumbing between.'],
+  eyebrow: 'Full-stack developer · Web, mobile & AI',
+  headline: ['One developer', 'for your whole product.'],
   valueProp:
-    'I design, build and run web products end to end, from the Chrome extension your users install to the RAG pipeline that answers their questions. Right now I ship remotely for Fintask.ie in Ireland.',
-  primaryCta: { label: 'Let’s work together', href: '/contact' },
-  secondaryCta: { label: 'View selected work', href: '/#work' },
-  focus: 'Products · AI · Automation',
+    'I’m Bilal. I design, build and launch web apps, mobile apps and useful AI features, including the systems behind them. You work with one person who takes responsibility from the first screen to release.',
+  primaryCta: { label: 'Email me', href: '/contact' },
+  secondaryCta: { label: 'See my work', href: '/#work' },
+  focus: 'Web · Mobile · AI · Backend',
 };
 
 /** Labels for the proof strip. Values are computed from Supabase in lib/content.ts. */
 export const proof = {
   liveProductsLabel: 'products live in production',
   yearsValue: '2+',
-  yearsLabel: 'years shipping for clients',
-  teamsLabel: 'engineering teams shipped with',
-  extraStat: { value: '[TODO: add metric]', label: '[TODO: e.g. users served across products]' },
-  companiesHeading: 'Shipped with',
+  yearsLabel: 'years building software',
+  teamsLabel: 'teams I have worked with',
+  companiesHeading: 'Experience across',
 };
+
+export const glance: GlanceItem[] = [
+  {
+    label: 'What I build',
+    value: 'Complete digital products',
+    detail: 'Web apps, Flutter mobile apps, AI features and backend systems.',
+  },
+  {
+    label: 'How I work',
+    value: 'One accountable developer',
+    detail: 'A direct line from planning and build through launch and handover.',
+  },
+  {
+    label: 'Where I work',
+    value: 'Remote from Lahore',
+    detail: 'PKT (UTC+5), with working-hour overlap for UK and European teams.',
+  },
+  {
+    label: 'How to hire me',
+    value: 'Freelance or contract',
+    detail: 'Start with an email about the problem, product and current stage.',
+  },
+];
 
 /** Core stack from the bio. Merged with the Supabase `skills` table for the marquee. */
 export const coreStack = [
@@ -52,75 +70,87 @@ export const coreStack = [
   'RAG pipelines',
   'LLM APIs',
   'FastAPI',
+  'Flutter',
+];
+
+export const stackGroups = [
+  { title: 'Web', items: ['TypeScript', 'React', 'Next.js', 'Vue.js', 'Node.js', 'Tailwind CSS'] },
+  { title: 'Mobile', items: ['Flutter', 'Dart', 'Firebase', 'REST APIs'] },
+  { title: 'AI', items: ['Python', 'LLM APIs', 'LangChain', 'RAG pipelines', 'FastAPI'] },
+  { title: 'Backend', items: ['Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'Redis', 'Docker', 'Nginx'] },
 ];
 
 export const services: Service[] = [
   {
-    id: 'product',
-    title: 'Full-stack product builds',
-    outcome: 'From brief to a product people can log into.',
-    body: 'I take a product from schema to deployed UI: auth, payments, dashboards and the admin tooling nobody remembers until launch week. One engineer owns the whole thing, so nothing falls through the cracks between frontend and backend.',
-    deliverables: ['React / Vue / Next.js frontends', 'Node.js or Python APIs', 'Stripe, auth, roles', 'Deployed and documented'],
-    proof: ['soul-virtue', 'local-key', 'mister-clay'],
+    id: 'web',
+    title: 'Web apps & dashboards',
+    outcome: 'A complete web product, not a collection of disconnected pages.',
+    body: 'I build the customer-facing app and the less visible parts that make it useful: accounts, payments, dashboards, admin tools and browser automation. Keeping that work with one developer means fewer hand-offs and clearer ownership.',
+    deliverables: ['Customer and admin experiences', 'Accounts, roles and payments', 'Chrome extensions and automation', 'Launch and handover'],
+    tech: ['React', 'Next.js', 'Vue.js', 'Node.js', 'TypeScript'],
+    proof: ['meetdrake', 'soul-virtue', 'local-key', 'mister-clay'],
+  },
+  {
+    id: 'mobile',
+    title: 'Mobile apps',
+    outcome: 'One app for iPhone and Android, built from one codebase.',
+    body: 'I build cross-platform Flutter apps and connect them to the same accounts, data and services as your web product. My client mobile work is covered by an NDA, so I discuss the relevant approach and responsibilities privately.',
+    deliverables: ['iOS and Android from one codebase', 'App screens and user flows', 'API and service integration', 'Release-ready builds'],
+    tech: ['Flutter', 'Dart', 'REST APIs', 'Firebase'],
+    proof: [],
   },
   {
     id: 'ai',
-    title: 'AI, RAG & LLM integrations',
-    outcome: 'Assistants that answer from your data, not from thin air.',
-    body: 'I connect LLMs to the knowledge you already have: retrieval over documents, agents that query your database and tools the model can call. I keep the deployment around them plain and observable. You can try one now: the chat assistant on this site is wired to my own data.',
-    deliverables: ['RAG pipelines', 'SQL / tool-using agents', 'LLM API integration', 'FastAPI services in Docker'],
+    title: 'AI features',
+    outcome: 'AI that works with your information and solves a defined task.',
+    body: 'I add assistants that can search your documents, answer questions about business data and use approved tools. The goal is not an AI label; it is a useful feature with clear boundaries that your team can understand and operate.',
+    deliverables: ['Document and knowledge assistants', 'Data-aware chat and search', 'Tool-using workflows', 'Deployable AI services'],
+    tech: ['LLM APIs', 'LangChain', 'RAG', 'Python', 'FastAPI'],
     proof: ['nomia-docs-chatbot', 'quickrooms'],
   },
   {
-    id: 'automation',
-    title: 'Browser automation & Chrome extensions',
-    outcome: 'Turn repetitive browser work into a button.',
-    body: 'I build extensions that work inside the tools your team already uses, with background workers that keep running and a backend that stays in sync. That covers both production Chrome Web Store releases and internal automation.',
-    deliverables: ['Manifest V3 extensions', 'Background & content scripts', 'Extension ↔ backend sync', 'Web Store publishing'],
-    proof: ['meetdrake'],
-  },
-  {
     id: 'backend',
-    title: 'Backend & API systems',
-    outcome: 'APIs and data models that hold up when usage grows.',
-    body: 'I design data models, REST APIs and background jobs with the boring virtues: deduplicated data, safe concurrency, caching where it pays and deployments you can restart without holding your breath.',
-    deliverables: ['Data modelling (MongoDB, Postgres)', 'REST APIs', 'Redis caching & queues', 'Docker + Nginx deploys'],
+    title: 'Backend & scaling',
+    outcome: 'The system behind your app, built to stay dependable as usage grows.',
+    body: 'I design the data, integrations and background work behind a product. I focus on the things users notice when they go wrong: slow responses, duplicate records, failed jobs and changes that are difficult to deploy.',
+    deliverables: ['Data models and APIs', 'Payments and third-party integrations', 'Background work and caching', 'Deployment and monitoring setup'],
+    tech: ['Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'Redis', 'Docker'],
     proof: ['meetdrake', 'nomia-docs-chatbot', 'lit-path'],
   },
 ];
 
 export const process: ProcessStep[] = [
   {
-    title: 'Brief & scope',
-    body: 'A call to understand the problem, the users and what “done” means. You get a written scope with milestones and the open questions, before any code.',
+    title: 'Understand the job',
+    body: 'We start with the problem, the people using the product and what a successful first release needs to do. I turn that into a written scope before development starts.',
   },
   {
-    title: 'Architecture',
-    body: 'I pick the simplest stack that fits and write down the decisions that matter: data model, integrations, where the risk is. No surprises later.',
+    title: 'Plan the build',
+    body: 'I break the work into clear milestones, identify the risky parts early and choose tools that fit the product. You can see what is included, what is not and what comes next.',
   },
   {
     title: 'Build in the open',
-    body: 'Short cycles with a working preview link you can click. Progress updates in writing, so you never have to ask where things stand.',
+    body: 'You get short written updates and working previews you can try. Questions and trade-offs are raised early, while they are still inexpensive to change.',
   },
   {
-    title: 'Ship & hand over',
-    body: 'Production deploy, monitoring, and a handover your team can actually use: docs, access and a walkthrough. Then I stay available for fixes.',
+    title: 'Launch & hand over',
+    body: 'I prepare the production release, document the important parts and walk you through access and day-to-day use. I also remain available for agreed follow-up work.',
   },
 ];
 
 export const about = {
   short:
-    'I’m Bilal, a full-stack engineer in Lahore working remotely with an Irish software company. I build the whole product, not just a layer of it, and I’m increasingly focused on the AI side: retrieval, agents and browser automation that do real work.',
+    'I’m Bilal, a full-stack developer based in Lahore. I work across the visible product and the systems behind it, so clients do not need a different person for every layer. My experience covers web platforms, Flutter apps, AI assistants, browser automation and production backend services.',
   story: [
-    'I studied Computer Science at GCU Lahore and graduated in 2024. My first role was at StechAi, building OpenAI-powered RAG chatbots and Django/FastAPI APIs and deploying ML models with Docker and MLflow.',
-    'At Cherrybyte Technologies I worked on production Python systems, including a dual-agent RAG + SQL assistant, an audio streaming platform and a subscription trading platform, all deployed with Docker and Nginx.',
-    'Along the way I took a short contract with Turing doing data annotation and quality assurance on computer-interaction datasets used to train a computer-use agent model. It gave me a close look at how agentic systems succeed and fail.',
-    'Since August 2025 I’ve been shipping client products end to end for Fintask.ie: full-stack web apps, Chrome extensions and AI integrations, working remotely across time zones from Lahore.',
+    'I help clients turn a product idea or an unfinished system into software people can use. That can mean building the full product, joining an existing team for a difficult part, or connecting the user experience to a more reliable backend.',
+    'I earned a BS in Computer Science from GCU Lahore in 2024. At StechAi, I built document-based AI assistants, Django and FastAPI services, and deployment workflows for machine-learning systems.',
+    'At Cherrybyte Technologies, I worked on production Python products including an assistant that could answer from both documents and database records, an audio platform and a subscription product.',
+    'A contract with Turing added hands-on experience reviewing computer-interaction data used to train a computer-use agent. Since August 2025, I have worked as a freelance full-stack developer with Fintask.ie, shipping web products, Chrome extensions and AI integrations for clients.',
   ],
   principles: [
-    { title: 'Own the outcome', body: 'I’d rather ship a smaller thing that works than a bigger thing that almost does.' },
-    { title: 'Write it down', body: 'Decisions, trade-offs and status in writing, so remote never means out of the loop.' },
-    { title: 'Boring infrastructure', body: 'Use novel tech where it earns its place, like LLMs, and proven tech everywhere else.' },
+    { title: 'Own the outcome', body: 'I care whether the finished product solves the job, not only whether the code is complete.' },
+    { title: 'Keep work visible', body: 'Written updates, working previews and recorded decisions keep remote projects clear.' },
+    { title: 'Use the simplest fit', body: 'I use new technology where it creates value and proven tools everywhere else.' },
   ],
 };
 
@@ -130,10 +160,9 @@ export const about = {
  */
 export const experienceCopy: Record<string, { role?: string; summary: string }> = {
   'Fintask.ie': {
-    // Bio says remote engineer; DB says "Freelance". Confirm which is right.
-    role: 'Full-Stack Software Engineer · Remote',
+    role: 'Freelance Full-Stack Developer',
     summary:
-      'Shipping client products end to end for an Irish software company: full-stack web apps, Chrome extensions and AI integrations. [TODO: add metric: products shipped or clients served]',
+      'Builds client products end to end for an Irish software company, including full-stack web apps, Chrome extensions and AI integrations for international clients.',
   },
   'Cherrybyte Technologies': {
     summary:
@@ -149,32 +178,62 @@ export const experienceCopy: Record<string, { role?: string; summary: string }> 
   },
 };
 
-/** Placeholder slots. Hidden in production until real quotes are added. */
-export const testimonials: Testimonial[] = [
-  { quote: '[TODO: add a client testimonial]', name: '[TODO: name]', role: '[TODO: role, company]' },
-  { quote: '[TODO: add a client testimonial]', name: '[TODO: name]', role: '[TODO: role, company]' },
-];
+/** Add the verified Fintask Upwork review here once its exact text and public URL are available. */
+export const testimonials: Testimonial[] = [];
 
 export const contact = {
-  heading: 'Have something that needs to ship?',
-  body: 'Tell me what you’re building and where it’s stuck. I’ll reply with honest next steps, even if the answer is “you don’t need me for this”.',
-  responseTime: '[TODO: confirm reply time, e.g. within 1 working day]',
+  heading: 'Tell me what you want to build.',
+  body: 'Share the problem, who the product is for and what stage you are at. I’ll reply personally with the questions and next step needed to see whether I’m a good fit.',
+  responseTime: 'Direct replies. No sales team.',
 };
 
-/** Section headings. Wrap a word in *asterisks* to set it in the italic accent. */
+export const faq: FaqItem[] = [
+  {
+    question: 'I’m not technical. Can we still work together?',
+    answer:
+      'Yes. You can describe the business problem and the experience you want customers to have. I will translate that into a practical scope, explain choices without jargon and make the open decisions visible before development begins.',
+  },
+  {
+    question: 'Can you join an existing product or engineering team?',
+    answer:
+      'Yes. I can take ownership of a defined feature, work across the frontend and backend, or help with AI and browser-automation work. I document decisions and adapt to the team’s existing review and release process.',
+  },
+  {
+    question: 'How do you handle communication across time zones?',
+    answer:
+      'I work from Lahore in PKT (UTC+5), with useful working-hour overlap for UK and European teams. I rely on concise written updates, clear questions and working previews so progress does not depend on constant meetings.',
+  },
+  {
+    question: 'Who owns the code and project access?',
+    answer:
+      'You do. Repositories, production accounts and third-party services should be held in client-controlled accounts wherever possible. Handover includes the access and documentation needed to keep operating the product.',
+  },
+  {
+    question: 'Can you work under an NDA?',
+    answer:
+      'Yes. I have client work, including mobile development, that cannot be shown publicly. I can sign a reasonable NDA and keep private product details out of public case studies and repositories.',
+  },
+  {
+    question: 'What happens after launch?',
+    answer:
+      'The initial scope includes an agreed handover and follow-up period. Ongoing improvements, monitoring or support can then continue as a separate contract when the product needs it.',
+  },
+];
+
+/** Section headings. Wrap a word in *asterisks* to set it in the accent colour. */
 export const sections = {
   work: {
     eyebrow: 'Selected work',
-    title: 'Products in production, *not* side projects.',
-    intro: 'A few of the products I’ve built and shipped: what the problem was, what I built, and the decisions that mattered.',
+    title: 'Real products, explained through the *problem* they solve.',
+    intro: 'Selected web, AI and backend work with the challenge, my contribution and the decisions behind the result.',
     moreTitle: 'More shipped work',
     moreCta: 'All projects',
     empty: 'Case studies are being updated. Check back shortly or get in touch for a walkthrough.',
   },
   services: {
     eyebrow: 'What I do',
-    title: 'Four ways I help teams *ship*.',
-    intro: 'Hire me for the outcome, not the tech list. Each of these is backed by work that’s live today.',
+    title: 'Four parts of a product, handled by *one developer*.',
+    intro: 'Start with the outcome you need. The technical detail is there for the people who need to evaluate it.',
   },
   process: {
     eyebrow: 'How I work',
@@ -183,7 +242,7 @@ export const sections = {
   },
   about: {
     eyebrow: 'About',
-    title: 'An engineer who owns the *whole* product.',
+    title: 'A developer who can see the *whole* product.',
     cta: 'More about me',
   },
   testimonials: {
@@ -195,7 +254,16 @@ export const sections = {
     hint: 'Numbers show case studies using it. Hover to pause.',
   },
   contact: {
-    eyebrow: 'Contact',
+    eyebrow: 'Start a conversation',
+  },
+  glance: {
+    eyebrow: 'At a glance',
+    title: 'The short version, before the *details*.',
+  },
+  faq: {
+    eyebrow: 'Common questions',
+    title: 'What clients usually want to know *before we start*.',
+    intro: 'Straight answers about working remotely, ownership, confidentiality and what happens after launch.',
   },
 };
 
@@ -226,7 +294,7 @@ export const pages = {
   },
   about: {
     eyebrow: 'About',
-    title: 'Full-stack engineer. Increasingly, an *AI* engineer.',
+    title: 'One developer, from the first screen to the *system behind it*.',
     storyHeading: 'The short version',
     experienceHeading: 'Where I’ve shipped',
     principlesHeading: 'How I work',
@@ -235,7 +303,7 @@ export const pages = {
   },
   contact: {
     eyebrow: 'Contact',
-    title: 'Let’s build the *thing* you keep putting off.',
+    title: 'Start with the problem. We’ll work out the *right build*.',
     emailLabel: 'Email',
     elsewhereLabel: 'Elsewhere',
     locationLabel: 'Location',
@@ -250,18 +318,18 @@ export const pages = {
 };
 
 export const nav = [
-  { label: 'Work', href: '/#work', section: 'work' },
   { label: 'Services', href: '/#services', section: 'services' },
-  { label: 'Process', href: '/#process', section: 'process' },
+  { label: 'Work', href: '/#work', section: 'work' },
   { label: 'About', href: '/about', section: 'about' },
+  { label: 'FAQ', href: '/#faq', section: 'faq' },
   { label: 'Contact', href: '/contact', section: 'contact' },
 ];
 
 export const seo: Record<'home' | 'projects' | 'about' | 'contact', PageSeo> = {
   home: {
-    title: 'Bilal Awan: Full-Stack & AI Engineer',
+    title: 'Bilal Awan: Full-Stack Developer for Web, Mobile & AI',
     description:
-      'Full-stack and AI engineer who ships real products: web apps, RAG and LLM integrations, Chrome extensions and backend systems. Based in Lahore, working remotely with teams in Europe.',
+      'Hire one developer for your web app, Flutter mobile app, AI feature and backend. Bilal Awan builds complete products for remote clients and teams.',
   },
   projects: {
     title: 'Work: Case Studies',
@@ -271,11 +339,11 @@ export const seo: Record<'home' | 'projects' | 'about' | 'contact', PageSeo> = {
   about: {
     title: 'About',
     description:
-      'Bilal Awan is a full-stack engineer in Lahore, Pakistan, building web products and AI integrations remotely for an Irish software company.',
+      'Bilal Awan is a full-stack developer in Lahore who builds web products, Flutter apps, AI features and backend systems for remote clients.',
   },
   contact: {
     title: 'Contact: Let’s Work Together',
     description:
-      'Hire Bilal Awan for full-stack product builds, AI/RAG integrations, Chrome extensions or backend systems. Tell me what you’re building.',
+      'Contact Bilal Awan about a web app, Flutter mobile app, AI feature, Chrome extension or backend project.',
   },
 };

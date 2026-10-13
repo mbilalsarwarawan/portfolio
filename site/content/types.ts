@@ -1,7 +1,4 @@
-/**
- * Copy for the site. Strings may contain `[TODO: ...]` markers. They render
- * highlighted in development and are stripped in production (see lib/copy.ts).
- */
+/** Shared content types for the public portfolio. */
 
 export interface CaseStudyDecision {
   title: string;
@@ -39,6 +36,8 @@ export interface Service {
   outcome: string;
   body: string;
   deliverables: string[];
+  /** Technical detail shown after the plain-English service description. */
+  tech: string[];
   /** DB project slugs that back this service up. */
   proof: string[];
 }
@@ -52,6 +51,19 @@ export interface Testimonial {
   quote: string;
   name: string;
   role: string;
+  source?: string;
+  href?: string;
+}
+
+export interface GlanceItem {
+  label: string;
+  value: string;
+  detail: string;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
 }
 
 export interface PageSeo {

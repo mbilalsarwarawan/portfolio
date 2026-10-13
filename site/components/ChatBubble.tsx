@@ -13,7 +13,7 @@ export function ChatBubble({ isOpen, onToggle, hasUnread }: ChatBubbleProps) {
     <motion.button
       onClick={onToggle}
       className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-      style={{ background: 'var(--color-accent)', color: 'var(--color-accent-fg)' }}
+      style={{ background: 'var(--color-accent-solid)', color: 'var(--color-accent-fg)' }}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 1.2 }}

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { getExperience, getResumeUrl, getStack } from '@/lib/content';
+import { getExperience, getResumeUrl } from '@/lib/content';
 import { ExperienceTimeline } from '@/components/sections/ExperienceTimeline';
 import { ContactCTA } from '@/components/sections/ContactCTA';
 import { Reveal, RevealItem } from '@/components/ui/Reveal';
@@ -8,7 +8,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { Emphasis } from '@/components/ui/Emphasis';
 import { getContact } from '@/lib/content';
 import { copy } from '@/lib/copy';
-import { about, contact as contactCopy, hero, pages, person, sections, seo } from '@/content/site';
+import { about, contact as contactCopy, hero, pages, person, sections, seo, stackGroups } from '@/content/site';
 
 export const revalidate = 3600;
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const P = pages.about;
 
 export default async function AboutPage() {
-  const [experience, stack, resumeUrl, contact] = await Promise.all([getExperience(), getStack(), getResumeUrl(), getContact()]);
+  const [experience, resumeUrl, contact] = await Promise.all([getExperience(), getResumeUrl(), getContact()]);
 
   return (
     <>
@@ -58,7 +58,7 @@ export default async function AboutPage() {
           <Reveal className="space-y-6 md:col-span-8">
             {about.story.map((para, i) => (
               <RevealItem key={i}>
-                <p className={i === 0 ? 'font-display text-h4 leading-relaxed text-fg' : 'text-lead leading-relaxed text-muted'}>{para}</p>
+                <p className={i === 0 ? 'text-h4 font-medium leading-relaxed tracking-tight text-fg' : 'text-lead leading-relaxed text-muted'}>{para}</p>
               </RevealItem>
             ))}
           </Reveal>
@@ -88,19 +88,19 @@ export default async function AboutPage() {
           <h2 id="stack-title" className="t-h3 text-fg md:col-span-4">
             {P.stackHeading}
           </h2>
-          <div className="md:col-span-8">
-            <ul className="flex flex-wrap gap-2">
-              {stack.core.map((s) => (
-                <li key={s} className="chip !border-accent/50 !text-small text-fg">
-                  {s}
-                </li>
-              ))}
-              {stack.extended.map((s) => (
-                <li key={s} className="chip !text-small">
-                  {s}
-                </li>
-              ))}
-            </ul>
+          <div className="grid gap-px overflow-hidden rounded-md border border-line bg-line sm:grid-cols-2 md:col-span-8">
+            {stackGroups.map((group) => (
+              <div key={group.title} className="bg-bg p-6 md:p-8">
+                <h3 className="t-h4 mb-4 text-fg">{group.title}</h3>
+                <ul className="flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <li key={item} className="chip !text-small">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </section>

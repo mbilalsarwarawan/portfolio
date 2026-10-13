@@ -42,7 +42,7 @@ export function AboutTeaser({ heading, body, principles, facts, portrait }: Abou
 
           <Reveal className="md:col-span-8">
             <RevealItem>
-              <p className="font-display text-h3 leading-snug text-fg" style={{ fontVariationSettings: "'opsz' 48" }}>
+              <p className="text-h4 font-medium leading-snug tracking-tight text-fg md:text-h3">
                 {body}
               </p>
             </RevealItem>

@@ -42,7 +42,7 @@ export function ProjectGrid({ projects, filters, allLabel, emptyLabel }: Project
               aria-pressed={isActive}
               onClick={() => select(f)}
               className={`chip min-h-10 !px-4 !text-small transition-colors duration-[var(--dur-base)] ${
-                isActive ? '!border-accent bg-accent !text-accent-fg' : 'hover:border-fg hover:text-fg'
+                isActive ? '!border-accent-solid bg-accent-solid !text-accent-fg' : 'hover:border-fg hover:text-fg'
               }`}
             >
               {f ?? allLabel}

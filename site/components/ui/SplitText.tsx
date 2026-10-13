@@ -7,7 +7,7 @@ interface SplitTextProps {
   delay?: number;
   /** Seconds between words. */
   stagger?: number;
-  /** Words (without punctuation) to render in the italic accent style. */
+  /** Words (without punctuation) to render in the accent colour. */
   accentWords?: string[];
   as?: 'h1' | 'h2' | 'p';
   id?: string;
@@ -37,7 +37,7 @@ export function SplitText({
             const accent = accentWords.includes(word.replace(/[^\p{L}\p{N}]/gu, ''));
             return (
               <span key={wi} className="split-word inline-block" style={style}>
-                <span className={accent ? 'italic-accent' : undefined}>{word}</span>
+                <span className={accent ? 'em-accent' : undefined}>{word}</span>
                 {wi < arr.length - 1 ? ' ' : ''}
               </span>
             );

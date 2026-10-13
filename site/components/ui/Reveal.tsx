@@ -14,7 +14,7 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: duration.slower, ease: ease.outExpo } },
 };
 
-type Tag = 'div' | 'section' | 'ul' | 'ol' | 'li' | 'header' | 'article';
+type Tag = 'div' | 'section' | 'ul' | 'ol' | 'li' | 'dl' | 'header' | 'article';
 
 interface RevealProps {
   children: ReactNode;

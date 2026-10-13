@@ -8,7 +8,7 @@ const base =
   'group relative inline-flex items-center gap-3 rounded-full font-medium transition-[background-color,border-color,color] duration-[var(--dur-base)] ease-[var(--ease-standard)] px-6 py-3.5 text-[0.9375rem] min-h-12';
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-accent text-accent-fg hover:bg-accent-strong shadow-glow',
+  primary: 'bg-accent-solid text-accent-fg hover:brightness-110 shadow-glow',
   ghost: 'border border-line-strong text-fg hover:border-accent hover:text-accent',
 };
 

@@ -1,18 +1,30 @@
 import type { Metadata, Viewport } from 'next';
-import { Fraunces } from 'next/font/google';
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
+import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import { seo, person } from '@/content/site';
 import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
-const fraunces = Fraunces({
-  variable: '--font-fraunces',
+// Display: Archivo with its width axis, set expanded for headlines.
+const archivo = Archivo({
+  variable: '--font-archivo',
   subsets: ['latin'],
-  axes: ['opsz', 'SOFT'],
-  style: ['normal', 'italic'],
+  axes: ['wdth'],
   display: 'swap',
-  adjustFontFallback: true,
+});
+
+const plexSans = IBM_Plex_Sans({
+  variable: '--font-plex-sans',
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  display: 'swap',
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: '--font-plex-mono',
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  display: 'swap',
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -37,8 +49,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#0e0d0c' },
-    { media: '(prefers-color-scheme: light)', color: '#f4f0ea' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b0d10' },
+    { media: '(prefers-color-scheme: light)', color: '#f4f5f7' },
   ],
   colorScheme: 'dark light',
 };
@@ -50,7 +62,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`dark ${fraunces.variable} ${GeistSans.variable} ${GeistMono.variable}`}
+      className={`dark ${archivo.variable} ${plexSans.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <head>

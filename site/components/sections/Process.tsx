@@ -6,14 +6,13 @@ export function Process({ heading, steps }: { heading: SectionHeading; steps: Pr
   return (
     <section id="process" aria-labelledby="process-title" className="section scroll-mt-20">
       <div className="shell">
-        <SectionHeader id="process-title" index="03" heading={heading} />
+        <SectionHeader id="process-title" index="05" heading={heading} />
 
         <Reveal as="ol" className="grid gap-px overflow-hidden rounded-md border border-line bg-line sm:grid-cols-2 lg:grid-cols-4" stagger={0.12}>
           {steps.map((step, i) => (
             <RevealItem as="li" key={step.title} className="flex flex-col bg-bg p-8 md:p-10">
               <span
-                className="mb-12 font-display text-[4.5rem] leading-none text-accent"
-                style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 100" }}
+                className="mb-12 font-display text-[4.5rem] font-semibold leading-none tracking-tighter text-accent [font-stretch:120%]"
                 aria-hidden="true"
               >
                 {i + 1}

@@ -30,7 +30,7 @@ export function ProjectCard({ project }: { project: Project }) {
           </h3>
           <p className="mt-2 line-clamp-2 text-small text-muted">{project.summary}</p>
         </div>
-        <span className="mt-1 grid size-10 shrink-0 place-items-center rounded-full border border-line text-fg transition-colors duration-[var(--dur-base)] group-hover:border-accent group-hover:bg-accent group-hover:text-accent-fg" aria-hidden="true">
+        <span className="mt-1 grid size-10 shrink-0 place-items-center rounded-full border border-line text-fg transition-colors duration-[var(--dur-base)] group-hover:border-accent group-hover:bg-accent-solid group-hover:text-accent-fg" aria-hidden="true">
           <Arrow />
         </span>
       </div>

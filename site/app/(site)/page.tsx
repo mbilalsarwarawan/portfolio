@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
 import { Hero } from '@/components/sections/Hero';
 import { ProofStrip } from '@/components/sections/ProofStrip';
-import { StackMarquee } from '@/components/sections/StackMarquee';
+import { AtAGlance } from '@/components/sections/AtAGlance';
 import { SelectedWork } from '@/components/sections/SelectedWork';
 import { Services } from '@/components/sections/Services';
 import { Process } from '@/components/sections/Process';
-import { AboutTeaser } from '@/components/sections/AboutTeaser';
 import { Testimonials } from '@/components/sections/Testimonials';
+import { Faq } from '@/components/sections/Faq';
 import { ContactCTA } from '@/components/sections/ContactCTA';
-import { getContact, getProjects, getProofStats, getStackRows, getTestimonials } from '@/lib/content';
+import { getContact, getProjects, getProofStats, getTestimonials } from '@/lib/content';
 import { copy } from '@/lib/copy';
-import { about, contact as contactCopy, hero, person, process, proof, sections, seo, services } from '@/content/site';
+import { contact as contactCopy, faq, glance, hero, person, process, proof, sections, seo, services } from '@/content/site';
 
 export const revalidate = 3600;
 
@@ -21,10 +21,9 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [projects, proofStats, stackRows, contact] = await Promise.all([
+  const [projects, proofStats, contact] = await Promise.all([
     getProjects(),
     getProofStats(),
-    getStackRows(),
     getContact(),
   ]);
 
@@ -42,27 +41,18 @@ export default async function HomePage() {
         secondaryCta={hero.secondaryCta}
         availability={person.availability}
         meta={[
-          { label: 'Currently', value: `${person.currentCompany.name} · ${person.currentCompany.country}` },
           { label: 'Based in', value: person.location },
-          { label: 'Focus', value: hero.focus },
+          { label: 'Works with', value: 'Founders, teams & agencies' },
+          { label: 'Builds', value: hero.focus },
         ]}
       />
+      <AtAGlance heading={sections.glance} items={glance} />
       <ProofStrip stats={proofStats.stats} companies={proofStats.companies} companiesHeading={proof.companiesHeading} />
-      <SelectedWork heading={sections.work} featured={featured} rest={rest} />
-      <StackMarquee heading={sections.stack.heading} hint={sections.stack.hint} rows={stackRows} />
       <Services heading={sections.services} services={services} projectTitles={projectTitles} />
-      <Process heading={sections.process} steps={process} />
-      <AboutTeaser
-        heading={sections.about}
-        body={about.short}
-        principles={about.principles}
-        portrait={{ src: '/profile.png', alt: `Portrait of ${person.fullName}` }}
-        facts={[
-          { label: 'Education', value: `${person.education.degree}, ${person.education.school} ’${person.education.year.slice(2)}` },
-          { label: 'Time zone', value: 'PKT (UTC+5)' },
-        ]}
-      />
+      <SelectedWork heading={sections.work} featured={featured} rest={rest} />
       <Testimonials heading={sections.testimonials} items={getTestimonials()} />
+      <Process heading={sections.process} steps={process} />
+      <Faq heading={sections.faq} items={faq} />
       <ContactCTA
         eyebrow={sections.contact.eyebrow}
         heading={contactCopy.heading}
