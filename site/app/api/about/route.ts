@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
+import { invalidate } from '@/lib/revalidate';
 
 export async function GET() {
   const supabase = await createClient();
@@ -29,5 +30,6 @@ export async function PUT(request: Request) {
   }
 
   if (result.error) return NextResponse.json({ error: result.error.message }, { status: 400 });
+  invalidate('about');
   return NextResponse.json(result.data);
 }

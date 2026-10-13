@@ -1,0 +1,148 @@
+/* ==========================================================
+   Design tokens: "Graphite & Cobalt"
+   Dark-first. Light theme = :root, dark theme = .dark (the
+   default class on <html>; see app/layout.tsx).
+   Contrast ratios are against --color-bg.
+   ========================================================== */
+
+:root {
+  /* ---- Color: light ---- */
+  --color-bg: #f4f5f7;
+  --color-surface: #e9ecef;
+  --color-elevated: #ffffff;
+  --color-fg: #0e1116;             /* 17.3:1 */
+  --color-fg-muted: #4a525e;       /* 7.2:1 */
+  --color-fg-subtle: #5f6874;      /* 5.2:1 (AA) */
+  --color-line: rgba(14, 17, 22, 0.1);
+  --color-line-strong: rgba(14, 17, 22, 0.24);
+  --color-accent: #2848e0;         /* text/graphics, 6.2:1 */
+  --color-accent-strong: #1f3bc4;
+  --color-accent-solid: #2848e0;   /* fills; white text 6.8:1 */
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(40, 72, 224, 0.09);
+  --color-focus: #2848e0;
+  --color-success: #1f7a4d;
+  --color-danger: #c0262d;
+  --mesh-a: #7d95ff;
+  --mesh-b: #f4f5f7;
+  --mesh-c: #cdd6ea;
+  --shadow-1: 0 1px 2px rgba(14, 17, 22, 0.06), 0 2px 8px rgba(14, 17, 22, 0.04);
+  --shadow-2: 0 8px 24px -8px rgba(14, 17, 22, 0.16), 0 2px 6px rgba(14, 17, 22, 0.05);
+  --shadow-3: 0 32px 64px -24px rgba(14, 17, 22, 0.26), 0 8px 24px -12px rgba(14, 17, 22, 0.1);
+  --shadow-glow: 0 0 0 1px rgba(40, 72, 224, 0.2), 0 12px 36px -12px rgba(40, 72, 224, 0.45);
+  color-scheme: light;
+}
+
+.dark {
+  /* ---- Color: dark (default) ---- */
+  --color-bg: #0b0d10;
+  --color-surface: #13161a;
+  --color-elevated: #1a1e23;
+  --color-fg: #e8ecef;             /* 16.4:1 */
+  --color-fg-muted: #a3acb6;       /* 8.5:1 */
+  --color-fg-subtle: #7e8894;      /* 5.4:1 (AA) */
+  --color-line: rgba(232, 236, 239, 0.08);
+  --color-line-strong: rgba(232, 236, 239, 0.2);
+  --color-accent: #6f8cff;         /* text/graphics, 6.4:1 */
+  --color-accent-strong: #93aaff;
+  --color-accent-solid: #3657f5;   /* fills; white text 5.5:1 */
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(111, 140, 255, 0.12);
+  --color-focus: #93aaff;
+  --color-success: #4cc38a;
+  --color-danger: #ff6369;
+  --mesh-a: #3657f5;
+  --mesh-b: #0b0d10;
+  --mesh-c: #0f1d3f;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 8px 24px -8px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-3: 0 32px 64px -24px rgba(0, 0, 0, 0.8), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 0 1px rgba(111, 140, 255, 0.25), 0 12px 40px -12px rgba(54, 87, 245, 0.6);
+  color-scheme: dark;
+}
+
+:root {
+  /* ---- Typography ---- */
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Fluid type scale: 360px → 1440px viewport */
+  --text-caption: clamp(0.6875rem, 0.66rem + 0.1vw, 0.75rem);
+  --text-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --text-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --text-lead: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+  --text-h4: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --text-h3: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem);
+  --text-h2: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+  --text-h1: clamp(1.875rem, 1.4rem + 2.2vw, 3.25rem);
+  --text-display: clamp(2rem, 1.3rem + 3.5vw, 4.75rem);
+
+  --leading-tight: 0.92;
+  --leading-snug: 1.15;
+  --leading-body: 1.6;
+  --tracking-display: -0.04em;
+  --tracking-caps: 0.12em;
+
+  /* ---- Spacing (4px base) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-section: clamp(5rem, 3.5rem + 7vw, 10rem);
+  --gutter: clamp(1rem, 0.4rem + 2.6vw, 3rem);
+  --content-max: 1360px;
+
+  /* ---- Radii ---- */
+  --radius-xs: 2px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+
+  /* ---- Motion ---- */
+  --dur-fast: 120ms;
+  --dur-base: 240ms;
+  --dur-slow: 480ms;
+  --dur-slower: 900ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- Layers ---- */
+  --z-cursor: 100;
+  --z-progress: 90;
+  --z-nav: 50;
+  --z-chat: 60;
+}
+
+/* Legacy aliases. Admin dashboard and chatbot still read these names. */
+:root,
+.dark {
+  --bg: var(--color-bg);
+  --bg-surface: var(--color-surface);
+  --bg-elevated: var(--color-elevated);
+  --fg: var(--color-fg);
+  --text-primary: var(--color-fg);
+  --text-secondary: var(--color-fg-muted);
+  --text-tertiary: var(--color-fg-subtle);
+  --surface: var(--color-surface);
+  --border: var(--color-line-strong);
+  --border-hover: var(--color-fg-subtle);
+  --accent: var(--color-accent);
+  --accent-hover: var(--color-accent-strong);
+  --accent-subtle: var(--color-accent-soft);
+  --font-body: var(--font-sans);
+  --error: var(--color-danger);
+  --error-bg: color-mix(in srgb, var(--color-danger) 10%, transparent);
+  --error-border: color-mix(in srgb, var(--color-danger) 30%, transparent);
+  --success: var(--color-success);
+  --success-bg: color-mix(in srgb, var(--color-success) 10%, transparent);
+  --success-border: color-mix(in srgb, var(--color-success) 30%, transparent);
+}

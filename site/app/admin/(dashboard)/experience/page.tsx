@@ -23,13 +23,20 @@ export default function AdminExperiencePage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => { fetchItems(); }, []);
-
   async function fetchItems() {
     const res = await fetch('/api/experience');
     setItems(await res.json());
     setLoading(false);
   }
+
+  useEffect(() => {
+    fetch('/api/experience')
+      .then((r) => r.json())
+      .then((data: Experience[]) => {
+        setItems(data);
+        setLoading(false);
+      });
+  }, []);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     setForm({ ...form, [e.target.name]: e.target.name === 'display_order' ? Number(e.target.value) : e.target.value });

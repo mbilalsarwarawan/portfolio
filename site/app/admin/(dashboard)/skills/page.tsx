@@ -20,15 +20,20 @@ export default function AdminSkillsPage() {
   const [saving, setSaving] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchSkills();
-  }, []);
-
   async function fetchSkills() {
     const res = await fetch('/api/skills');
     setSkills(await res.json());
     setLoading(false);
   }
+
+  useEffect(() => {
+    fetch('/api/skills')
+      .then((r) => r.json())
+      .then((data: Skill[]) => {
+        setSkills(data);
+        setLoading(false);
+      });
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
