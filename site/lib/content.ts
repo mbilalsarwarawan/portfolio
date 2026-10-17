@@ -208,9 +208,9 @@ export const getResumeUrl = cache(async (): Promise<string | null> => {
 
 export async function getProofStats(): Promise<ProofStats> {
   const [projects, experience] = await Promise.all([getProjects(), getExperience()]);
-  const live = projects.filter((p) => p.liveUrl).length;
+  const projectCount = proof.projectsValue ?? (projects.length >= 10 ? '10+' : String(projects.length));
   const stats = [
-    { value: String(live), label: proof.liveProductsLabel },
+    { value: projectCount, label: proof.projectsLabel ?? proof.liveProductsLabel },
     { value: proof.yearsValue, label: proof.yearsLabel },
     { value: String(experience.length), label: proof.teamsLabel },
   ].filter((s) => s.value && s.label);

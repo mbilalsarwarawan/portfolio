@@ -24,6 +24,8 @@ export const hero = {
 
 /** Labels for the proof strip. Values are computed from Supabase in lib/content.ts. */
 export const proof = {
+  projectsValue: '10+',
+  projectsLabel: 'projects built',
   liveProductsLabel: 'products live in production',
   yearsValue: '2+',
   yearsLabel: 'years building software',
